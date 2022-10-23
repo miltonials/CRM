@@ -1187,3 +1187,153 @@ INSERT INTO Motivo VALUES
   (3, 'El cliente no se interesó.'),
   (4, 'El cliente no respondió.'),
   (5, 'El cliente no se presentó.');
+
+
+/*
+####################################################
+############# PROBAR INSERCIONES 🔽 ###############
+####################################################
+*/
+
+INSERT INTO origen (id, nombre) VALUES (1, 'Origen 1'),
+(2, 'Origen 2'),
+(3, 'Origen 3'),
+(4, 'Origen 4'),
+(5, 'Origen 5'),
+(6, 'Origen 6'),
+(7, 'Origen 7'),
+(8, 'Origen 8'),
+(9, 'Origen 9'),
+(10, 'Origen 10'),
+(11, 'Origen 11'),
+(12, 'Origen 12'),
+(13, 'Origen 13'),
+(14, 'Origen 14'),
+(15, 'Origen 15');
+
+
+INSERT INTO prioridad (id, nombre) VALUES (1, 'Urgente'),
+(2, 'Alta'),
+(3, 'Media'),
+(4, 'Baja'),
+(5, 'Muy Baja');
+
+
+INSERT INTO probabilidad (id, porcentaje) VALUES (1, 23),
+(2, 45),
+(3, 67),
+(4, 89),
+(5, 100),
+(6, 1),
+(7, 2),
+(8, 3),
+(9, 4),
+(10, 5),
+(11, 6),
+(12, 7),
+(13, 8),
+(14, 9),
+(15, 10);
+
+INSERT INTO Provincia (id, nombre) VALUES
+(1, 'San José'),
+(2, 'Alajuela'),
+(3, 'Cartago'),
+(4, 'Heredia'),
+(5, 'Guanacaste'),
+(6, 'Puntarenas'),
+(7, 'Limón');
+
+INSERT INTO rol (id, privilegios, tipo) VALUES (1, 1, 'Administrador'),
+(2, 2, 'Usuario'),
+(3, 3, 'Invitado'),
+(4, 1, 'Administrador'),
+(5, 2, 'Usuario'),
+(6, 3, 'Invitado'),
+(7, 1, 'Administrador'),
+(8, 2, 'Usuario'),
+(9, 3, 'Invitado'),
+(10, 1, 'Administrador'),
+(11, 2, 'Usuario'),
+(12, 3, 'Invitado'),
+(13, 1, 'Administrador'),
+(14, 2, 'Usuario'),
+(15, 3, 'Invitado');
+
+INSERT INTO sector (id, nombre) VALUES 
+  (1, 'San José'),
+  (2, 'Alajuela'),
+  (3, 'Cartago'),
+  (4, 'Heredia'),
+  (5, 'Guanacaste'),
+  (6, 'Puntarenas'),
+  (7, 'Limón');
+
+
+INSERT INTO tarea (id, fecha_finalizacion, fecha_creacion, estado, descripcion) VALUES (1, '2019-01-01', '2019-01-01', 'Finalizada', 'Comprar Productos'),
+(2, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender'),
+(3, '2019-01-01', '2019-01-01', 'inconcluso', 'Comprar Productos'),
+(4, '2019-01-01', '2019-01-01', 'En proceso', 'Vender'),
+(5, '2019-01-01', '2019-01-01', 'Sin iniciar', 'Comprar Productos'),
+(6, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender'),
+(7, '2019-01-01', '2019-01-01', 'inconcluso', 'Comprar Productos'),
+(8, '2019-01-01', '2019-01-01', 'En proceso', 'Vender'),
+(9, '2019-01-01', '2019-01-01', 'Sin iniciar', 'Comprar Productos'),
+(10, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender');
+
+INSERT INTO tipocaso (id, tipo) VALUES (1, 'Tipo 1'),
+(2, 'Tipo 2'),
+(3, 'Tipo 3'),
+(4, 'Tipo 4'),
+(5, 'Tipo 5');
+
+INSERT INTO tipocontacto (id, tipo) VALUES (1, 'Vendedor'),
+(2, 'Cliente'),
+(3, 'Proveedor'),
+(4, 'Otro');
+
+INSERT INTO tipoprivilegio (id, tipo) VALUES (1, 'Administrador'),
+(2, 'Usuario'),
+(3, 'Invitado'),
+(4, 'Otro');
+
+DECLARE @i INT, @nombre VARCHAR(50), @apellido1 VARCHAR(50), @apellido2 VARCHAR(50), @clave VARCHAR(50), @cedula VARCHAR(50),
+@randomNombre INT, @randomApellido1 INT, @randomApellido2 INT, @randomCedula INT, @randomClave INT, @randomDepartamento INT
+SET @i = 1
+WHILE @i <= 20
+BEGIN
+  SET @cedula = 111111111 + RAND() * 999999999;
+    SET @clave = 11111111 + RAND() * 99999999;
+    -- random de nombres de 1 al 10
+    SET @randomNombre = 1 + RAND() * 10;
+    -- random de apellidos de 1 al 10
+    SET @randomApellido1 = 1 + RAND() * 10;
+    SET @randomApellido2 = 1 + RAND() * 10;
+    -- random de cedula de 1 al 10
+    set @nombre  = CHOOSE(@randomNombre, 'Juan', 'Pedro', 'Jose', 'Maria', 'Luis', 'Ana', 'Carlos', 'Luisa', 'Rosa', 'Ramon');
+    set @apellido1  = CHOOSE(@randomApellido1, 'Perez', 'Gonzalez', 'Rodriguez', 'Fernandez', 'Lopez', 'Martinez', 'Gomez', 'Sanchez', 'Perez', 'Gonzalez');
+    set @apellido2  = CHOOSE(@randomApellido2, 'Porras', 'Romero', 'Torre', 'Hernandez', 'Garcia', 'Gutierrez', 'Perez', 'Sanchez', 'Perez', 'Gonzalez');
+    -- random de departamento de 1 al 20
+    SET @randomDepartamento = 1 + RAND() * 20;
+    INSERT INTO usuario (cedula, clave, nombre, apellido1, apellido2, id_departamento) VALUES (@cedula, @clave, @nombre, @apellido1, @apellido2, @randomDepartamento)
+    SET @i = @i + 1
+END
+
+INSERT INTO Zona (id, nombre) VALUES
+(1, 'Central'),
+(2, 'Chorotega'),
+(3, 'Pacífico Central'),
+(4, 'Brunca'),
+(5, 'Huetar Atlántica'),
+(6, 'Huetar Norte'),
+(7, 'Pacífico Sur'),
+(8, 'Talamanca'),
+(9, 'Golfo de Nicoya'),
+(10, 'Zona Norte'),
+(11, 'Zona Sur'),
+(12, 'Zona Este'),
+(13, 'Zona Oeste'),
+(14, 'Zona Central'),
+(15, 'Zona Insular');
+
+

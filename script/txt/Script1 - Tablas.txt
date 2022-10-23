@@ -1,15 +1,20 @@
---##################CREACI�N DE LA BASE DE DATOS
+--##################CREACIÓN DE LA BASE DE DATOS
 
 --MILTON BARRERA ZEPEDA | 2021091205
 --ANDY PORRAS ROMERO | 20210678934
+
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'CRM';
 
 
 USE master
 GO
 
+
+
 IF EXISTS (SELECT * FROM sys.databases WHERE [name] = N'CRM')
 BEGIN
 	PRINT 'ELIMINANDO...';
+	ALTER DATABASE CRM SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 	DROP DATABASE CRM;
 END
 GO
@@ -23,113 +28,21 @@ GO
 
 USE CRM;
 GO
+  
+CREATE TABLE TipoPrivilegio(
+  id int primary key,
+  tipo varchar(20)
+);
 
-IF OBJECT_ID(N'UsuarioRoles', N'U') IS NOT NULL
-	DROP TABLE UsuarioRoles;
-GO
-
-IF OBJECT_ID(N'Rol', N'U') IS NOT NULL
-	DROP TABLE Rol;
-GO
-
-IF OBJECT_ID(N'Usuario', N'U') IS NOT NULL
-	DROP TABLE Usuario;
-GO
-
-IF OBJECT_ID(N'Cliente', N'U') IS NOT NULL
-	DROP TABLE Cliente;
-GO
-
-IF OBJECT_ID(N'Asesoria', N'U') IS NOT NULL
-	DROP TABLE Asesoria;
-GO
-
-IF OBJECT_ID(N'Cuenta', N'U') IS NOT NULL
-	DROP TABLE Cuenta;
-GO
-
-IF OBJECT_ID(N'Contacto', N'U') IS NOT NULL
-	DROP TABLE Contacto;
-GO
-
-IF OBJECT_ID(N'Caso', N'U') IS NOT NULL
-	DROP TABLE Caso;
-GO
-
-IF OBJECT_ID(N'Ejecucion', N'U') IS NOT NULL
-	DROP TABLE Ejecucion;
-GO
-
-IF OBJECT_ID(N'Tarea', N'U') IS NOT NULL
-	DROP TABLE Tarea;
-GO
-
-IF OBJECT_ID(N'CasosTarea', N'U') IS NOT NULL
-	DROP TABLE CasosTarea;
-GO
-
-IF OBJECT_ID(N'EjecucionTarea', N'U') IS NOT NULL
-	DROP TABLE EjecucionTarea;
-GO
-
-IF OBJECT_ID(N'CotizacionTarea', N'U') IS NOT NULL
-	DROP TABLE CotizacionTarea;
-GO
-
-IF OBJECT_ID(N'ContactoTarea', N'U') IS NOT NULL
-	DROP TABLE ContactoTarea;
-GO
-
-IF OBJECT_ID(N'Factura', N'U') IS NOT NULL
-	DROP TABLE Factura;
-GO
-
-IF OBJECT_ID(N'Denegacion', N'U') IS NOT NULL
-	DROP TABLE Denegacion;
-GO
-
-IF OBJECT_ID(N'Inflacion', N'U') IS NOT NULL
-	DROP TABLE Inflacion;
-GO
-
-IF OBJECT_ID(N'Producto', N'U') IS NOT NULL
-	DROP TABLE Producto;
-GO
-
-IF OBJECT_ID(N'Familia', N'U') IS NOT NULL
-	DROP TABLE Familia;
-GO
-
-IF OBJECT_ID(N'ProductoCotizacion', N'U') IS NOT NULL
-	DROP TABLE ProductoCotizacion;
-GO
-
-IF OBJECT_ID(N'Cotizacion', N'U') IS NOT NULL
-	DROP TABLE Cotizacion;
-GO
-
-IF OBJECT_ID(N'Actividad', N'U') IS NOT NULL
-	DROP TABLE Actividad;
-GO
-
-IF OBJECT_ID(N'EjecucionActividad', N'U') IS NOT NULL
-	DROP TABLE EjecucionActividad;
-GO
-
-IF OBJECT_ID(N'CotizacionActividad', N'U') IS NOT NULL
-	DROP TABLE CotizacionActividad;
-GO
-
-IF OBJECT_ID(N'ContactoActividad', N'U') IS NOT NULL
-	DROP TABLE ContactoActividad;
-GO
-
-IF OBJECT_ID(N'CasosActividad', N'U') IS NOT NULL
-	DROP TABLE CasosActividad;
-GO
-
+CREATE TABLE PrivilegiosXrol(
+  id_rol int,
+  id_privilegio int,
+  PRIMARY KEY (id_rol, id_privilegio)
+);
+  
 CREATE TABLE Rol(
 	id int PRIMARY KEY,
+	privilegios INT,
 	tipo varchar(15) NOT NULL
 );
 
@@ -139,14 +52,19 @@ CREATE TABLE UsuarioRoles(
 	PRIMARY KEY(id_rol,cedula_usuario)
 );
 
+CREATE TABLE Departamento(
+  id VARCHAR(30),
+  nombre VARCHAR(20),
+  PRIMARY KEY (id)
+)
 CREATE TABLE Usuario(
 	cedula VARCHAR(30) UNIQUE,
 	clave VARCHAR(30) NOT NULL,
 	nombre VARCHAR(30) NOT NULL,
 	apellido1 VARCHAR(30) NOT NULL,
 	apellido2 VARCHAR(30) NOT NULL,
-	departemento VARCHAR(30) NOT NULL
-	PRIMARY KEY(cedula) 
+	id_departamento VARCHAR(30) NOT NULL
+	PRIMARY KEY(cedula)
 );
 
 
@@ -154,55 +72,124 @@ CREATE TABLE Cliente(
 	cedula VARCHAR(30) UNIQUE,
 	telefono VARCHAR(30) NOT NULL,
 	celular Varchar(30) NOT NULL,
-	contacto_principal int NOT NULL,
-	sitio_web VARCHAR(30) NOT NULL,
-	informacion_adicional VARCHAR(30) NOT NULL,
-	correo_electronico VARCHAR(30) NOT NULL,
-	sector VARCHAR(20),
-	zona VARCHAR(30),
-	PRIMARY KEY(cedula,contacto_principal)
+	nombre VARCHAR(30) NOT NULL,
+	apellido1 VARCHAR(30) NOT NULL,
+	apellido2 VARCHAR(30) NOT NULL,
+	  PRIMARY KEY(cedula)
 );
 
-CREATE TABLE Asesoria(
-	cedula_cliente varchar(30) NOT NULL,
-	cedula_usuario varchar(30) NOT NULL,
-	PRIMARY KEY (cedula_cliente,cedula_usuario)
+CREATE TABLE CuentaCliente(
+  id INT,
+  cedula_cliente VARCHAR(30) UNIQUE not null,
+  nombre_cuenta varchar(30) not null,
+  moneda INT NOT NULL,
+  contacto_principal VARCHAR(30) NOT NULL,
+  sitio_web VARCHAR (50) NOT NULL,
+  informacion_adicional varchar(50) NOT NULL,
+  correo_electronuco varchar (50) NOT NULL,
+  id_zona INT,
+  id_sector INT,
+  PRIMARY KEY(id,cedula_cliente, moneda) 
 );
-CREATE TABLE Cuenta(
-	cedula_cliente VARCHAR(30),
-	nombre_cuenta VARCHAR(30),
-	modeda_cuenta VARCHAR(30)
+
+CREATE TABLE Moneda(
+  id INT PRIMARY KEY,
+  nombre  VARCHAR (30)
+);
+
+CREATE table zona(
+  id int primary KEY,
+  nombre VARCHAR(30)
+);
+
+CREATE table Sector (
+  id int primary KEY,
+  nombre VARCHAR(30)
+);
+
+CREATE table Provincia (
+  id int primary KEY,
+  nombre VARCHAR(30)
+);
+
+create TABLE Canton(
+  id int PRIMARY KEY,
+  nombre VARCHAR(30)
+);
+
+create TABLE Distrito (
+  id int PRIMARY KEY,
+  nombre VARCHAR(30)
+);
+
+create TABLE Direccion (
+  id int UNIQUE,
+  id_provincia int,
+  id_canton int,
+  id_distrito int,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE Estado(
+  id int PRIMARY KEY,
+  nombre VARCHAR(30)
+);
+
+CREATE TABLE TipoContacto(
+	id int PRIMARY KEY NOT NULL,
+  tipo VARCHAR(30) not null
 );
 
 CREATE TABLE Contacto(
-	id int,
-	cedula_cliente VARCHAR(30),
+	id int UNIQUE,
+	cedula_cliente VARCHAR(30) UNIQUE,
 	cedula_usuario VARCHAR(30),
-	medio VARCHAR(30),
+  tipo_contacto INT,
 	motivo VARCHAR(30),
 	nombre VARCHAR(30),
 	telefono VARCHAR(30),
 	correo_electronico VARCHAR(30),
-	estado VARCHAR(30),
-	dirreccion VARCHAR(30),
-	sector VARCHAR(30),
-	zona VARCHAR(30),
+	estado INT,
+	direccion INT,
 	descripcion VARCHAR(50),
-	PRIMARY KEY (id)
+  id_zona INT,
+  id_sector INT,
+	PRIMARY KEY (id, cedula_cliente)
 );
+
+CREATE TABLE Origen(
+  id VARCHAR(30) PRIMARY KEY,
+  origen VARCHAR(30),
+)
+
+CREATE TABLE EstadoCaso(
+  id VARCHAR(30) PRIMARY KEY,
+  estado VARCHAR(30),
+)
+
+CREATE TABLE TipoCaso(
+  id VARCHAR(30) PRIMARY KEY,
+  tipo VARCHAR(30),
+)
+  
+CREATE TABLE Prioridad(
+  id VARCHAR(30) PRIMARY KEY,
+  prioridad VARCHAR(30),
+)
 
 CREATE TABLE Caso(
 	id INT,
 	proyectoAsociado INT,
 	propietarioCaso VARCHAR(30),
 	asunto VARCHAR(30),
-	dirrecion VARCHAR(30),
 	nombreCuenta VARCHAR(30),
 	nombreContacto VARCHAR(30),
-	origenCaso VARCHAR(30),
 	descripcion VARCHAR(30),
-	estado VARCHAR(50),
-	tipoCaso VARCHAR(30),
+	id_direccion INT,
+	id_origen VARCHAR(30),
+	id_estado VARCHAR(30),
+	id_tipo VARCHAR(30),
+  id_prioridad VARCHAR(30),
 	PRIMARY KEY (id)
 );
 
@@ -214,15 +201,16 @@ CREATE TABLE Ejecucion(
 	nombreCuenta VARCHAR(30),
 	nombreEjecucion VARCHAR(30),
 	propietarioEjecucion VARCHAR(30),
-	a�oProyectadoCierre int,
+	añoProyectadoCierre int,
 	mesProyectadoCierre int,
 	fechaCierre DATE,
-	departamento VARCHAR(30)
+	id_departamento VARCHAR(30)
 );
 
 CREATE TABLE Tarea(
 	id Int PRIMARY KEY,
-	fecha_Finalizacion DATE,
+	fecha_finalizacion DATE,
+  fecha_creacion DATE,
 	estado VARCHAR(30),
 	descripcion VARCHAR(30)
 );
@@ -251,26 +239,27 @@ CREATE TABLE ContactoTarea(
 	PRIMARY KEY (id_contacto, id_tarea)
 );
 
---drop table Factura
-CREATE TABLE Factura(
-	consecutivo INT UNIQUE,
-	id_cotizacion int,
-	monto smallint,
-	fecha DATE,
-	PRIMARY KEY (consecutivo, id_cotizacion)
+CREATE TABLE Competidor(
+	nombre Varchar(30) PRIMARY KEY
 );
 
-CREATE TABLE Denegacion(
-	id_cotizacion int PRIMARY KEY,
-	motivo VARCHAR(30),
-	competidor Varchar(30)
+CREATE TABLE Etapa(
+	nombre Varchar(30) PRIMARY KEY
+);
+
+CREATE TABLE Probabilidad(
+	porcentaje smallint PRIMARY KEY
+);
+
+CREATE TABLE Motivo(
+	id VARCHAR(10) PRIMARY KEY,
+  descripcion VARCHAR (255)
 );
 
 CREATE TABLE Inflacion(
 	anno INT,
 	porcentaje INT,
-	numero_cotizacion INT unique,
-	PRIMARY KEY(anno, numero_cotizacion)
+	PRIMARY KEY(anno)
 );
 
 --drop table Producto
@@ -300,22 +289,26 @@ CREATE TABLE ProductoCotizacion(
 
 CREATE TABLE Cotizacion(
 	numero_cotizacion int unique,
-	id_factura INT, 
+  id_factura INT, 
 	id_contacto INT,
-	zona VARCHAR(30),
-	tipo VARCHAR(30),
-	moneda_oportunidad VARCHAR(30),
-	etapa VARCHAR(30),
-	asesor VARCHAR(30),
+	tipo VARCHAR(30), --QUIZÁ PUEDE SER UN CATÁLOGO
 	nombre_oportunidad VARCHAR(30),
 	fecha_cotizacion VARCHAR(30),
 	nombre_cuenta VARCHAR(30),
 	fecha_proyeccion_cierre DATE,
 	fecha_cierre DATE,
-	probabilidades VARCHAR(30),
 	orden_compra VARCHAR(30),
 	descripcion VARCHAR(30),
-	PRIMARY KEY(numero_cotizacion, id_factura,id_contacto)
+  precio_negociado FLOAT,
+	id_zona INT,
+  id_sector INT,
+  id_moneda INT,
+  id_etapa VARCHAR(30),
+  id_asesor VARCHAR(30),
+	probabilidad smallint,
+	motivo_denegacion VARCHAR(10),
+  id_competidor Varchar(30),
+	PRIMARY KEY(numero_cotizacion, id_factura)
 );
 
 CREATE TABLE Actividad(
