@@ -311,17 +311,29 @@ CREATE TABLE Producto(
 	codigo_Familia int,
 	nombre VARCHAR(30),
 	precio_estandar int,
-	estado VARCHAR(30),
+	estado INT,
 	descripcion VARCHAR(30),
 	PRIMARY KEY(codigo,codigo_Familia)
 );
 
+-- Creacion de la tabla de los estados de los producto
+CREATE TABLE EstadoProducto (
+	id INT PRIMARY KEY,
+	estado VARCHAR(30)
+);
+
 -- Creacion de la tabla Familia
 CREATE TABLE Familia(
-	codigoFamilia int PRIMARY KEY,
-	nombreFamilia VARCHAR(30),
-	estado VARCHAR(30),
+	codigo int PRIMARY KEY,
+	nombre VARCHAR(30),
+	estado INT,
 	descripcion VARCHAR(255)
+);
+
+-- Creacion de la tabla de los estados de las familias de producto
+CREATE TABLE EstadoFamilia (
+	id INT PRIMARY KEY,
+	estado VARCHAR(30)
 );
 
 -- Creacion de la tabla ProductoCotizacion
