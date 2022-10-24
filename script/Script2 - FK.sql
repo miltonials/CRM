@@ -66,7 +66,8 @@ ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Motivo
 ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Competidor
 ALTER TABLE Tarea DROP CONSTRAINT IF EXISTS fk_Tarea_EstadoTarea
 ALTER TABLE Contacto DROP CONSTRAINT IF EXISTS fk_Contacto_Cliente
-
+ALTER TABLE Producto DROP CONSTRAINT IF EXISTS fk_Producto_EstadoProducto
+ALTER TABLE Familia DROP CONSTRAINT IF EXISTS fk_Familia_EstadoFamilia
 
 
 
@@ -114,7 +115,7 @@ ALTER TABLE ProductoCotizacion ADD CONSTRAINT fk_ProductoCotizacion_Producto FOR
 	ON DELETE NO ACTION;
 ALTER TABLE ProductoCotizacion ADD CONSTRAINT fk_ProductoCotizacion_Cotizacion FOREIGN KEY (numero_cotizacion) REFERENCES Cotizacion (numero_cotizacion)
 	ON DELETE NO ACTION;
-ALTER TABLE Producto ADD CONSTRAINT fk_Producto_Familia FOREIGN KEY (codigo_Familia) REFERENCES Familia (codigoFamilia)
+ALTER TABLE Producto ADD CONSTRAINT fk_Producto_Familia FOREIGN KEY (codigo_Familia) REFERENCES Familia (codigo)
 	ON DELETE NO ACTION;
 ALTER TABLE EjecucionActividad ADD CONSTRAINT fk_EjecucionActividad_Ejecucion FOREIGN KEY (id_ejecucion) REFERENCES Ejecucion (id)
 	ON DELETE NO ACTION;
@@ -189,3 +190,7 @@ ALTER TABLE Direccion ADD CONSTRAINT fk_Direccion_Distrito FOREIGN KEY (id_distr
   ON DELETE NO ACTION;
 ALTER TABLE Tarea ADD CONSTRAINT fk_Tarea_EstadoTarea FOREIGN KEY (estado) REFERENCES EstadoTarea (id)
   ON DELETE NO ACTION;
+ALTER TABLE Producto ADD CONSTRAINT fk_Producto_EstadoProducto FOREIGN KEY (estado) REFERENCES EstadoProducto (id)
+	ON DELETE NO ACTION;
+ALTER TABLE Familia ADD CONSTRAINT fk_Familia_EstadoFamilia FOREIGN KEY (estado) REFERENCES EstadoFamilia (id)
+	ON DELETE NO ACTION;

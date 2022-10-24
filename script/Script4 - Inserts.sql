@@ -1157,12 +1157,26 @@ INSERT INTO Competidor VALUES
   ('Lenovo'),
   ('LG');
 
-  -- Insercciones de datos en la tabla de Estado
+-- Insercciones de datos en la tabla de Estado para contacto
 INSERT INTO Estado VALUES
   (1, 'Activo'),
   (2, 'Inactivo'),
   (3, 'Con poca mercadería'),
   (4, 'Agotado');
+
+-- Inserciones de los datos para la tabla estados de los productos
+INSERT INTO EstadoProducto VALUES
+  (1, 'Agotado'),
+  (2, 'Disponible'),
+  (3, 'Obsoleto'),
+  (4, 'Vencido');
+
+-- Inserciones de los datos para la tabla estados de las familias de productos
+INSERT INTO EstadoFamilia VALUES
+  (1, 'Activo'),
+  (2, 'Inactivo'),
+  (3, 'No comercializado'),
+  (4, 'En proceso de adquisicion');
 
 -- Insercciones de datos en la tabla de Estapa
 INSERT INTO Etapa VALUES
