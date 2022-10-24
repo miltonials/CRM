@@ -1157,13 +1157,12 @@ INSERT INTO Competidor VALUES
   ('Lenovo'),
   ('LG');
 
--- Insercciones de datos en la tabla de Estado
+  -- Insercciones de datos en la tabla de Estado
 INSERT INTO Estado VALUES
-  (1, 'Estado1'),
-  (2, 'Estado2'),
-  (3, 'Estado3'),
-  (4, 'Estado4'),
-  (5, 'Estado5');
+  (1, 'Activo'),
+  (2, 'Inactivo'),
+  (3, 'Con poca mercadería'),
+  (4, 'Agotado');
 
 -- Insercciones de datos en la tabla de Estapa
 INSERT INTO Etapa VALUES
@@ -1334,3 +1333,29 @@ INSERT INTO Zona (id, nombre) VALUES
 (13, 'Zona Oeste'),
 (14, 'Zona Central'),
 (15, 'Zona Insular');
+
+--inserciones de las familias de productos
+INSERT INTO Familia VALUES
+  (1, 'Electrodomésticos', 1,  'Muebles importados del Polo norte'),
+  (2, 'Ropa', 1, 'Ropa con hilos de oro'),
+  (3, 'Juguetes', 1, 'Juguetes de madera'),
+  (4, 'Muebles', 1, 'Muebles de madera'),
+  (5, 'Cocina', 1, 'Utensilios de cocina'),
+  (6, 'Hogar', 1, 'Utensilios de hogar'),
+  (7, 'Jardín', 1, 'Utensilios de jardín'),
+  (8, 'Deportes', 1, 'Utensilios de deporte'),
+  (9, 'Tecnología', 1, 'Utensilios de tecnología'),
+  (10, 'Mascotas', 1, 'Utensilios de mascotas'),
+  (11, 'Bebés', 1, 'Utensilios de bebés'),
+  (12, 'Libros', 1, 'Libros de todo tipo'),
+  (13, 'Música', 1, 'Música de todo tipo'),
+  (14, 'Películas', 1, 'Películas de todo tipo'),
+  (15, 'Videojuegos', 1, 'Videojuegos de todo tipo'),
+  (16, 'Herramientas', 1, 'Herramientas de todo tipo'),
+  (17, 'Belleza', 1, 'Productos de belleza'),
+  (18, 'Salud', 1, 'Productos de salud'),
+  (19, 'Automóviles', 1, 'Productos de automóviles'),
+  (20, 'Motos', 1, 'Productos de motos'),
+  (21, 'Bicicletas', 1, 'Productos de bicicletas'),
+  (22, 'Muebles de oficina', 1, 'Productos de muebles de oficina'),
+  (23, 'Muebles de cocina', 1, 'Productos de muebles de cocina')

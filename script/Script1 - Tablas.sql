@@ -321,7 +321,7 @@ CREATE TABLE Familia(
 	codigoFamilia int PRIMARY KEY,
 	nombreFamilia VARCHAR(30),
 	estado VARCHAR(30),
-	descripcion VARCHAR(30)
+	descripcion VARCHAR(255)
 );
 
 -- Creacion de la tabla ProductoCotizacion
