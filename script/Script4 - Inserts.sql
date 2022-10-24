@@ -1,6 +1,7 @@
 USE CRM
 GO
 
+-- eliminacion de los datos de la tabla
 
 DELETE FROM Direccion
 DELETE FROM Actividad
@@ -17,6 +18,7 @@ DELETE FROM Cotizacion
 DELETE FROM CotizacionActividad
 DELETE FROM CotizacionTarea
 DELETE FROM CuentaCliente
+DELETE FROM Usuario
 DELETE FROM Departamento
 DELETE FROM Distrito
 DELETE FROM Ejecucion
@@ -42,9 +44,11 @@ DELETE FROM Tarea
 DELETE FROM TipoCaso
 DELETE FROM TipoContacto
 DELETE FROM TipoPrivilegio
-DELETE FROM Usuario
 DELETE FROM UsuarioRoles
 DELETE FROM Zona
+DELETE FROM EstadoTarea
+
+-- insertar datos en la tabla
 
 --departamentos
 INSERT INTO dbo.Departamento (id, nombre) VALUES
@@ -1134,6 +1138,7 @@ BEGIN
   SET @i = @i + 1;
 END;
 
+-- Insercciones de datos en la tabla de Competidor
 
 INSERT INTO Competidor VALUES
   ('IBM'),
@@ -1152,6 +1157,7 @@ INSERT INTO Competidor VALUES
   ('Lenovo'),
   ('LG');
 
+-- Insercciones de datos en la tabla de Estado
 INSERT INTO Estado VALUES
   (1, 'Estado1'),
   (2, 'Estado2'),
@@ -1159,6 +1165,7 @@ INSERT INTO Estado VALUES
   (4, 'Estado4'),
   (5, 'Estado5');
 
+-- Insercciones de datos en la tabla de Estapa
 INSERT INTO Etapa VALUES
   ('etapa1'),
   ('etapa2'),
@@ -1166,6 +1173,7 @@ INSERT INTO Etapa VALUES
   ('etapa4'),
   ('etapa5');
 
+-- Insercciones de datos en la tabla de EstadoCaso
 INSERT INTO EstadoCaso VALUES
   (1, '1EstadoCaso'),
   (2, '2EstadoCaso'),
@@ -1173,7 +1181,7 @@ INSERT INTO EstadoCaso VALUES
   (4, '4EstadoCaso'),
   (5, '5EstadoCaso'); 
 
-
+-- Insercciones de datos en la tabla de Moneda
 
 INSERT INTO Moneda VALUES
   (1, 'Dolar'),
@@ -1188,117 +1196,107 @@ INSERT INTO Motivo VALUES
   (4, 'El cliente no respondió.'),
   (5, 'El cliente no se presentó.');
 
+-- Insercciones de datos en la tabla de Origen
+INSERT INTO origen VALUES (1, 'Origen 1'),
+  (2, 'Origen 2'),
+  (3, 'Origen 3'),
+  (4, 'Origen 4'),
+  (5, 'Origen 5'),
+  (6, 'Origen 6'),
+  (7, 'Origen 7'),
+  (8, 'Origen 8'),
+  (9, 'Origen 9'),
+  (10, 'Origen 10'),
+  (11, 'Origen 11'),
+  (12, 'Origen 12'),
+  (13, 'Origen 13'),
+  (14, 'Origen 14'),
+  (15, 'Origen 15');
 
-/*
-####################################################
-############# PROBAR INSERCIONES 🔽 ###############
-####################################################
-*/
-
-INSERT INTO origen (id, nombre) VALUES (1, 'Origen 1'),
-(2, 'Origen 2'),
-(3, 'Origen 3'),
-(4, 'Origen 4'),
-(5, 'Origen 5'),
-(6, 'Origen 6'),
-(7, 'Origen 7'),
-(8, 'Origen 8'),
-(9, 'Origen 9'),
-(10, 'Origen 10'),
-(11, 'Origen 11'),
-(12, 'Origen 12'),
-(13, 'Origen 13'),
-(14, 'Origen 14'),
-(15, 'Origen 15');
-
-
-INSERT INTO prioridad (id, nombre) VALUES (1, 'Urgente'),
+-- Insercciones de datos en la tabla de Prioridad
+INSERT INTO prioridad VALUES (1, 'Urgente'),
 (2, 'Alta'),
 (3, 'Media'),
 (4, 'Baja'),
 (5, 'Muy Baja');
 
+-- Insercciones de datos en la tabla de Probabilidad
+INSERT INTO probabilidad VALUES
+  (23), (45), (67), (89), (100), (1), (2), (3), (4), (5), (6), (7),
+  (8), (9), (10);
 
-INSERT INTO probabilidad (id, porcentaje) VALUES (1, 23),
-(2, 45),
-(3, 67),
-(4, 89),
-(5, 100),
-(6, 1),
-(7, 2),
-(8, 3),
-(9, 4),
-(10, 5),
-(11, 6),
-(12, 7),
-(13, 8),
-(14, 9),
-(15, 10);
+-- Insercciones de datos en la tabla de Rol
+INSERT INTO rol VALUES
+  (1, 'Administrador'),
+  (2, 'Usuario'),
+  (3, 'Invitado'),
+  (4, 'Administrador'),
+  (5, 'Usuario'),
+  (6, 'Invitado'),
+  (7, 'Administrador'),
+  (8, 'Usuario'),
+  (9, 'Invitado'),
+  (10, 'Administrador'),
+  (11, 'Usuario'),
+  (12, 'Invitado'),
+  (13, 'Administrador'),
+  (14, 'Usuario'),
+  (15, 'Invitado');
 
-INSERT INTO Provincia (id, nombre) VALUES
-(1, 'San José'),
-(2, 'Alajuela'),
-(3, 'Cartago'),
-(4, 'Heredia'),
-(5, 'Guanacaste'),
-(6, 'Puntarenas'),
-(7, 'Limón');
-
-INSERT INTO rol (id, privilegios, tipo) VALUES (1, 1, 'Administrador'),
-(2, 2, 'Usuario'),
-(3, 3, 'Invitado'),
-(4, 1, 'Administrador'),
-(5, 2, 'Usuario'),
-(6, 3, 'Invitado'),
-(7, 1, 'Administrador'),
-(8, 2, 'Usuario'),
-(9, 3, 'Invitado'),
-(10, 1, 'Administrador'),
-(11, 2, 'Usuario'),
-(12, 3, 'Invitado'),
-(13, 1, 'Administrador'),
-(14, 2, 'Usuario'),
-(15, 3, 'Invitado');
-
+-- Insercciones de datos en la tabla de Sector
 INSERT INTO sector (id, nombre) VALUES 
-  (1, 'San José'),
-  (2, 'Alajuela'),
-  (3, 'Cartago'),
-  (4, 'Heredia'),
-  (5, 'Guanacaste'),
-  (6, 'Puntarenas'),
-  (7, 'Limón');
+  (1, 'Sector 1'),
+  (2, 'Sector 2'),
+  (3, 'Sector 3'),
+  (4, 'Sector 4'),
+  (5, 'Sector 5'),
+  (6, 'Sector 6'),
+  (7, 'Sector 7'),
+  (8, 'Sector 8'),
+  (9, 'Sector 9'),
+  (10, 'Sector 10');
 
+-- Insercciones de datos en la tabla de EstadoTarea
+INSERT INTO EstadoTarea VALUES
+  (1, 'Sin iniciar'),
+  (2, 'En proceso'),
+  (3, 'Finalizada'),
+  (4, 'Cancelada');
 
-INSERT INTO tarea (id, fecha_finalizacion, fecha_creacion, estado, descripcion) VALUES (1, '2019-01-01', '2019-01-01', 'Finalizada', 'Comprar Productos'),
-(2, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender'),
-(3, '2019-01-01', '2019-01-01', 'inconcluso', 'Comprar Productos'),
-(4, '2019-01-01', '2019-01-01', 'En proceso', 'Vender'),
-(5, '2019-01-01', '2019-01-01', 'Sin iniciar', 'Comprar Productos'),
-(6, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender'),
-(7, '2019-01-01', '2019-01-01', 'inconcluso', 'Comprar Productos'),
-(8, '2019-01-01', '2019-01-01', 'En proceso', 'Vender'),
-(9, '2019-01-01', '2019-01-01', 'Sin iniciar', 'Comprar Productos'),
-(10, '2019-01-01', '2019-01-01', 'Finalizada', 'Vender');
+-- Insercciones de datos en la tabla de Tarea
+INSERT INTO tarea (id, fecha_finalizacion, fecha_creacion, estado, descripcion) VALUES
+	(1, '2019-01-01', '2019-01-01', 3, 'Comprar Productos'),
+	(2, '2019-01-01', '2019-01-01', 4, 'Vender'),
+	(3, '2019-01-01', '2019-01-01', 3, 'Comprar Productos'),
+	(4, '2019-01-01', '2019-01-01', 2, 'Vender'),
+	(5, '2019-01-01', '2019-01-01', 1, 'Comprar Productos'),
+	(6, '2019-01-01', '2019-01-01', 3, 'Vender'),
+	(7, '2019-01-01', '2019-01-01', 4, 'Comprar Productos'),
+	(8, '2019-01-01', '2019-01-01', 2, 'Vender'),
+	(9, '2019-01-01', '2019-01-01', 1, 'Comprar Productos'),
+	(10, '2019-01-01', '2019-01-01', 3, 'Vender');
 
+-- Insercciones de datos en la tabla de TipoCaso
 INSERT INTO tipocaso (id, tipo) VALUES (1, 'Tipo 1'),
 (2, 'Tipo 2'),
 (3, 'Tipo 3'),
 (4, 'Tipo 4'),
 (5, 'Tipo 5');
 
+-- Insercciones de datos en la tabla de TipoContacto
 INSERT INTO tipocontacto (id, tipo) VALUES (1, 'Vendedor'),
 (2, 'Cliente'),
 (3, 'Proveedor'),
 (4, 'Otro');
 
+-- Insercciones de datos en la tabla de TipoPrivilegio
 INSERT INTO tipoprivilegio (id, tipo) VALUES (1, 'Administrador'),
 (2, 'Usuario'),
 (3, 'Invitado'),
 (4, 'Otro');
 
-DECLARE @i INT, @nombre VARCHAR(50), @apellido1 VARCHAR(50), @apellido2 VARCHAR(50), @clave VARCHAR(50), @cedula VARCHAR(50),
-@randomNombre INT, @randomApellido1 INT, @randomApellido2 INT, @randomCedula INT, @randomClave INT, @randomDepartamento INT
+-- Insercciones de datos en la tabla de Usuario
+DECLARE @clave INT, @randomCedula INT, @randomClave INT, @randomDepartamento INT
 SET @i = 1
 WHILE @i <= 20
 BEGIN
@@ -1319,6 +1317,7 @@ BEGIN
     SET @i = @i + 1
 END
 
+-- Insercciones de datos en la tabla de Zona
 INSERT INTO Zona (id, nombre) VALUES
 (1, 'Central'),
 (2, 'Chorotega'),
@@ -1335,5 +1334,3 @@ INSERT INTO Zona (id, nombre) VALUES
 (13, 'Zona Oeste'),
 (14, 'Zona Central'),
 (15, 'Zona Insular');
-
-

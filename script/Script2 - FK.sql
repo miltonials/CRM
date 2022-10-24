@@ -3,7 +3,8 @@ GO
 
 USE CRM
 GO
-
+-- Aqui inicia la 
+-- Eliminacion de los foreign keys
 ALTER TABLE UsuarioRoles DROP CONSTRAINT IF EXISTS fk_UsuarioRoles_Rol
 ALTER TABLE UsuarioRoles DROP CONSTRAINT IF EXISTS fk_UsuarioRoles_Usuario
 ALTER TABLE Cliente DROP CONSTRAINT IF EXISTS fk_Cliente_Contacto
@@ -32,10 +33,8 @@ ALTER TABLE EjecucionActividad DROP CONSTRAINT IF EXISTS fk_EjecucionActividad_A
 ALTER TABLE CasosActividad DROP CONSTRAINT IF EXISTS fk_CasosActividad_Caso
 ALTER TABLE casosActividad DROP CONSTRAINT IF EXISTS fk_casosActividad_Actividad
 
--- nuevos eliminación Andy 
 ALTER TABLE PrivilegiosXRol DROP CONSTRAINT IF EXISTS fk_PrivilegiosXRol_Rol
 ALTER TABLE privilegiosXrol DROP CONSTRAINT IF EXISTS fk_privilegiosXrol_TipoPrivilegio
-ALTER TABLE Rol DROP CONSTRAINT IF EXISTS fk_Rol_PrivilegiosXRol
 ALTER TABLE CuentaCliente DROP CONSTRAINT IF EXISTS fk_CuentaCliente_Cliente
 ALTER TABLE CuentaCliente DROP CONSTRAINT IF EXISTS fk_CuentaCliente_Moneda
 ALTER TABLE CuentaCliente DROP CONSTRAINT IF EXISTS fk_CuentaCliente_Zona
@@ -50,7 +49,6 @@ ALTER TABLE Direccion DROP CONSTRAINT IF EXISTS fk_Direccion_Provincia
 ALTER TABLE Direccion DROP CONSTRAINT IF EXISTS fk_Direccion_Canton
 ALTER TABLE Direccion DROP CONSTRAINT IF EXISTS fk_Direccion_Distrito
 
--- Eliminación NUEVOS Milton
 ALTER TABLE Usuario DROP CONSTRAINT IF EXISTS fk_Usuario_Departamento
 ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Direccion
 ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Origen
@@ -66,13 +64,13 @@ ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Asesor
 ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Probabilidad
 ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Motivo
 ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_Competidor
+ALTER TABLE Tarea DROP CONSTRAINT IF EXISTS fk_Tarea_EstadoTarea
+ALTER TABLE Contacto DROP CONSTRAINT IF EXISTS fk_Contacto_Cliente
 
 
 
 
-
---select * from Cliente
-
+-- Aqui se crea los foreign keys de las tablas
 
 ALTER TABLE UsuarioRoles ADD CONSTRAINT fk_UsuarioRoles_Rol FOREIGN KEY (id_rol) REFERENCES Rol (id)
 	ON DELETE NO ACTION;
@@ -127,7 +125,6 @@ ALTER TABLE CasosActividad ADD CONSTRAINT fk_CasosActividad_Caso FOREIGN KEY (id
 ALTER TABLE casosActividad ADD CONSTRAINT fk_casosActividad_Actividad FOREIGN KEY (id_actividad) REFERENCES Actividad (id)
 	ON DELETE NO ACTION;
 
---NUEVOS MILTON
 ALTER TABLE Usuario ADD CONSTRAINT fk_Usuario_Departamento FOREIGN KEY (id_departamento) REFERENCES Departamento (id)
   ON DELETE NO ACTION;
 ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Direccion FOREIGN KEY (id_direccion) REFERENCES Direccion (id)
@@ -160,8 +157,6 @@ ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_Competidor FOREIGN KEY (id_c
 ON DELETE NO ACTION;
 
 
---NUEVOS ANDY
-
 ALTER TABLE PrivilegiosXRol ADD CONSTRAINT fk_PrivilegiosXRol_Rol FOREIGN KEY (id_rol) REFERENCES Rol (id)
   ON DELETE NO ACTION;
 ALTER TABLE privilegiosXrol ADD CONSTRAINT fk_privilegiosXrol_TipoPrivilegio FOREIGN KEY (id_privilegio) REFERENCES TipoPrivilegio (id)
@@ -191,4 +186,6 @@ ALTER TABLE Direccion ADD CONSTRAINT fk_Direccion_Provincia FOREIGN KEY (id_prov
 ALTER TABLE Direccion ADD CONSTRAINT fk_Direccion_Canton FOREIGN KEY (id_canton) REFERENCES Canton (id)
   ON DELETE NO ACTION;
 ALTER TABLE Direccion ADD CONSTRAINT fk_Direccion_Distrito FOREIGN KEY (id_distrito) REFERENCES Distrito (id)
+  ON DELETE NO ACTION;
+ALTER TABLE Tarea ADD CONSTRAINT fk_Tarea_EstadoTarea FOREIGN KEY (estado) REFERENCES EstadoTarea (id)
   ON DELETE NO ACTION;

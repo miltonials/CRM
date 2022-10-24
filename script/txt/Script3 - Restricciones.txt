@@ -4,4 +4,4 @@ GO
 ALTER TABLE Rol DROP CONSTRAINT IF EXISTS chk_tipo_rol
 
 ALTER TABLE Rol ADD CONSTRAINT chk_tipo_rol
-CHECK (tipo = 'Edici�n' OR tipo = 'Visualizaci�n' OR tipo = 'Reporter�a')
+CHECK (tipo = 'Edición' OR tipo = 'Visualización' OR tipo = 'Reportería')
