@@ -203,18 +203,18 @@ CREATE TABLE Prioridad(
 
 -- Creacion de la tabla Caso
 CREATE TABLE Caso(
-	id INT,
-	proyectoAsociado INT,
-	propietarioCaso VARCHAR(30),
-	asunto VARCHAR(30),
-	nombreCuenta VARCHAR(30),
-	nombreContacto VARCHAR(30),
-	descripcion VARCHAR(30),
-	id_direccion INT,
-	id_origen VARCHAR(30),
-	id_estado VARCHAR(30),
-	id_tipo VARCHAR(30),
-  id_prioridad VARCHAR(30),
+	id INT NOT NULL,
+	proyectoAsociado INT NOT NULL,
+	propietarioCaso VARCHAR(30) NOT NULL,
+	asunto VARCHAR(255) NOT NULL,
+	nombreCuenta VARCHAR(30) NOT NULL,
+	nombreContacto VARCHAR(30) NOT NULL,
+	descripcion VARCHAR(255) NOT NULL,
+	id_direccion INT NOT NULL,
+	id_origen VARCHAR(30) NOT NULL,
+	id_estado VARCHAR(30) NOT NULL,
+	id_tipo VARCHAR(30) NOT NULL,
+  id_prioridad VARCHAR(30) NOT NULL,
 	PRIMARY KEY (id)
 );
 

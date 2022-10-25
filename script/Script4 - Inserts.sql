@@ -2,8 +2,13 @@
 GO
 
 -- eliminacion de los datos de la tabla
+DELETE FROM CasosActividad
+DELETE FROM CasosTarea
+DELETE FROM ContactoTarea
+DELETE FROM ContactoActividad
 DELETE FROM EjecucionTarea
 DELETE FROM EjecucionActividad
+DELETE FROM Caso
 DELETE FROM Ejecucion
 DELETE FROM ProductoCotizacion
 DELETE FROM Cotizacion
@@ -11,14 +16,9 @@ DELETE FROM Contacto
 DELETE FROM Direccion
 DELETE FROM Actividad
 DELETE FROM Canton
-DELETE FROM Caso
-DELETE FROM CasosActividad
-DELETE FROM CasosTarea
 DELETE FROM CuentaCliente
 DELETE FROM Cliente
 DELETE FROM Competidor
-DELETE FROM ContactoActividad
-DELETE FROM ContactoTarea
 DELETE FROM CotizacionActividad
 DELETE FROM CotizacionTarea
 DELETE FROM UsuarioRoles
@@ -1465,7 +1465,7 @@ DECLARE @cliente VARCHAR(9), @usuario VARCHAR(9), @TipoContacto INT,
 		--@nombre VARCHAR, 
 
 --DECLARE @i INT
-SET @i = 10
+SET @i = 35
 SET @motivo = 'Provedor de productos'
 SET @descripcion = 'Se le provee productos a la empresa'
 WHILE @i > 0
@@ -1609,4 +1609,130 @@ WHILE @i > 0
       (@ejecucion, @actividad)
     END
     SET @i = @i - 1
+  END
+
+
+/*INSERTS DEPENDIENTES MILTON*/
+DECLARE @contacto INT
+SET @i = 4
+WHILE @i > 0
+  BEGIN
+    SET @contacto = (SELECT TOP(1) id FROM Contacto ORDER BY NEWID())
+    SET @actividad = (SELECT TOP(1) id FROM Actividad ORDER BY NEWID())
+
+    INSERT INTO ContactoActividad VALUES
+    (@contacto, @actividad)
+   
+    SET @i = @i - 1
+  END
+
+
+
+-- Inserción de nueva tarea de contacto
+SET @i = 10
+WHILE @i > 0
+  BEGIN
+    SET @contacto = (SELECT TOP(1) id FROM Contacto ORDER BY NEWID())
+    SET @tarea = (SELECT TOP(1) id FROM Tarea ORDER BY NEWID())
+
+	begin try
+      begin
+		INSERT INTO ContactoTarea VALUES (@contacto, @tarea)
+		  SET @i = @i - 1
+      end
+    end try
+    begin catch
+      begin
+        PRINT 'Registro ya existe'
+		SET @i = @i - 1
+      end
+    end catch
+  END
+
+
+
+
+  -- insercion de 10 nuevas cotizaciones
+DECLARE @proyecto INT, @propietarioCaso INT, @asunto VARCHAR(255), @nombreCuenta VARCHAR(255), @descripcion VARCHAR(255),
+        @direccion INT, @estado INT, @tipo INT, @prioridad INT, @nombreContacto VARCHAR (255), @origen INT;
+
+SET @i = 5
+
+
+WHILE @i > 0
+  BEGIN
+    SET @proyecto = (SELECT TOP(1) id FROM Ejecucion ORDER BY NEWID())
+    SET @propietarioCaso = (SELECT TOP(1) cedula FROM Usuario ORDER BY NEWID())
+    SET @asunto = 'Garantías de productos'
+    SET @nombreCuenta = (SELECT TOP (1) nombreCuenta FROM Ejecucion ORDER BY NEWID())
+	SET @nombreContacto = (SELECT TOP(1) nombre FROM Contacto ORDER BY NEWID())
+    SET @descripcion = 'El cliente solicitó una consulta sobre los términos y condiciones de una garantía'
+    SET @direccion = (SELECT TOP(1) id FROM Direccion ORDER BY NEWID())
+    SET @estado = (SELECT TOP(1) id FROM Estado ORDER BY NEWID())
+    SET @tipo = (SELECT TOP(1) id FROM TipoCaso ORDER BY NEWID())
+    SET @prioridad = (SELECT TOP(1) id FROM Prioridad ORDER BY NEWID())
+	SET @origen	 = (SELECT TOP(1) id FROM Origen ORDER BY NEWID())
+    INSERT INTO Caso (id, proyectoAsociado, propietarioCaso, asunto, nombreCuenta, nombreContacto, descripcion, id_direccion, id_origen, id_estado, id_tipo, id_prioridad) VALUES
+    (@i, @proyecto, @propietarioCaso, @asunto, @nombreCuenta, @nombreContacto,@descripcion, @direccion, @origen ,@estado, @tipo, @prioridad)
+
+    SET @i = @i - 1
+  END
+
+
+DECLARE @caso INT
+
+SET @i = 20
+WHILE @i > 0
+  BEGIN
+    SET @caso = (SELECT TOP(1) id FROM Caso ORDER BY NEWID())
+    SET @tarea = (SELECT TOP(1) id FROM Tarea ORDER BY NEWID())
+    SET @actividad = (SELECT TOP(1) id FROM Actividad ORDER BY NEWID())
+
+
+	begin try
+      begin
+
+		INSERT INTO CasosTarea VALUES
+		(@caso, @tarea)
+
+		INSERT INTO CasosActividad VALUES
+		(@caso, @actividad)
+
+		  SET @i = @i - 1
+      end
+    end try
+    begin catch
+      begin
+        PRINT 'Registro ya existe'
+		SET @i = @i - 1
+      end
+    end catch
+  END
+
+
+SET @i = 20
+WHILE @i > 0
+  BEGIN
+    SET @cotizacion = (SELECT TOP(1) id FROM Caso ORDER BY NEWID())
+    SET @tarea = (SELECT TOP(1) id FROM Tarea ORDER BY NEWID())
+    SET @actividad = (SELECT TOP(1) id FROM Actividad ORDER BY NEWID())
+
+
+	begin try
+      begin
+			INSERT INTO CasosTarea VALUES
+			(@caso, @tarea)
+
+			INSERT INTO CasosActividad VALUES
+			(@caso, @actividad)
+
+		  SET @i = @i - 1
+      end
+    end try
+    begin catch
+      begin
+        PRINT 'Registro ya existe'
+		SET @i = @i - 1
+      end
+    end catch
   END
