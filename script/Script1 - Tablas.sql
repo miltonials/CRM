@@ -91,7 +91,7 @@ CREATE TABLE Cliente(
 CREATE TABLE CuentaCliente(
   id INT,
   cedula_cliente VARCHAR(30) UNIQUE not null,
-  nombre_cuenta varchar(30) not null,
+  nombre_cuenta varchar(30) UNIQUE NOT NULL,
   moneda INT NOT NULL,
   contacto_principal VARCHAR(30) NOT NULL,
   sitio_web VARCHAR (50) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE CuentaCliente(
   correo_electronuco varchar (50) NOT NULL,
   id_zona INT,
   id_sector INT,
-  PRIMARY KEY(id,cedula_cliente, moneda) 
+  PRIMARY KEY(id,cedula_cliente, moneda, nombre_cuenta) 
 );
 
 -- Creacion de la tabla Moneda
@@ -220,17 +220,18 @@ CREATE TABLE Caso(
 
 -- Creacion de la tabla Ejecucion
 CREATE TABLE Ejecucion(
-	id int PRIMARY KEY,
-	numeroCotizacion smallint,
+	id int UNIQUE,
+	numeroCotizacion smallint UNIQUE,
 	asesor VARCHAR(30),
 	fechaEjecucion DATE,
-	nombreCuenta VARCHAR(30),
+	nombreCuenta VARCHAR(30) UNIQUE,
 	nombreEjecucion VARCHAR(30),
 	propietarioEjecucion VARCHAR(30),
 	añoProyectadoCierre int,
 	mesProyectadoCierre int,
 	fechaCierre DATE,
-	id_departamento VARCHAR(30)
+	id_departamento VARCHAR(30),
+	PRIMARY KEY(id, nombreCuenta)
 );
 
 -- Creacion de la tabla EstadoTarea
@@ -347,26 +348,26 @@ CREATE TABLE ProductoCotizacion(
 -- Creacion de la tabla Cotizacion
 CREATE TABLE Cotizacion(
 	numero_cotizacion int unique,
-  id_factura INT, 
+	id_factura INT, 
 	id_contacto INT,
 	tipo VARCHAR(30), 
 	nombre_oportunidad VARCHAR(30),
 	fecha_cotizacion VARCHAR(30),
-	nombre_cuenta VARCHAR(30),
+	nombre_cuenta VARCHAR(30) NOT NULL UNIQUE,
 	fecha_proyeccion_cierre DATE,
 	fecha_cierre DATE,
 	orden_compra VARCHAR(30),
 	descripcion VARCHAR(30),
-  precio_negociado FLOAT,
+	precio_negociado FLOAT,
 	id_zona INT,
-  id_sector INT,
-  id_moneda INT,
-  id_etapa VARCHAR(30),
-  id_asesor VARCHAR(30),
+	id_sector INT,
+	id_moneda INT,
+	id_etapa VARCHAR(30),
+	id_asesor VARCHAR(30),
 	probabilidad smallint,
 	motivo_denegacion VARCHAR(10),
-  id_competidor Varchar(30),
-	PRIMARY KEY(numero_cotizacion, id_factura)
+	id_competidor Varchar(30),
+	PRIMARY KEY(numero_cotizacion, id_factura, nombre_cuenta)
 );
 
 -- Creacion de la tabla Actividad

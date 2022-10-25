@@ -1,4 +1,4 @@
-USE CRM
+   USE CRM
 GO
 
 -- eliminacion de los datos de la tabla
@@ -47,6 +47,9 @@ DELETE FROM TipoPrivilegio
 DELETE FROM UsuarioRoles
 DELETE FROM Zona
 DELETE FROM EstadoTarea
+DELETE FROM EstadoProducto
+DELETE FROM EstadoFamilia
+
 
 -- insertar datos en la tabla
 

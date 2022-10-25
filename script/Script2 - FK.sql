@@ -69,6 +69,11 @@ ALTER TABLE Contacto DROP CONSTRAINT IF EXISTS fk_Contacto_Cliente
 ALTER TABLE Producto DROP CONSTRAINT IF EXISTS fk_Producto_EstadoProducto
 ALTER TABLE Familia DROP CONSTRAINT IF EXISTS fk_Familia_EstadoFamilia
 
+ALTER TABLE Ejecucion DROP CONSTRAINT IF EXISTS fk_Ejecucion_Cotizacion
+ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Ejecucion_nombreCuenta
+ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Cotizacion_asesor
+--ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_CuentaCliente
+
 
 
 -- Aqui se crea los foreign keys de las tablas
@@ -194,3 +199,16 @@ ALTER TABLE Producto ADD CONSTRAINT fk_Producto_EstadoProducto FOREIGN KEY (esta
 	ON DELETE NO ACTION;
 ALTER TABLE Familia ADD CONSTRAINT fk_Familia_EstadoFamilia FOREIGN KEY (estado) REFERENCES EstadoFamilia (id)
 	ON DELETE NO ACTION;
+
+ALTER TABLE Ejecucion ADD CONSTRAINT fk_Ejecucion_Cotizacion FOREIGN KEY (nombreCuenta) REFERENCES Cotizacion (nombre_cuenta)
+  ON DELETE NO ACTION;
+ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Ejecucion_nombreCuenta FOREIGN KEY (nombreCuenta) REFERENCES Ejecucion (nombreCuenta)
+  ON DELETE NO ACTION;
+/*
+ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Cotizacion_asesor FOREIGN KEY (asesor) REFERENCES Cotizacion (id_asesor)
+  ON DELETE NO ACTION;
+*/
+ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_CuentaCliente FOREIGN KEY (nombre_cuenta) REFERENCES CuentaCliente (nombre_cuenta)
+  ON DELETE NO ACTION;
+
+
