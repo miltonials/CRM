@@ -72,7 +72,7 @@ ALTER TABLE Familia DROP CONSTRAINT IF EXISTS fk_Familia_EstadoFamilia
 ALTER TABLE Ejecucion DROP CONSTRAINT IF EXISTS fk_Ejecucion_Cotizacion
 ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Ejecucion_nombreCuenta
 ALTER TABLE Caso DROP CONSTRAINT IF EXISTS fk_Caso_Cotizacion_asesor
---ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_CuentaCliente
+ALTER TABLE Cotizacion DROP CONSTRAINT IF EXISTS fk_Cotizacion_CuentaCliente
 
 
 
@@ -210,5 +210,3 @@ ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Cotizacion_asesor FOREIGN KEY (asesor) R
 */
 ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_CuentaCliente FOREIGN KEY (nombre_cuenta) REFERENCES CuentaCliente (nombre_cuenta)
   ON DELETE NO ACTION;
-
-
