@@ -2,32 +2,36 @@
 GO
 
 -- eliminacion de los datos de la tabla
-
+DELETE FROM EjecucionTarea
+DELETE FROM EjecucionActividad
+DELETE FROM Ejecucion
+DELETE FROM ProductoCotizacion
+DELETE FROM Cotizacion
+DELETE FROM Contacto
 DELETE FROM Direccion
 DELETE FROM Actividad
 DELETE FROM Canton
 DELETE FROM Caso
 DELETE FROM CasosActividad
 DELETE FROM CasosTarea
+DELETE FROM CuentaCliente
 DELETE FROM Cliente
 DELETE FROM Competidor
-DELETE FROM Contacto
 DELETE FROM ContactoActividad
 DELETE FROM ContactoTarea
-DELETE FROM Cotizacion
 DELETE FROM CotizacionActividad
 DELETE FROM CotizacionTarea
-DELETE FROM CuentaCliente
+DELETE FROM UsuarioRoles
 DELETE FROM Usuario
 DELETE FROM Departamento
 DELETE FROM Distrito
-DELETE FROM Ejecucion
-DELETE FROM EjecucionActividad
-DELETE FROM EjecucionTarea
 DELETE FROM Estado
 DELETE FROM EstadoCaso
 DELETE FROM Etapa
+DELETE FROM Producto
+DELETE FROM EstadoProducto
 DELETE FROM Familia
+DELETE FROM EstadoFamilia
 DELETE FROM Inflacion
 DELETE FROM Moneda
 DELETE FROM Motivo
@@ -35,8 +39,6 @@ DELETE FROM Origen
 DELETE FROM Prioridad
 DELETE FROM PrivilegiosXrol
 DELETE FROM Probabilidad
-DELETE FROM Producto
-DELETE FROM ProductoCotizacion
 DELETE FROM Provincia
 DELETE FROM Rol
 DELETE FROM Sector
@@ -44,12 +46,8 @@ DELETE FROM Tarea
 DELETE FROM TipoCaso
 DELETE FROM TipoContacto
 DELETE FROM TipoPrivilegio
-DELETE FROM UsuarioRoles
 DELETE FROM Zona
 DELETE FROM EstadoTarea
-DELETE FROM EstadoProducto
-DELETE FROM EstadoFamilia
-
 
 -- insertar datos en la tabla
 
@@ -1126,7 +1124,7 @@ insert into inflacion values
 DECLARE @i INT, @cedula INT, @telefono INT, @celular INT, @nombre VARCHAR(30), @apellido1 VARCHAR(30), @apellido2 VARCHAR(30), @randomNombre INT, @randomApellido1 INT, @randomApellido2 INT
 
 SET @i = 1;
-WHILE @i <= 100
+WHILE @i <= 1000
 BEGIN
   SET @cedula = 111111111 + RAND() * 999999999;
   SET @telefono = 66666666 + RAND() * 89999999;
@@ -1314,7 +1312,7 @@ INSERT INTO tipoprivilegio (id, tipo) VALUES (1, 'Administrador'),
 -- Insercciones de datos en la tabla de Usuario
 DECLARE @clave INT, @randomCedula INT, @randomClave INT, @randomDepartamento INT
 SET @i = 1
-WHILE @i <= 20
+WHILE @i <= 1000
 BEGIN
   SET @cedula = 111111111 + RAND() * 999999999;
     SET @clave = 11111111 + RAND() * 99999999;
@@ -1376,3 +1374,239 @@ INSERT INTO Familia VALUES
   (21, 'Bicicletas', 1, 'Productos de bicicletas'),
   (22, 'Muebles de oficina', 1, 'Productos de muebles de oficina'),
   (23, 'Muebles de cocina', 1, 'Productos de muebles de cocina')
+
+
+  /* Insecciones de PrivilegiosXRol con idRol de un rol existente y 
+idPrivilegio de un privilegio existente */
+DECLARE @maxElement int, @random1 int, @randomRol int, @privilegio int
+
+SET @maxElement = 1;
+WHILE @maxElement <= 20
+BEGIN
+  SELECT TOP 1 @randomRol = id FROM rol ORDER BY NEWID()
+  select TOP 1 @privilegio = id FROM TipoPrivilegio ORDER BY NEWID()
+  IF NOT (SELECT COUNT(*) From PrivilegiosXrol where  id_rol = @randomRol and id_privilegio = @privilegio) > 0
+  BEGIN
+    INSERT INTO PrivilegiosXrol (id_rol, id_privilegio) VALUES (@randomRol, @privilegio)
+  END
+  SET @maxElement = @maxElement + 1
+END
+ 
+
+/* Insecciones de productos con codigo, codigoFamilia, nombre, precioEstandar,
+estado, descripcion */
+INSERT INTO Producto VALUES
+  (1, 1, 'Refrigerador', 1000, 1, 'Refrigerador de 2 puertas'),
+  (2, 1, 'Lavadora', 1000, 1, 'Lavadora de 2 puertas'),
+  (3, 1, 'Secadora', 1000, 1, 'Secadora de 2 puertas'),
+  (4, 1, 'Estufa', 1000, 1, 'Estufa de 2 puertas'),
+  (5, 1, 'Microondas', 1000, 1, 'Microondas de 2 puertas'),
+  (6, 1, 'Licuadora', 1000, 1, 'Licuadora de 2 puertas'),
+  (7, 1, 'Batidora', 1000, 1, 'Batidora de 2 puertas'),
+  (8, 1, 'Aspiradora', 1000, 1, 'Aspiradora de 2 puertas'),
+  (9, 1, 'Cafetera', 1000, 1, 'Cafetera de 2 puertas'),
+  (10, 1, 'Horno', 1000, 1, 'Horno de 2 puertas'),
+  (11, 1, 'Televisor', 1000, 1, 'Televisor de 2 puertas'),
+  (12, 1, 'Radio', 1000, 1, 'Radio de 2 puertas'),
+  (13, 1, 'DVD', 1000, 1, 'DVD de 2 puertas'),
+  (14, 1, 'Videocasetera', 1000, 1, 'Videocasetera de 2 puertas'),
+  (15, 1, 'Videojuego', 1000, 1, 'Videojuego de 2 puertas'),
+  (16, 1, 'Computadora', 1000, 1, 'Computadora de 2 puertas'),
+  (17, 1, 'Impresora', 1000, 1, 'Impresora de 2 puertas');
+
+  
+
+/* Insercciones de 10 UsuarioRoles con id rol de 1 a 15 y cedula usuario de usuarios existentes */
+--DECLARE @maxElement int, @random1 int, @randomRol int
+
+SET @maxElement = 10;
+WHILE @maxElement > 0
+BEGIN
+  SELECT top 1 @cedula = cedula FROM Usuario ORDER BY NEWID();
+  -- Random de 1 a 4
+  SET @random1 = ROUND(RAND()*3,0)+1
+  WHILE @random1 > 0
+  BEGIN
+    SELECT TOP 1 @randomRol = id FROM Rol ORDER BY NEWID();
+    IF NOT (SELECT COUNT(*) FROM UsuarioRoles WHERE cedula_usuario = @cedula AND id_rol = @randomRol) > 0
+    BEGIN
+      INSERT INTO UsuarioRoles (id_rol, cedula_usuario) VALUES (@randomRol, @cedula);
+      SET @random1 = @random1 - 1;
+    END
+  END
+  SET @maxElement = @maxElement - 1;
+END
+
+/* Insercciones de cuentaCliente con id, cedula_cliente debe ser uno de los existente, nombre_cuenta, moneda debe ser 1 o 2,
+contacto_principal, sitio_web, informacion_adicional, correo_electronico, id_zona de los existente, id_sector de los existente*/
+DEclare @zona int, @sector int
+--, @maxElement int, @cedula int
+
+SET @maxElement = 1;
+WHILE @maxElement < 25
+BEGIN
+  SELECT TOP 1 @cedula = cedula FROM Cliente ORDER BY NEWID();
+  SELECT TOP 1 @zona = id FROM Zona ORDER BY NEWID();
+  SELECT TOP 1 @sector = id FROM Sector ORDER BY NEWID();
+  IF NOT (SELECT COUNT(*) FROM CuentaCliente WHERE cedula_cliente = @cedula) > 0
+  BEGIN	
+	  INSERT INTO CuentaCliente (id,cedula_cliente, nombre_cuenta, moneda, contacto_principal, sitio_web, informacion_adicional, correo_electronico, id_zona, id_sector) 
+	  VALUES (@maxElement, @cedula, 'Cuenta de prueba'+CAST(@maxElement AS varchar), 1, 'Contacto de prueba', 'www.prueba.com', 'Informacion de prueba', 'andy@gmail.com', @zona, @sector);
+	  SET @maxElement = @maxElement + 1;
+  END
+END
+
+
+DECLARE @cliente VARCHAR(9), @usuario VARCHAR(9), @TipoContacto INT,
+		--@telefono VARCHAR(10),
+		@correo_electronico VARCHAR(50), @estado INT,
+		@direccion INT, @descripcion VARCHAR(255), @id_zona INT, @id_sector INT,
+		@motivo VARCHAR(255),@randNombre INT, @randTelefono INT
+		--@nombre VARCHAR, 
+
+--DECLARE @i INT
+SET @i = 10
+SET @motivo = 'Provedor de productos'
+SET @descripcion = 'Se le provee productos a la empresa'
+WHILE @i > 0
+BEGIN
+	  SET @cliente = (SELECT TOP(1) cedula_cliente FROM CuentaCliente ORDER BY NEWID())
+	  SET @usuario = (SELECT TOP(1) cedula FROM Usuario ORDER BY NEWID())
+	  SET @TipoContacto = (SELECT TOP(1) id FROM TipoContacto ORDER BY NEWID())
+	  SET @estado = (SELECT TOP(1) id FROM Estado ORDER BY NEWID())
+	  SET @randNombre = 1 + RAND() * 10;
+	  SET @randTelefono = 1 + RAND() * 10;
+	  SET @nombre = CHOOSE(@randNombre, 'Juan', 'Pedro', 'Carlos', 'Luis', 'Jose', 'Maria', 'Ana', 'Luisa', 'Sofia', 'Camila')
+      SET @telefono = CHOOSE(@randTelefono, '809134567', '809124568', '809124569', '809123450', '809123457', '809123452', '809123473', '809123457', '809123457', '809123457')
+	  SET @correo_electronico = CHOOSE(@randNombre, 'xz', 'xy', 'xw', 'xv', 'xu', 'xt', 'xs', 'xr', 'xq', 'xp') + '@gmail.com'
+	  SET @direccion = (SELECT TOP(1) id FROM Direccion ORDER BY (NEWID()))
+	  SET @id_zona = (SELECT TOP(1) id FROM Zona ORDER BY (NEWID()))
+	  SET @id_sector = (SELECT TOP(1) id FROM Sector ORDER BY (NEWID()))
+	  IF NOT (SELECT COUNT(*) FROM Contacto WHERE cedula_usuario = @usuario or cedula_cliente = @cliente) > 0
+	  BEGIN
+    begin try
+      begin
+        INSERT INTO Contacto (id,cedula_cliente, cedula_usuario,tipo_contacto, nombre, telefono, correo_electronico, estado, direccion, descripcion, id_zona, id_sector, motivo)
+		  VALUES (@i,@cliente, @usuario, @TipoContacto, @nombre, @telefono, @correo_electronico, @estado, @direccion, @descripcion, @id_zona, @id_sector, @motivo)
+		  SET @i = @i - 1
+      end
+    end try
+    begin catch
+      begin
+        PRINT 'cedula ya existe'
+		SET @i = @i - 1
+      end
+    end catch
+	 END
+END
+
+
+/* Insercciones de Cotizacion con numero_cotizacion, id_factura, id_contacto de los existente, tipo, nombre_oportunidad, fecha_cotizacion,
+nombre_cuenta de los existente en cotizacion, fecha_proyecccion_cierre, fecha_cierre, orden_compra, descripcion, precio_negociodo, 
+id_zona de los existente, id_sector de los existente, id_etapa de los existente, id_moneda de los existente, id_asesor de los existente, probabilidad de los existente,
+motivo_denegacion de los existente, id_competidor de los existente, id_cuenta_cliente de los existente
+*/
+-- @maxElement int, @random1 int, @randomRol int
+DECLARE @randomContacto int, @randomCuenta VARCHAR(30), @randomZona int,
+@randomSector int, @randomEtapa VARCHAR(30), @randomMoneda int, @randomAsesor int, @randomProbabilidad int,
+@randomMotivo int, @randomCompetidor VARCHAR(30)
+
+SET @maxElement = 1;
+WHILE @maxElement < 15
+BEGIN
+  SELECT TOP 1 @randomContacto = id FROM Contacto ORDER BY NEWID();
+  SELECT TOP 1 @randomCuenta = nombre_cuenta FROM CuentaCliente ORDER BY NEWID();
+  SELECT TOP 1 @randomZona = id FROM Zona ORDER BY NEWID();
+  SELECT TOP 1 @randomSector = id FROM Sector ORDER BY NEWID();
+  SELECT TOP 1 @randomEtapa = nombre FROM Etapa ORDER BY NEWID();
+  SELECT TOP 1 @randomMoneda = id FROM Moneda ORDER BY NEWID();
+  SELECT TOP 1 @randomAsesor = cedula FROM Usuario ORDER BY NEWID();
+  SELECT TOP 1 @randomProbabilidad = porcentaje FROM Probabilidad ORDER BY NEWID();
+  SELECT TOP 1 @randomMotivo = id FROM Motivo ORDER BY NEWID();
+  SELECT TOP 1 @randomCompetidor = nombre FROM Competidor ORDER BY NEWID();
+  SELECT @random1 = 1 + RAND() * 100;
+  IF NOT (SELECT COUNT(*) FROM Cotizacion WHERE id_factura = @random1 or nombre_cuenta = @randomCuenta) > 0
+  BEGIN
+    INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, precio_negociado, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
+    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', 1000, @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);
+    SET @maxElement = @maxElement + 1;
+  END
+END
+
+
+
+/* Insercciones de Ejecucion con id, numeroCotizacion, asesor, fechaEjecucion, nombreCuenta,
+nombreEjecucion, propietarioEjecucion, añoProyectadoCierre, mesProyectadoCierre, fechaCierre, id_departamento de los existente
+*/
+DECLARE @departamento int, @cotizacion int, @cedulaPropietario varchar(30)--, @nombre varchar, @cedula varchar
+
+SET @maxElement = 1;
+WHILE @maxElement < 10
+BEGIN
+  SELECT TOP 1 @cotizacion = numero_cotizacion FROM Cotizacion ORDER BY NEWID();
+  SELECT TOP 1 @departamento = id FROM Departamento ORDER BY NEWID();
+  SELECT TOP 1 @nombre = nombre_cuenta FROM Cotizacion ORDER BY NEWID();
+  SELECT TOP 1 @cedula = cedula from Usuario ORDER BY NEWID();
+  SELECT TOP 1 @cedulaPropietario = cedula from Usuario ORDER BY NEWID();
+  IF NOT (SELECT COUNT(*) FROM Ejecucion WHERE nombreCuenta = @nombre or numeroCotizacion =@cotizacion ) > 0
+  BEGIN
+    INSERT INTO Ejecucion (id, numeroCotizacion, asesor, fechaEjecucion, nombreCuenta, nombreEjecucion, propietarioEjecucion, añoProyectadoCierre, mesProyectadoCierre, fechaCierre, id_departamento) 
+    VALUES (@maxElement, @cotizacion, @cedula ,'2018-01-01',@nombre , 'Ejecucion de prueba', @cedulaPropietario, 2018, 1, '2018-01-01', @departamento);
+    SET @maxElement = @maxElement + 1;
+  END
+END
+GO
+
+
+/* Insercciones de ProductoCotizacion con codigo_producto de los existente, numero_cotizacion de los existente, cantidad
+*/
+
+DECLARE @producto int, @cotizacion int, @maxElement int
+
+SET @maxElement = 1;
+WHILE @maxElement < 10
+BEGIN
+  SELECT TOP 1 @producto = codigo FROM Producto ORDER BY NEWID();
+  SELECT TOP 1 @cotizacion = numero_cotizacion FROM Cotizacion ORDER BY NEWID();
+  IF NOT (SELECT COUNT(*) FROM ProductoCotizacion WHERE codigo_producto = @producto or numero_cotizacion =@cotizacion ) > 0
+  BEGIN
+    INSERT INTO ProductoCotizacion (codigo_producto, numero_cotizacion, cantidad) 
+    VALUES (@producto, @cotizacion, 1);
+    SET @maxElement = @maxElement + 1;
+  END
+END
+
+INSERT INTO Actividad (id, descripcion, fecha_finalizacion) VALUES
+  (1, 'Realizar cambios a cotizacion', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (2, 'Realizar visita', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (3, 'Realizar llamada', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (4, 'Realizar reunión', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (5, 'Realizar cotización', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (6, 'Realizar seguimiento', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (7, 'Realizar propuesta', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (8, 'Realizar seguimiento', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (9, 'Realizar propuesta', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE()))),
+  (10, 'Realizar seguimiento', (SELECT DATEADD(DAY, ABS(CHECKSUM(NEWID()) % 30) * -1, GETDATE())));
+
+DECLARE @tarea INT, @actividad INT, @ejecucion int
+
+DECLARE @i INT
+SET @i = 7
+WHILE @i > 0
+  BEGIN
+    SET @ejecucion = (SELECT TOP(1) id FROM Ejecucion ORDER BY NEWID())
+    SET @tarea = (SELECT TOP(1) id FROM Tarea ORDER BY NEWID())
+    SET @actividad = (SELECT TOP(1) id FROM Actividad ORDER BY NEWID())
+
+    IF NOT (SELECT COUNT(*) FROM EjecucionTarea WHERE id_ejecucion = @ejecucion OR id_tarea = @tarea) > 0
+    BEGIN
+      INSERT INTO EjecucionTarea VALUES
+      (@ejecucion, @tarea)
+    END
+    IF NOT (SELECT COUNT(*) FROM EjecucionActividad WHERE id_actividad  = @actividad OR id_ejecucion = @ejecucion) > 0
+    BEGIN
+      INSERT INTO EjecucionActividad VALUES
+      (@ejecucion, @actividad)
+    END
+    SET @i = @i - 1
+  END

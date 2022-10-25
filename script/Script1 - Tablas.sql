@@ -96,7 +96,7 @@ CREATE TABLE CuentaCliente(
   contacto_principal VARCHAR(30) NOT NULL,
   sitio_web VARCHAR (50) NOT NULL,
   informacion_adicional varchar(50) NOT NULL,
-  correo_electronuco varchar (50) NOT NULL,
+  correo_electronico varchar (50) NOT NULL,
   id_zona INT,
   id_sector INT,
   PRIMARY KEY(id,cedula_cliente, moneda, nombre_cuenta) 
@@ -221,7 +221,7 @@ CREATE TABLE Caso(
 -- Creacion de la tabla Ejecucion
 CREATE TABLE Ejecucion(
 	id int UNIQUE,
-	numeroCotizacion smallint UNIQUE,
+	numeroCotizacion int UNIQUE,
 	asesor VARCHAR(30),
 	fechaEjecucion DATE,
 	nombreCuenta VARCHAR(30) UNIQUE,
@@ -348,7 +348,7 @@ CREATE TABLE ProductoCotizacion(
 -- Creacion de la tabla Cotizacion
 CREATE TABLE Cotizacion(
 	numero_cotizacion int unique,
-	id_factura INT, 
+	id_factura INT UNIQUE, 
 	id_contacto INT,
 	tipo VARCHAR(30), 
 	nombre_oportunidad VARCHAR(30),
@@ -367,7 +367,7 @@ CREATE TABLE Cotizacion(
 	probabilidad smallint,
 	motivo_denegacion VARCHAR(10),
 	id_competidor Varchar(30),
-	PRIMARY KEY(numero_cotizacion, id_factura, nombre_cuenta)
+	PRIMARY KEY(numero_cotizacion, nombre_cuenta)
 );
 
 -- Creacion de la tabla Actividad

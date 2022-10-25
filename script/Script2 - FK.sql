@@ -32,6 +32,7 @@ ALTER TABLE EjecucionActividad DROP CONSTRAINT IF EXISTS fk_EjecucionActividad_E
 ALTER TABLE EjecucionActividad DROP CONSTRAINT IF EXISTS fk_EjecucionActividad_Actividad
 ALTER TABLE CasosActividad DROP CONSTRAINT IF EXISTS fk_CasosActividad_Caso
 ALTER TABLE casosActividad DROP CONSTRAINT IF EXISTS fk_casosActividad_Actividad
+ALTER TABLE Ejecucion DROP CONSTRAINT IF EXISTS fk_Ejecucion_numeroCotizacion
 
 ALTER TABLE PrivilegiosXRol DROP CONSTRAINT IF EXISTS fk_PrivilegiosXRol_Rol
 ALTER TABLE privilegiosXrol DROP CONSTRAINT IF EXISTS fk_privilegiosXrol_TipoPrivilegio
@@ -163,6 +164,7 @@ ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_Competidor FOREIGN KEY (id_c
 ON DELETE NO ACTION;
 
 
+
 ALTER TABLE PrivilegiosXRol ADD CONSTRAINT fk_PrivilegiosXRol_Rol FOREIGN KEY (id_rol) REFERENCES Rol (id)
   ON DELETE NO ACTION;
 ALTER TABLE privilegiosXrol ADD CONSTRAINT fk_privilegiosXrol_TipoPrivilegio FOREIGN KEY (id_privilegio) REFERENCES TipoPrivilegio (id)
@@ -210,3 +212,5 @@ ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Cotizacion_asesor FOREIGN KEY (asesor) R
 */
 ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_CuentaCliente FOREIGN KEY (nombre_cuenta) REFERENCES CuentaCliente (nombre_cuenta)
   ON DELETE NO ACTION;
+ALTER TABLE Ejecucion ADD CONSTRAINT fk_Ejecucion_numeroCotizacion FOREIGN KEY (numeroCotizacion) REFERENCES Cotizacion (numero_cotizacion)
+	ON DELETE NO ACTION;
