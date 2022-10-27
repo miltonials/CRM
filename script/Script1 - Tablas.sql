@@ -302,7 +302,7 @@ CREATE TABLE Motivo(
 -- Creacion de la tabla Inflacion
 CREATE TABLE Inflacion(
 	anno INT,
-	porcentaje INT,
+	porcentaje float,
 	PRIMARY KEY(anno)
 );
 

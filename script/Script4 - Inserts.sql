@@ -1,4 +1,4 @@
-   USE CRM
+USE CRM
 GO
 
 -- eliminacion de los datos de la tabla
@@ -11,6 +11,7 @@ DELETE FROM EjecucionActividad
 DELETE FROM Caso
 DELETE FROM Ejecucion
 DELETE FROM ProductoCotizacion
+DELETE FROM CotizacionActividad
 DELETE FROM Cotizacion
 DELETE FROM Contacto
 DELETE FROM Direccion
@@ -19,7 +20,6 @@ DELETE FROM Canton
 DELETE FROM CuentaCliente
 DELETE FROM Cliente
 DELETE FROM Competidor
-DELETE FROM CotizacionActividad
 DELETE FROM CotizacionTarea
 DELETE FROM UsuarioRoles
 DELETE FROM Usuario
