@@ -1,3 +1,6 @@
+USE CRM
+GO
+
 DROP PROCEDURE IF EXISTS Actividad_Insert
 DROP PROCEDURE IF EXISTS Actividad_Update
 DROP PROCEDURE IF EXISTS Actividad_Delete
@@ -43,6 +46,51 @@ DROP PROCEDURE IF EXISTS UsuarioRoles_Delete
 DROP PROCEDURE IF EXISTS Cotizacion_Insert
 DROP PROCEDURE IF EXISTS Cotizacion_Update
 DROP PROCEDURE IF EXISTS Cotizacion_Delete
+
+DROP PROCEDURE IF EXISTS procInsertarCaso
+DROP PROCEDURE IF EXISTS procInsertarCasosTarea
+DROP PROCEDURE IF EXISTS procInsertarContacto
+DROP PROCEDURE IF EXISTS procInsertarContactoTarea
+DROP PROCEDURE IF EXISTS procInsertarCotizacionTarea
+DROP PROCEDURE IF EXISTS procInsertarDepartamento
+DROP PROCEDURE IF EXISTS procInsertarEjecucionActividad
+DROP PROCEDURE IF EXISTS procInsertarEstadoCaso
+DROP PROCEDURE IF EXISTS procInsertarOrigen
+DROP PROCEDURE IF EXISTS procInsertarPrivilegiosXrol
+DROP PROCEDURE IF EXISTS procInsertarProductoCotizacion
+DROP PROCEDURE IF EXISTS procInsertarTarea
+DROP PROCEDURE IF EXISTS procInsertarTipoPrivilegio
+DROP PROCEDURE IF EXISTS procInsertarEstadoProducto
+
+DROP PROCEDURE IF EXISTS procModificarCaso
+DROP PROCEDURE IF EXISTS procModificarCasosTarea
+DROP PROCEDURE IF EXISTS procModificarContacto
+DROP PROCEDURE IF EXISTS procModificarContactoTarea
+DROP PROCEDURE IF EXISTS procModificarCotizacionTarea
+DROP PROCEDURE IF EXISTS procModificarDepartamento
+DROP PROCEDURE IF EXISTS procModificarEjecucionActividad
+DROP PROCEDURE IF EXISTS procModificarEstadoCaso
+DROP PROCEDURE IF EXISTS procModificarOrigen
+DROP PROCEDURE IF EXISTS procModificarPrivilegiosXrol
+DROP PROCEDURE IF EXISTS procModificarProductoCotizacion
+DROP PROCEDURE IF EXISTS procModificarTarea
+DROP PROCEDURE IF EXISTS procModificarTipoPrivilegio
+DROP PROCEDURE IF EXISTS procModificarEstadoProducto
+
+DROP PROCEDURE IF EXISTS procEliminarCaso
+DROP PROCEDURE IF EXISTS procEliminarCasosTarea
+DROP PROCEDURE IF EXISTS procEliminarContacto
+DROP PROCEDURE IF EXISTS procEliminarContactoTarea
+DROP PROCEDURE IF EXISTS procEliminarCotizacionTarea
+DROP PROCEDURE IF EXISTS procEliminarDepartamento
+DROP PROCEDURE IF EXISTS procEliminarEjecucionActividad
+DROP PROCEDURE IF EXISTS procEliminarEstadoCaso
+DROP PROCEDURE IF EXISTS procEliminarOrigen
+DROP PROCEDURE IF EXISTS procEliminarPrivilegiosXrol
+DROP PROCEDURE IF EXISTS procEliminarProductoCotizacion
+DROP PROCEDURE IF EXISTS procEliminarTarea
+DROP PROCEDURE IF EXISTS procEliminarTipoPrivilegio
+DROP PROCEDURE IF EXISTS procEliminarEstadoProducto
 GO
 
 -- procedimientos almacenados para la tabla: "Actividad"
@@ -1264,4 +1312,931 @@ BEGIN
         PRINT @ret
     END CATCH
 END
+GO
+
+
+/*
+##############################################
+#####################Caso#####################
+##############################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarCaso
+  @idCaso INT,
+  @proyecto INT,
+  @propietarioCaso VARCHAR(30),
+  @asunto VARCHAR(255),
+  @nombreCuenta VARCHAR(30),
+  @nombreContacto VARCHAR(30),
+  @descripcion VARCHAR(255),
+  @direccion INT,
+  @estado VARCHAR(30),
+  @tipo VARCHAR(30),
+  @prioridad VARCHAR(30),
+  @origen VARCHAR(30),
+  @ret INT OUTPUT
+
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO Caso (
+					id, proyectoAsociado, propietarioCaso,
+					asunto, nombreCuenta, nombreContacto,
+					descripcion, id_direccion, id_origen,
+					id_estado, id_tipo, id_prioridad
+					)
+		VALUES (
+				@idCaso, @proyecto, @propietarioCaso,
+				@asunto, @nombreCuenta, @nombreContacto,
+				@descripcion, @direccion, @origen,
+				@estado, @tipo, @prioridad
+				)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarCaso
+  @idCaso INT,
+  @proyecto INT,
+  @propietarioCaso VARCHAR(30),
+  @asunto VARCHAR(255),
+  @nombreCuenta VARCHAR(30),
+  @nombreContacto VARCHAR(30),
+  @descripcion VARCHAR(255),
+  @direccion INT,
+  @estado VARCHAR(30),
+  @tipo VARCHAR(30),
+  @prioridad VARCHAR(30),
+  @origen VARCHAR(30),
+  @ret INT OUTPUT
+
+
+AS
+  BEGIN
+	BEGIN TRY
+		UPDATE Caso
+		SET proyectoAsociado = @proyecto, propietarioCaso = @propietarioCaso, asunto = @asunto,
+			nombreCuenta = @nombreCuenta, nombreContacto = @nombreContacto, descripcion = @descripcion,
+			id_direccion = @direccion, id_estado = @estado, id_tipo = @tipo, id_prioridad = @prioridad,
+			id_origen = @origen
+		WHERE id = @idCaso
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarCaso
+  @idCaso INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM CasosActividad
+			WHERE id_caso = @idCaso
+		DELETE FROM CasosTarea
+			WHERE id_caso = @idCaso
+		DELETE FROM Caso
+			WHERE id = @idCaso
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+##################################################
+#####################Contacto#####################
+##################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarContacto
+  @id INT,
+  @cedula_cliente VARCHAR(30),
+  @cedula_usuario VARCHAR(30),
+  @tipo_contacto INT,
+  @motivo VARCHAR(30),
+  @nombre VARCHAR(30),
+  @telefono VARCHAR(255),
+  @correo_electronico VARCHAR(30),
+  @estado INT,
+  @direccion INT,
+  @descripcion VARCHAR(50),
+  @id_zona INT,
+  @id_sector INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO Contacto (
+					id, cedula_cliente, cedula_usuario, tipo_contacto, motivo, nombre, telefono,
+					correo_electronico, estado, direccion, descripcion, id_zona, id_sector
+					)
+		VALUES (
+				  @id, @cedula_cliente, @cedula_usuario, @tipo_contacto, @motivo, @nombre, @telefono,
+				  @correo_electronico, @estado, @direccion, @descripcion, @id_zona, @id_sector
+				)
+					
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarContacto
+  @id INT,
+  @cedula_cliente VARCHAR(30),
+  @cedula_usuario VARCHAR(30),
+  @tipo_contacto INT,
+  @motivo VARCHAR(30),
+  @nombre VARCHAR(30),
+  @telefono VARCHAR(255),
+  @correo_electronico VARCHAR(30),
+  @estado INT,
+  @direccion INT,
+  @descripcion VARCHAR(50),
+  @id_zona INT,
+  @id_sector INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		UPDATE Contacto
+		SET cedula_cliente = @cedula_cliente, cedula_usuario = @cedula_usuario, tipo_contacto = @tipo_contacto,
+			motivo = @motivo, nombre = @nombre, telefono = @telefono, correo_electronico = @correo_electronico,
+			estado = @estado, direccion = @direccion, descripcion = @descripcion, id_zona = @id_zona, id_sector = @id_sector
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarContacto
+  @id INT,
+  @ret INT OUTPUT
+
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM ContactoTarea
+			WHERE id_contacto = @id
+		DELETE FROM ContactoActividad
+			WHERE id_contacto = @id
+		DELETE FROM Contacto
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+/*
+######################################################
+#####################Departamento#####################
+######################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarDepartamento
+  @id INT,
+  @nombre VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO Departamento VALUES (@id, @nombre)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarDepartamento
+  @id INT,
+  @nombre VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		UPDATE Departamento
+		SET nombre = @nombre
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarDepartamento
+  @id INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM Departamento
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+/*
+######################################################
+##################### Origen #####################
+######################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarOrigen
+  @id INT,
+  @nombre VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO Departamento VALUES (@id, @nombre)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarOrigen
+  @id INT,
+  @nombre VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		UPDATE Departamento
+		SET nombre = @nombre
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarOrigen
+  @id INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM Origen
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+/*
+#################################################
+##################### Tarea #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarTarea
+  @id INT,
+  @fecha_finalizacion DATE,
+  @fecha_creacion DATE,
+  @estado INT,
+  @descripcion VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO Tarea VALUES (@id, @fecha_finalizacion, @fecha_creacion, @estado, @descripcion)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarTarea
+  @id INT,
+  @fecha_finalizacion DATE,
+  @fecha_creacion DATE,
+  @estado INT,
+  @descripcion VARCHAR(20),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		UPDATE Tarea
+		SET fecha_finalizacion = @fecha_finalizacion, fecha_creacion = @fecha_creacion, estado = @estado, descripcion = @descripcion
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarTarea 
+  @id INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM Origen
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+#################################################
+##################### CasosTarea #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarCasosTarea
+  @id_caso INT,
+  @id_tarea INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO CasosTarea VALUES (@id_caso, @id_tarea)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarCasosTarea
+  @id_caso INT,
+  @id_tarea INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM CasosTarea
+			WHERE id_caso = @id_caso AND id_tarea = @id_tarea
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+#################################################
+##################### ContactoTarea #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarContactoTarea
+  @id_contacto INT,
+  @id_tarea INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO ContactoTarea VALUES (@id_contacto, @id_tarea)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarContactoTarea
+  @id_contacto INT,
+  @id_tarea INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM ContactoTarea
+			WHERE id_contacto = @id_contacto AND id_tarea = @id_tarea
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+/*
+#################################################
+##################### CotizacionTarprocInsertarEjecucionActividadea #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarCotizacionTarea
+  @id_cotizacion INT,
+  @id_tarea INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO CotizacionTarea VALUES (@id_cotizacion, @id_tarea)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarCotizacionTarea
+  @id_cotizacion INT,
+  @id_tarea INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM CotizacionTarea
+			WHERE id_cotizacion = @id_cotizacion AND id_tarea = @id_tarea
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+#################################################
+##################### EjecucionActividad #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarEjecucionActividad
+  @id_ejecucion INT,
+  @id_actividad INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO EjecucionActividad VALUES (@id_ejecucion, @id_actividad)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarEjecucionActividad
+  @id_ejecucion INT,
+  @id_actividad INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM EjecucionActividad
+			WHERE id_ejecucion = @id_ejecucion AND id_actividad = @id_actividad
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+
+/*
+#################################################
+##################### EstadoCaso #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarEstadoCaso
+  @id INT,
+  @estado VARCHAR(30),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO EstadoCaso VALUES (@id, @estado)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarEstadoCaso
+  @id INT,
+  @estado VARCHAR(20),
+  @ret INT
+	AS
+		BEGIN
+		BEGIN TRY
+			UPDATE EstadoCaso
+			SET estado = @estado
+				WHERE id = @id
+			SET @ret = 1
+		END TRY
+		BEGIN CATCH
+			print @@ERROR
+			PRINT ERROR_MESSAGE()
+			SET @ret = -1
+			PRINT @ret
+		END CATCH
+		END
+	GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarEstadoCaso
+  @id INT,
+  @estado VARCHAR(30),
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM EstadoCaso
+			WHERE id = @id AND estado = @estado
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+
+/*
+#################################################
+##################### PrivilegiosXrol #####################
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarPrivilegiosXrol
+  @id_rol INT,
+  @id_privilegio INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO PrivilegiosXrol VALUES (@id_rol, @id_privilegio)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarPrivilegiosXrol
+  @id_rol INT,
+  @id_privilegio INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM PrivilegiosXrol
+			WHERE id_rol = @id_rol AND id_privilegio = @id_privilegio
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+#################################################
+##################### ProductoCotizacion ########
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarProductoCotizacion
+  @codigo_producto INT,
+  @numero_cotizacion INT,
+  @cantidad INT,
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO ProductoCotizacion VALUES (@codigo_producto, @numero_cotizacion, @cantidad)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. DELETE
+CREATE PROCEDURE procEliminarProductoCotizacion
+  @codigo_producto INT,
+  @numero_cotizacion INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM ProductoCotizacion
+			WHERE codigo_producto = @codigo_producto AND numero_cotizacion = @numero_cotizacion
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+
+/*
+#################################################
+##################### TipoPrivilegio ############
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarTipoPrivilegio
+  @id INT,
+  @tipo VARCHAR(30),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO TipoPrivilegio VALUES (@id, @tipo)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarTipoPrivilegio
+  @id INT,
+  @tipo VARCHAR(20),
+  @ret INT
+	AS
+		BEGIN
+		BEGIN TRY
+			UPDATE TipoPrivilegio
+			SET tipo = @tipo
+				WHERE id = @id
+			SET @ret = 1
+		END TRY
+		BEGIN CATCH
+			print @@ERROR
+			PRINT ERROR_MESSAGE()
+			SET @ret = -1
+			PRINT @ret
+		END CATCH
+		END
+	GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarTipoPrivilegio
+  @id INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM TipoPrivilegio
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+/*
+#################################################
+##################### EstadoProducto ############
+#################################################
+*/
+--1. INSERT
+CREATE PROCEDURE procInsertarEstadoProducto
+  @id INT,
+  @estado VARCHAR(30),
+  @ret INT
+AS
+  BEGIN
+	BEGIN TRY
+		INSERT INTO EstadoProducto VALUES (@id, @estado)
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
+GO
+
+--2. UPDATE
+CREATE PROCEDURE procModificarEstadoProducto
+  @id INT,
+  @estado VARCHAR(20),
+  @ret INT
+	AS
+		BEGIN
+		BEGIN TRY
+			UPDATE EstadoProducto
+			SET estado = @estado
+				WHERE id = @id
+			SET @ret = 1
+		END TRY
+		BEGIN CATCH
+			print @@ERROR
+			PRINT ERROR_MESSAGE()
+			SET @ret = -1
+			PRINT @ret
+		END CATCH
+		END
+	GO
+
+--3. DELETE
+CREATE PROCEDURE procEliminarEstadoProducto
+  @id INT,
+  @ret INT OUTPUT
+AS
+  BEGIN
+	BEGIN TRY
+		DELETE FROM EstadoProducto
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		--Se maneja un posible error generado en el try
+		print @@ERROR
+		PRINT ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+  END
 GO
