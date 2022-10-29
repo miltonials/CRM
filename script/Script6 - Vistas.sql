@@ -6,6 +6,7 @@ DROP VIEW IF EXISTS vClienteInfoGeneral
 DROP VIEW IF EXISTS vContactosInfoGeneral
 DROP VIEW IF EXISTS vCotizacionInfoGeneral
 DROP PROCEDURE IF EXISTS procObtenerContactosPorCliente
+DROP PROCEDURE IF EXISTS procObtenerProductoPorCotizacion
 GO
 
 CREATE VIEW vProductosInfoGeneral AS
@@ -78,3 +79,30 @@ BEGIN
 	END CATCH
 END
 GO
+
+/* Procedimiento que obtenga producto por cotizacion */
+
+CREATE PROCEDURE procObtenerProductoPorCotizacion
+	@numero_cotizacion INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT p.codigo as codigo,f.nombre as Familia, p.nombre,p.precio_estandar,
+		e.nombre, p.descripcion
+			FROM ProductoCotizacion pc, Producto p, Estado e, Familia F
+			WHERE pc.numero_cotizacion = @numero_cotizacion and p.estado = e.id and p.codigo_Familia = f.codigo AND
+			PC.codigo_producto = P.codigo
+
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+
