@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CRM.Models.ValorPresenteCotizacione>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroContacto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreOportunidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCuenta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAValorPresente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroContacto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreOportunidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCuenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAValorPresente)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-primary">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

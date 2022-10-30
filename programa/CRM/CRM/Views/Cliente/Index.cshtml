@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CRM.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Clientes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Agregar un nuevo cliente</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+            </th>
+            <th>
+                Nombre completo
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.Apellido1)
+                @Html.DisplayFor(modelItem => item.Apellido2)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Cedula" class="btn btn-outline-primary">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Cedula" class="btn btn-outline-danger" >Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

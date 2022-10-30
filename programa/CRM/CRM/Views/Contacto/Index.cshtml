@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CRM.Models.Contacto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Contactos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Registrar un nuevo contacto</a>
+</p>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaCliente1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DireccionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdZonaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoContactoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaCliente1.CedulaCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaUsuarioNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DireccionNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdZonaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoContactoNavigation.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

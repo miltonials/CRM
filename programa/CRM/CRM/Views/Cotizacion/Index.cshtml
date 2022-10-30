@@ -1,0 +1,137 @@
+﻿@model IEnumerable<CRM.Models.Cotizacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFactura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreOportunidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaProyeccionCierre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCierre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdenCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAsesorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompetidorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdContactoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEtapaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMonedaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdZonaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotivoDenegacionNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCuentaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProbabilidadNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFactura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreOportunidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaProyeccionCierre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCierre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrdenCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAsesorNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompetidorNavigation.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdContactoNavigation.CedulaCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEtapaNavigation.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMonedaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdZonaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotivoDenegacionNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCuentaNavigation.CedulaCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProbabilidadNavigation.Porcentaje)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
