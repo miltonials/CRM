@@ -8,109 +8,109 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CRM
 build_property.RootNamespace = CRM
-build_property.ProjectDir = C:\Users\milto\Desktop\reps\Base de datos\proyectos\CRM2\programa\CRM\CRM\
+build_property.ProjectDir = D:\TEC UNIVERSIDAD\Documentos\Cuarto Semestre\Base de Datos 1\Proyectos\Proyecto 2\CRM\programa\CRM\CRM\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\milto\Desktop\reps\Base de datos\proyectos\CRM2\programa\CRM\CRM
+build_property.MSBuildProjectDirectory = D:\TEC UNIVERSIDAD\Documentos\Cuarto Semestre\Base de Datos 1\Proyectos\Proyecto 2\CRM\programa\CRM\CRM
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cliente/Create.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cliente/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cliente/Delete.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cliente/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cliente/Details.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cliente/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cliente/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cliente/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Contacto/Create.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Contacto/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Contacto/Delete.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Contacto/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9cRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Contacto/Details.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Contacto/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Contacto/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Contacto/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cotizacion/Create.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cotizacion/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ290aXphY2lvblxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cotizacion/Details.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cotizacion/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ290aXphY2lvblxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cotizacion/Edit.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cotizacion/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ290aXphY2lvblxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Cotizacion/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Cotizacion/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ290aXphY2lvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Home/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Home/Privacy.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Producto/Create.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Producto/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Producto/Details.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Producto/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Producto/Edit.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Producto/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Producto/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Producto/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Shared/Error.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/ValorPresenteCotizaciones/Details.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/ValorPresenteCotizaciones/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmFsb3JQcmVzZW50ZUNvdGl6YWNpb25lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/ValorPresenteCotizaciones/Index.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/ValorPresenteCotizaciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmFsb3JQcmVzZW50ZUNvdGl6YWNpb25lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/_ViewImports.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/_ViewStart.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/milto/Desktop/reps/Base de datos/proyectos/CRM2/programa/CRM/CRM/Views/Shared/_Layout.cshtml]
+[D:/TEC UNIVERSIDAD/Documentos/Cuarto Semestre/Base de Datos 1/Proyectos/Proyecto 2/CRM/programa/CRM/CRM/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-dwxmuyclez

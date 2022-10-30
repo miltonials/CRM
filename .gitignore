@@ -1,3 +1,9 @@
-.vs
 programa/CRM/.vs
 programa/CRM/CRM/bin
+programa/CRM/CRM/obj
+programa/CRM/CRM/Properties
+programa/CRM/CRM/wwwroot
+programa/CRM/CRM/*.json
+programa/CRM/CRM/*.csproj
+script/.vs
+.vs
