@@ -2,6 +2,7 @@ USE CRM
 GO
 
 -- eliminacion de los datos de la tabla
+DELETE FROM ValorPresenteCotizaciones
 DELETE FROM CasosActividad
 DELETE FROM CasosTarea
 DELETE FROM ContactoTarea
@@ -1391,7 +1392,6 @@ BEGIN
   END
   SET @maxElement = @maxElement + 1
 END
- 
 
 /* Insecciones de productos con codigo, codigoFamilia, nombre, precioEstandar,
 estado, descripcion */
