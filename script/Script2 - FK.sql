@@ -5,6 +5,7 @@ USE CRM
 GO
 -- Aqui inicia la 
 -- Eliminacion de los foreign keys
+ALTER TABLE ValorPresenteCotizaciones DROP CONSTRAINT IF EXISTS fk_valorPresente_numeroCotizacion
 ALTER TABLE UsuarioRoles DROP CONSTRAINT IF EXISTS fk_UsuarioRoles_Rol
 ALTER TABLE UsuarioRoles DROP CONSTRAINT IF EXISTS fk_UsuarioRoles_Usuario
 ALTER TABLE Cliente DROP CONSTRAINT IF EXISTS fk_Cliente_Contacto
@@ -213,4 +214,6 @@ ALTER TABLE Caso ADD CONSTRAINT fk_Caso_Cotizacion_asesor FOREIGN KEY (asesor) R
 ALTER TABLE Cotizacion ADD CONSTRAINT fk_Cotizacion_CuentaCliente FOREIGN KEY (nombre_cuenta) REFERENCES CuentaCliente (nombre_cuenta)
   ON DELETE NO ACTION;
 ALTER TABLE Ejecucion ADD CONSTRAINT fk_Ejecucion_numeroCotizacion FOREIGN KEY (numeroCotizacion) REFERENCES Cotizacion (numero_cotizacion)
+	ON DELETE NO ACTION;
+ALTER TABLE ValorPresenteCotizaciones ADD CONSTRAINT fk_valorPresente_numeroCotizacion FOREIGN KEY (numero_cotizacion) REFERENCES Cotizacion (numero_cotizacion)
 	ON DELETE NO ACTION;

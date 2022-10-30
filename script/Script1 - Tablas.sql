@@ -406,3 +406,12 @@ CREATE TABLE CasosActividad(
 	PRIMARY KEY(id_caso,id_actividad)
 );
 
+CREATE TABLE ValorPresenteCotizaciones (
+	numero_cotizacion INT NOT NULL PRIMARY KEY,
+	numero_contacto INT NOT NULL,
+	nombre_oportunidad VARCHAR(30) NOT NULL,
+	fecha_cotizacion VARCHAR(30) NOT NULL,
+	nombre_cuenta VARCHAR(30) NOT NULL,
+	total_cotizacion VARCHAR(30) NOT NULL,
+	total_a_valor_presente VARCHAR(30) NOT NULL
+)
