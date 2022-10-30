@@ -1220,8 +1220,8 @@ BEGIN
         )
     VALUES
         (
-            @numeroCotizacion, @idFactura, @idContacto, @tipo, @nombre_oportunidad, @fechaCotizacion, @nombrecuenta, @fecha_proyeccion_cierre, @fecha_cierre, @orden_compra, @descripcion, @id_zona, @id_sector, @id_moneda, @id_etapa, @id_asesor, @id_probabilidad, @motivo_denegacion, @id_competidor)
-
+        @numeroCotizacion, @idFactura, @idContacto, @tipo, @nombre_oportunidad, @fechaCotizacion, @nombrecuenta, @fecha_proyeccion_cierre, @fecha_cierre, @orden_compra, @descripcion, @id_zona, @id_sector, @id_moneda, @id_etapa, @id_asesor, @id_probabilidad, @motivo_denegacion, @id_competidor
+        )
 		SET @ret = 1
     END TRY
     BEGIN CATCH
@@ -2064,14 +2064,16 @@ GO
 CREATE PROCEDURE procInsertarProductoCotizacion
   @codigo_producto INT,
   @numero_cotizacion INT,
-  @precio_negociado FLOAT,
+  --@precio_negociado FLOAT,
   @cantidad INT,
   @ret INT
 AS
   BEGIN
 	BEGIN TRY
-		INSERT INTO ProductoCotizacion VALUES (@codigo_producto, @numero_cotizacion, @precio_negociado, @cantidad)
-		SET @ret = 1
+        DECLARE @precioProducto FLOAT
+        SELECT @precioProducto = precio_estandar FROM Producto WHERE codigo = @codigo_producto
+		INSERT INTO ProductoCotizacion VALUES (@codigo_producto, @numero_cotizacion, @cantidad*@precioProducto, @cantidad)		
+        SET @ret = 1
 	END TRY
 	BEGIN CATCH
 		print @@ERROR

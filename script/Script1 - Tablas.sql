@@ -141,9 +141,9 @@ create TABLE Distrito (
 -- Creacion de la tabla Direccion
 create TABLE Direccion (
   id int UNIQUE,
-  id_provincia int,
-  id_canton int,
-  id_distrito int,
+  id_provincia int NOT NULL,
+  id_canton int NOT  NULL,
+  id_distrito int NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -163,17 +163,17 @@ CREATE TABLE TipoContacto(
 CREATE TABLE Contacto(
 	id int UNIQUE,
 	cedula_cliente VARCHAR(30) UNIQUE,
-	cedula_usuario VARCHAR(30),
- 	tipo_contacto INT,
-	motivo VARCHAR(30),
-	nombre VARCHAR(30),
-	telefono VARCHAR(30),
-	correo_electronico VARCHAR(30),
-	estado INT,
-	direccion INT,
-	descripcion VARCHAR(50),
-  	id_zona INT,
-  	id_sector INT,
+	cedula_usuario VARCHAR(30) NOT NULL,
+ 	tipo_contacto INT NOT NULL,
+	motivo VARCHAR(30) NOT NULL,
+	nombre VARCHAR(30) NOT NULL,
+	telefono VARCHAR(30) NOT NULL,
+	correo_electronico VARCHAR(30) NOT NULL,
+	estado INT NOT NULL,
+	direccion INT NOT NULL,
+	descripcion VARCHAR(50) NOT NULL,
+  	id_zona INT NOT NULL,
+  	id_sector INT NOT NULL,
 	PRIMARY KEY (id, cedula_cliente)
 );
 
@@ -310,10 +310,10 @@ CREATE TABLE Inflacion(
 CREATE TABLE Producto(
 	codigo int unique,
 	codigo_Familia int,
-	nombre VARCHAR(30),
-	precio_estandar int,
+	nombre VARCHAR(30) NOT NULL,
+	precio_estandar FLOAT,
 	estado INT,
-	descripcion VARCHAR(30),
+	descripcion VARCHAR(30) NOT NULL,
 	PRIMARY KEY(codigo,codigo_Familia)
 );
 
@@ -326,7 +326,7 @@ CREATE TABLE EstadoProducto (
 -- Creacion de la tabla Familia
 CREATE TABLE Familia(
 	codigo int PRIMARY KEY,
-	nombre VARCHAR(30),
+	nombre VARCHAR(30) NOT NULL,
 	estado INT,
 	descripcion VARCHAR(255)
 );
@@ -339,10 +339,10 @@ CREATE TABLE EstadoFamilia (
 
 -- Creacion de la tabla ProductoCotizacion
 CREATE TABLE ProductoCotizacion(
-	codigo_producto int,
-	numero_cotizacion int, 
-	precio_negociado FLOAT,
-	cantidad int,
+	codigo_producto int NOT NULL,
+	numero_cotizacion int NOT NULL, 
+	precio_negociado FLOAT NOT NULL,
+	cantidad int NOT NULL,
 	PRIMARY KEY (codigo_producto,numero_cotizacion)
 );
 
@@ -351,29 +351,29 @@ CREATE TABLE Cotizacion(
 	numero_cotizacion int unique,
 	id_factura INT UNIQUE, 
 	id_contacto INT,
-	tipo VARCHAR(30), 
-	nombre_oportunidad VARCHAR(30),
-	fecha_cotizacion VARCHAR(30),
+	tipo VARCHAR(30) NOT NULL, 
+	nombre_oportunidad VARCHAR(30) NOT NULL,
+	fecha_cotizacion VARCHAR(30) NOT NULL,
 	nombre_cuenta VARCHAR(30) NOT NULL UNIQUE,
-	fecha_proyeccion_cierre DATE,
-	fecha_cierre DATE,
-	orden_compra VARCHAR(30),
-	descripcion VARCHAR(30),
-	id_zona INT,
-	id_sector INT,
-	id_moneda INT,
-	id_etapa VARCHAR(30),
-	id_asesor VARCHAR(30),
-	probabilidad smallint,
-	motivo_denegacion VARCHAR(10),
-	id_competidor Varchar(30),
+	fecha_proyeccion_cierre DATE NOT NULL,
+	fecha_cierre DATE NOT NULL,
+	orden_compra VARCHAR(30) NOT NULL,
+	descripcion VARCHAR(30) NOT NULL,
+	id_zona INT NOT NULL,
+	id_sector INT NOT NULL,
+	id_moneda INT NOT NULL,
+	id_etapa VARCHAR(30) NOT NULL,
+	id_asesor VARCHAR(30) NOT NULL,
+	probabilidad smallint NOT NULL,
+	motivo_denegacion VARCHAR(10) NOT NULL,
+	id_competidor Varchar(30) NOT NULL,
 	PRIMARY KEY(numero_cotizacion, nombre_cuenta)
 );
 
 -- Creacion de la tabla Actividad
 CREATE TABLE Actividad(
 	id int,
-	descripcion VARCHAR(30),
+	descripcion VARCHAR(30) NOT NULL,
 	fecha_finalizacion DATE,
 	PRIMARY KEY (id)
 );
@@ -394,15 +394,15 @@ CREATE TABLE EjecucionActividad(
 
 -- Creacion de la tabla ContactoActividad
 CREATE TABLE ContactoActividad(
-	id_contacto INT,
-	id_actividad INT,
+	id_contacto INT NOT NULL,
+	id_actividad INT NOT NULL,
 	PRIMARY KEY(id_contacto,id_actividad)
 );
 
 -- Creacion de la tabla CasosActividad
 CREATE TABLE CasosActividad(
-	id_caso INT,
-	id_actividad INT,
+	id_caso INT NOT NULL,
+	id_actividad INT NOT NULL,
 	PRIMARY KEY(id_caso,id_actividad)
 );
 
@@ -412,6 +412,6 @@ CREATE TABLE ValorPresenteCotizaciones (
 	nombre_oportunidad VARCHAR(30) NOT NULL,
 	fecha_cotizacion VARCHAR(30) NOT NULL,
 	nombre_cuenta VARCHAR(30) NOT NULL,
-	total_cotizacion VARCHAR(30) NOT NULL,
-	total_a_valor_presente VARCHAR(30) NOT NULL
+	total_cotizacion FLOAT NOT NULL,
+	total_a_valor_presente FLOAT NOT NULL
 )

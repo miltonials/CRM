@@ -1528,8 +1528,7 @@ BEGIN
   IF NOT (SELECT COUNT(*) FROM Cotizacion WHERE id_factura = @random1 or nombre_cuenta = @randomCuenta) > 0
   BEGIN
     INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
-    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);
-    
+    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);    
 	SET @maxElement = @maxElement + 1;
   END
 END
@@ -1562,17 +1561,18 @@ GO
 /* Insercciones de ProductoCotizacion con codigo_producto de los existente, numero_cotizacion de los existente, cantidad
 */
 
-DECLARE @producto int, @cotizacion int, @maxElement int
+DECLARE @producto int, @cotizacion int, @maxElement int, @valor FLOAT
 
 SET @maxElement = 1;
 WHILE @maxElement < 50
 BEGIN
   SELECT TOP 1 @producto = codigo FROM Producto ORDER BY NEWID();
   SELECT TOP 1 @cotizacion = numero_cotizacion FROM Cotizacion ORDER BY NEWID();
+  SELECT top 1  @valor = precio_estandar FROM Producto WHERE @producto = producto.codigo;
   IF NOT (SELECT COUNT(*) FROM ProductoCotizacion WHERE codigo_producto = @producto AND numero_cotizacion =@cotizacion ) > 0
   BEGIN
-    INSERT INTO ProductoCotizacion (codigo_producto, numero_cotizacion, precio_negociado, cantidad) 
-    VALUES (@producto, @cotizacion,1000, 1 + RAND() * 100);
+    INSERT INTO ProductoCotizacion (codigo_producto, numero_cotizacion , precio_negociado, cantidad) 
+    VALUES (@producto, @cotizacion, @valor, 1);
     SET @maxElement = @maxElement + 1;
   END
 END
