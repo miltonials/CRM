@@ -341,6 +341,7 @@ CREATE TABLE EstadoFamilia (
 CREATE TABLE ProductoCotizacion(
 	codigo_producto int,
 	numero_cotizacion int, 
+	precio_negociado FLOAT,
 	cantidad int,
 	PRIMARY KEY (codigo_producto,numero_cotizacion)
 );
@@ -358,7 +359,6 @@ CREATE TABLE Cotizacion(
 	fecha_cierre DATE,
 	orden_compra VARCHAR(30),
 	descripcion VARCHAR(30),
-	precio_negociado FLOAT,
 	id_zona INT,
 	id_sector INT,
 	id_moneda INT,

@@ -48,7 +48,7 @@ GO
 CREATE VIEW vCotizacionInfoGeneral AS
 	SELECT numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad,
 			fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre,
-			orden_compra, coti.descripcion, precio_negociado, zn.nombre AS zona, sec.nombre AS sector,
+			orden_compra, coti.descripcion, zn.nombre AS zona, sec.nombre AS sector,
 			mo.nombre, id_etapa AS etapa, id_asesor AS asesor, probabilidad, moti.descripcion AS motivo ,
 			id_competidor AS competidor
 		FROM Cotizacion coti
@@ -104,5 +104,3 @@ BEGIN
 	END CATCH
 END
 GO
-
-

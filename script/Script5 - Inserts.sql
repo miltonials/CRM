@@ -15,10 +15,10 @@ DELETE FROM ProductoCotizacion
 DELETE FROM CotizacionActividad
 DELETE FROM Cotizacion
 DELETE FROM Contacto
+DELETE FROM CuentaCliente
 DELETE FROM Direccion
 DELETE FROM Actividad
 DELETE FROM Canton
-DELETE FROM CuentaCliente
 DELETE FROM Cliente
 DELETE FROM Competidor
 DELETE FROM CotizacionTarea
@@ -1108,18 +1108,18 @@ INSERT INTO Direccion VALUES
 
 --inflacion
 insert into inflacion values
-  (2010,0.5),
-  (2011,0.5),
-  (2012,0.5),
-  (2013,0.5),
-  (2014,0.5),
-  (2015,0.5),
-  (2016,0.5),
-  (2017,0.5),
-  (2018,0.5),
-  (2019,0.5),
-  (2020,0.5),
-  (2021,0.5);
+  (2010,5),
+  (2011,3),
+  (2012,7),
+  (2013,1),
+  (2014,5),
+  (2015,7),
+  (2016,6),
+  (2017,3),
+  (2018,1),
+  (2019,1),
+  (2020,2),
+  (2021,2);
 
 --clientes
 DECLARE @i INT, @cedula INT, @telefono INT, @celular INT, @nombre VARCHAR(30), @apellido1 VARCHAR(30), @apellido2 VARCHAR(30), @randomNombre INT, @randomApellido1 INT, @randomApellido2 INT
@@ -1527,13 +1527,9 @@ BEGIN
   SELECT @random1 = 1 + RAND() * 100;
   IF NOT (SELECT COUNT(*) FROM Cotizacion WHERE id_factura = @random1 or nombre_cuenta = @randomCuenta) > 0
   BEGIN
-    INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, precio_negociado, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
-    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', 1000, @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);
+    INSERT INTO Cotizacion (numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor, probabilidad, motivo_denegacion, id_competidor) 
+    VALUES (@maxElement,@random1, @randomContacto, 'Tipo de prueba', 'Oportunidad de prueba', '2017-01-01', @randomCuenta, '2017-01-01', '2017-01-01', 'Orden de prueba', 'Descripcion de prueba', @randomZona, @randomSector, @randomMoneda,@randomEtapa, @randomAsesor, @randomProbabilidad, @randomMotivo, @randomCompetidor);
     
-	EXECUTE procInsertarValorPresenteCotizaciones
-		@numero_cotizacion = @maxElement,
-		@ret = 2137
-
 	SET @maxElement = @maxElement + 1;
   END
 END
@@ -1569,14 +1565,14 @@ GO
 DECLARE @producto int, @cotizacion int, @maxElement int
 
 SET @maxElement = 1;
-WHILE @maxElement < 10
+WHILE @maxElement < 50
 BEGIN
   SELECT TOP 1 @producto = codigo FROM Producto ORDER BY NEWID();
   SELECT TOP 1 @cotizacion = numero_cotizacion FROM Cotizacion ORDER BY NEWID();
-  IF NOT (SELECT COUNT(*) FROM ProductoCotizacion WHERE codigo_producto = @producto or numero_cotizacion =@cotizacion ) > 0
+  IF NOT (SELECT COUNT(*) FROM ProductoCotizacion WHERE codigo_producto = @producto AND numero_cotizacion =@cotizacion ) > 0
   BEGIN
-    INSERT INTO ProductoCotizacion (codigo_producto, numero_cotizacion, cantidad) 
-    VALUES (@producto, @cotizacion, 1);
+    INSERT INTO ProductoCotizacion (codigo_producto, numero_cotizacion, precio_negociado, cantidad) 
+    VALUES (@producto, @cotizacion,1000, 1 + RAND() * 100);
     SET @maxElement = @maxElement + 1;
   END
 END

@@ -94,46 +94,6 @@ DROP PROCEDURE IF EXISTS procEliminarTipoPrivilegio
 DROP PROCEDURE IF EXISTS procEliminarEstadoProducto
 GO
 
-/*
-#################################################
-##################### ValorPresenteCotizaciones ############
-#################################################
-*/
---1. INSERT
-CREATE PROCEDURE procInsertarValorPresenteCotizaciones
-	@numero_cotizacion INT,
-	@ret INT OUTPUT
-AS
-  BEGIN
-	DECLARE	@numero_contacto INT,
-			@nombre_oportunidad VARCHAR(30),
-			@fecha_cotizacion VARCHAR(30),
-			@nombre_cuenta VARCHAR(30),
-			@total_cotizacion VARCHAR(30),
-			@total_a_valor_presente VARCHAR(30)
-
-	SET @numero_contacto = (SELECT id_contacto FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-	SET @nombre_oportunidad = (SELECT nombre_oportunidad FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-	SET @fecha_cotizacion = (SELECT fecha_cotizacion FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-	SET @nombre_cuenta = (SELECT nombre_cuenta FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-	SET @total_cotizacion = (SELECT precio_negociado FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-	SET @total_a_valor_presente = (SELECT precio_negociado FROM Cotizacion WHERE numero_cotizacion = @numero_cotizacion)
-
-
-	BEGIN TRY
-		INSERT INTO ValorPresenteCotizaciones VALUES
-		(@numero_cotizacion, @numero_contacto, @nombre_oportunidad, @fecha_cotizacion, @nombre_cuenta, @total_cotizacion, @total_a_valor_presente)
-		SET @ret = 1
-	END TRY
-	BEGIN CATCH
-		print @@ERROR
-		PRINT ERROR_MESSAGE()
-		SET @ret = -1
-		PRINT @ret
-	END CATCH
-  END
-GO
-
 
 -- procedimientos almacenados para la tabla: "Actividad"
 
@@ -1242,7 +1202,6 @@ CREATE PROCEDURE Cotizacion_Insert
     @fecha_cierre DATE,
     @orden_compra VARCHAR(30),
     @descripcion VARCHAR(30),
-    @precio_negociado float,
     @id_zona INT,
     @id_sector INT,
     @id_moneda INT,
@@ -1257,15 +1216,11 @@ BEGIN
     BEGIN TRY
         INSERT INTO Cotizacion
         (
-        numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, precio_negociado, id_zona, id_sector, id_moneda, id_etapa, id_asesor,probabilidad, motivo_denegacion, id_competidor
+        numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor,probabilidad, motivo_denegacion, id_competidor
         )
     VALUES
         (
-            @numeroCotizacion, @idFactura, @idContacto, @tipo, @nombre_oportunidad, @fechaCotizacion, @nombrecuenta, @fecha_proyeccion_cierre, @fecha_cierre, @orden_compra, @descripcion, @precio_negociado, @id_zona, @id_sector, @id_moneda, @id_etapa, @id_asesor, @id_probabilidad, @motivo_denegacion, @id_competidor)
-        
-		EXECUTE procInsertarValorPresenteCotizaciones
-			@numero_cotizacion = @numeroCotizacion,
-			@ret = 2137
+            @numeroCotizacion, @idFactura, @idContacto, @tipo, @nombre_oportunidad, @fechaCotizacion, @nombrecuenta, @fecha_proyeccion_cierre, @fecha_cierre, @orden_compra, @descripcion, @id_zona, @id_sector, @id_moneda, @id_etapa, @id_asesor, @id_probabilidad, @motivo_denegacion, @id_competidor)
 
 		SET @ret = 1
     END TRY
@@ -1292,7 +1247,6 @@ CREATE PROCEDURE Cotizacion_Update
         @fecha_cierre DATE,
         @orden_compra VARCHAR(30),
         @descripcion VARCHAR(30),
-        @precio_negociado float,
         @id_zona INT,
         @id_sector INT,
         @id_moneda INT,
@@ -1318,7 +1272,6 @@ BEGIN
             fecha_cierre = @fecha_cierre,
             orden_compra = @orden_compra,
             descripcion = @descripcion,
-            precio_negociado = @precio_negociado,
             id_zona = @id_zona,
             id_sector = @id_sector,
             id_moneda = @id_moneda,
@@ -2111,12 +2064,13 @@ GO
 CREATE PROCEDURE procInsertarProductoCotizacion
   @codigo_producto INT,
   @numero_cotizacion INT,
+  @precio_negociado FLOAT,
   @cantidad INT,
   @ret INT
 AS
   BEGIN
 	BEGIN TRY
-		INSERT INTO ProductoCotizacion VALUES (@codigo_producto, @numero_cotizacion, @cantidad)
+		INSERT INTO ProductoCotizacion VALUES (@codigo_producto, @numero_cotizacion, @precio_negociado, @cantidad)
 		SET @ret = 1
 	END TRY
 	BEGIN CATCH
