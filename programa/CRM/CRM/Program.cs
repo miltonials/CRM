@@ -1,11 +1,18 @@
 using CRM.Controllers;
 using CRM.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option => {
+        option.LoginPath = "/Acceso/Index";
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(50);
+        option.AccessDeniedPath = "/Home/Privacy";
+    });
 
 builder.Services.AddDbContext<CRMContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion"))
@@ -30,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Acceso}/{action=Index}/{id?}");
 
 app.Run();
