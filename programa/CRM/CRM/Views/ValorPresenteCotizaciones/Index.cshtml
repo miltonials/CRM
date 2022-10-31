@@ -7,9 +7,10 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="calcularInflacion" class="btn btn-success">Calcular inflacion</a>
+    <a asp-action="borrarRegistros" class="btn btn-danger">Borrar registros</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -40,10 +41,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                <a asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.NumeroCotizacion)
+                </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroContacto)
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.NumeroContacto" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.NumeroContacto)
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NombreOportunidad)
@@ -61,7 +66,7 @@
                 @Html.DisplayFor(modelItem => item.TotalAValorPresente)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-primary">Details</a>
+                <a asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-primary">Detalles</a>
             </td>
         </tr>
 }

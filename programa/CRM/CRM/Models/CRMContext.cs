@@ -1342,7 +1342,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VContactosInfoGeneral>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id);
 
                 entity.ToView("vContactosInfoGeneral");
 

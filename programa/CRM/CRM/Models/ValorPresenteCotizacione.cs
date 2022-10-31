@@ -29,10 +29,10 @@ namespace CRM.Models
 
         [Display(Name = "Valor total de la cotización")]
 
-        public string TotalCotizacion { get; set; } = null!;
+        public double TotalCotizacion { get; set; }
 
         [Display(Name = "Valor presente de la cotización")]
-        public string TotalAValorPresente { get; set; } = null!;
+        public double TotalAValorPresente { get; set; }
 
         public virtual Cotizacion NumeroCotizacionNavigation { get; set; } = null!;
     }

@@ -2,6 +2,16 @@
 GO
 
 DROP PROCEDURE IF EXISTS procCalcularValorPresenteCotizaciones
+DROP PROCEDURE IF EXISTS procBorrarValorPresenteCotizaciones
+GO
+
+
+CREATE PROCEDURE procBorrarValorPresenteCotizaciones
+AS
+	BEGIN
+		DELETE FROM ValorPresenteCotizaciones
+		SELECT * FROM ValorPresenteCotizaciones
+	END
 GO
 
 CREATE PROCEDURE procCalcularValorPresenteCotizaciones
@@ -71,7 +81,8 @@ AS
 
 		CLOSE curValorPresenteCotizaciones;
 		DEALLOCATE curValorPresenteCotizaciones;
+
+		SELECT * FROM ValorPresenteCotizaciones
 	END	
 GO
-
-SELECT * FROM ProductoCotizacion
+	DELETE FROM ValorPresenteCotizaciones
