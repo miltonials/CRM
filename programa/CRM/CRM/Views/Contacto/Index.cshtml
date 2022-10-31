@@ -7,8 +7,30 @@
 <h1>Contactos</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Registrar un nuevo contacto</a>
+    <a asp-controller="Contacto" asp-action="Create" class="btn btn-success">Registrar un nuevo contacto</a>
+    <a asp-controller="VContactosInfoGeneral" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <div>
+        <a class="dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filtrar contactos por cliente
+          </button>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (var item in Model) {
+                <li>
+                    <a class="dropdown-item" asp-controller="Contacto" asp-action="VcontactosInfoGeneral" asp-route-id="@item.CedulaClienteNavigation.Cedula">
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula) | 
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Nombre)
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Apellido1)
+                        @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Apellido2)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
 </p>
+
+
 <table class="table table-stripped">
     <thead>
         <tr>
@@ -97,8 +119,8 @@
                 @Html.DisplayFor(modelItem => item.TipoContactoNavigation.Id)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Detalles</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Detalles</a>
+                <a asp-controller="Contacto" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
 }

@@ -13,6 +13,7 @@ namespace CRM.Models
             IdTareas = new HashSet<Tarea>();
         }
 
+        [Display(Name = "Número de cotización")]
         public int NumeroCotizacion { get; set; }
         [Display(Name = "Factura")]
         public int? IdFactura { get; set; }
@@ -87,7 +88,7 @@ namespace CRM.Models
         [Display(Name = "Motivo de denegación")]
         public virtual Motivo? MotivoDenegacionNavigation { get; set; }
 
-        [Display(Name = "Nombre de la cuenta")]
+        [Display(Name = "Cuenta cliente")]
         public virtual CuentaCliente NombreCuentaNavigation { get; set; } = null!;
 
         [Display(Name = "Probabilidad")]

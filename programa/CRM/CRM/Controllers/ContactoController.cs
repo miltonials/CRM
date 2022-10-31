@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CRM.Models;
 
 namespace CRM.Controllers
 {
@@ -129,14 +125,23 @@ namespace CRM.Controllers
             {
                 _context.Contactos.Remove(contacto);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContactoExists(int id)
         {
-          return _context.Contactos.Any(e => e.Id == id);
+            return _context.Contactos.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> VcontactosInfoGeneral(string cedula)
+        {
+            var cRMContext = _context.VContactosInfoGenerals.FromSqlRaw($"procObtenerContactosPorCliente @cedula_cliente = {cedula}, @ret = {0}");
+            return View("Views/VcontactosInfoGeneral/Index", await cRMContext.ToListAsync());
+
+        }
+
     }
 }

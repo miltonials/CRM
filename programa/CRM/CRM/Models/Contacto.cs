@@ -15,8 +15,14 @@ namespace CRM.Models
         }
 
         public int Id { get; set; }
+
+        [Display(Name = "Cédula del cliente")]
         public string CedulaCliente { get; set; } = null!;
+
+        [Display(Name = "Cédula del asesor")]
         public string? CedulaUsuario { get; set; }
+
+        [Display(Name = "Tipo de contacto")]
         public int? TipoContacto { get; set; }
         public string? Motivo { get; set; }
         public string? Nombre { get; set; }

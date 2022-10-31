@@ -1,0 +1,131 @@
+﻿@model IEnumerable<CRM.Models.VContactosInfoGeneral>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Contactos</h1>
+
+<p>
+    <a asp-controller="Contacto" asp-action="Create" class="btn btn-success">Registrar un nuevo contacto</a>
+    <a asp-controller="Contacto" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <div>
+        <a class="dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filtrar contactos por cliente
+            </button>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a class="dropdown-item" asp-action="Filtrar" asp-route-id="@item.CedulaCliente">
+                        @Html.DisplayFor(modelItem => item.CedulaCliente) |
+                        @Html.DisplayFor(modelItem => item.Cliente)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Asesor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreContactoEspecifico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelefonoContactoEspecifico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asesor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreContactoEspecifico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelefonoContactoEspecifico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sector)
+            </td>
+            <td>
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Detalles</a>
+                <a asp-controller="Contacto" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
