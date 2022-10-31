@@ -1414,7 +1414,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VCotizacionInfoGeneral>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.NumeroCotizacion);
 
                 entity.ToView("vCotizacionInfoGeneral");
 

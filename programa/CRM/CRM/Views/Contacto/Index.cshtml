@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Motivo)
             </th>
             <th>
@@ -29,9 +32,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CedulaCliente1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
@@ -58,6 +58,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Motivo)
             </td>
             <td>
@@ -71,9 +74,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CedulaCliente1.CedulaCliente)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula)
@@ -97,8 +97,8 @@
                 @Html.DisplayFor(modelItem => item.TipoContactoNavigation.Id)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Detalles</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
 }

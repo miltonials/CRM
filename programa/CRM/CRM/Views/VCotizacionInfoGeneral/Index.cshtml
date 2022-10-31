@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRM.Models.Cotizacion>
+﻿@model IEnumerable<CRM.Models.VCotizacionInfoGeneral>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,8 +7,8 @@
 <h1>Cotizaciones</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Agregar nueva cotización</a>
-    <a asp-controller="VCotizacionInfoGeneral" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <a asp-controller="Cotizacion" asp-action="Create" class="btn btn-success">Agregar nueva cotización</a>
+    <a asp-controller="Cotizacion" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
 </p>
 <table class="table table-striped">
     <thead>
@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.NumeroCotizacion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdFactura)
+                @Html.DisplayNameFor(model => model.IdContacto)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
@@ -27,6 +27,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaCotizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCuenta)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProyeccionCierre)
@@ -41,34 +44,28 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdAsesorNavigation)
+                @Html.DisplayNameFor(model => model.Zona)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCompetidorNavigation)
+                @Html.DisplayNameFor(model => model.Sector)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdContactoNavigation)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdEtapaNavigation)
+                @Html.DisplayNameFor(model => model.Etapa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdMonedaNavigation)
+                @Html.DisplayNameFor(model => model.Asesor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+                @Html.DisplayNameFor(model => model.Probabilidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdZonaNavigation)
+                @Html.DisplayNameFor(model => model.Motivo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MotivoDenegacionNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreCuentaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProbabilidadNavigation)
+                @Html.DisplayNameFor(model => model.Competidor)
             </th>
             <th></th>
         </tr>
@@ -80,7 +77,9 @@
                 @Html.DisplayFor(modelItem => item.NumeroCotizacion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdFactura)
+                <a asp-controller="Contacto" asp-action="Details" asp-route-id="@item.IdContacto" class="btn btn-outline-secondary">
+                    @Html.DisplayFor(modelItem => item.IdContacto)
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tipo)
@@ -90,6 +89,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaCotizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCuenta)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaProyeccionCierre)
@@ -104,38 +106,32 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAsesorNavigation.Cedula)
+                @Html.DisplayFor(modelItem => item.Zona)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCompetidorNavigation.Nombre)
+                @Html.DisplayFor(modelItem => item.Sector)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdContactoNavigation.CedulaCliente)
+                @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdEtapaNavigation.Nombre)
+                @Html.DisplayFor(modelItem => item.Etapa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdMonedaNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Asesor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Probabilidad)%
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdZonaNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Motivo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MotivoDenegacionNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Competidor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NombreCuentaNavigation.CedulaCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProbabilidadNavigation.Porcentaje)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { @item.NumeroCotizacion }) |
-                    @Html.ActionLink("Details", "Details", new {@item.NumeroCotizacion })
+                <a asp-controller="Cotizacion" asp-action="Edit" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-primary">Modificar</a>
+                <a asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-secondary">Detales</a>
             </td>
         </tr>
 }

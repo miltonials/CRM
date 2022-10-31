@@ -166,53 +166,6 @@ namespace CRM.Controllers
             return View(cotizacion);
         }
 
-        // GET: Cotizacion/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Cotizacions == null)
-            {
-                return NotFound();
-            }
-
-            var cotizacion = await _context.Cotizacions
-                .Include(c => c.IdAsesorNavigation)
-                .Include(c => c.IdCompetidorNavigation)
-                .Include(c => c.IdContactoNavigation)
-                .Include(c => c.IdEtapaNavigation)
-                .Include(c => c.IdMonedaNavigation)
-                .Include(c => c.IdSectorNavigation)
-                .Include(c => c.IdZonaNavigation)
-                .Include(c => c.MotivoDenegacionNavigation)
-                .Include(c => c.NombreCuentaNavigation)
-                .Include(c => c.ProbabilidadNavigation)
-                .FirstOrDefaultAsync(m => m.NumeroCotizacion == id);
-            if (cotizacion == null)
-            {
-                return NotFound();
-            }
-
-            return View(cotizacion);
-        }
-
-        // POST: Cotizacion/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Cotizacions == null)
-            {
-                return Problem("Entity set 'CRMContext.Cotizacions'  is null.");
-            }
-            var cotizacion = await _context.Cotizacions.FindAsync(id);
-            if (cotizacion != null)
-            {
-                _context.Cotizacions.Remove(cotizacion);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool CotizacionExists(int id)
         {
           return _context.Cotizacions.Any(e => e.NumeroCotizacion == id);

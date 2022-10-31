@@ -49,15 +49,15 @@ CREATE VIEW vCotizacionInfoGeneral AS
 	SELECT numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad,
 			fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre,
 			orden_compra, coti.descripcion, zn.nombre AS zona, sec.nombre AS sector,
-			mo.nombre, id_etapa AS etapa, id_asesor AS asesor, probabilidad, moti.descripcion AS motivo ,
+			mo.nombre, id_etapa AS etapa, ase.nombre + ' ' + ase.apellido1 + ' ' + ase.apellido2 AS asesor, probabilidad, moti.descripcion AS motivo ,
 			id_competidor AS competidor
 		FROM Cotizacion coti
 			INNER JOIN Zona zn ON zn.id = coti.id_zona
 			INNER JOIN Sector sec ON sec.id = coti.id_sector
 			INNER JOIN Moneda mo ON mo.id = coti.id_moneda
 			INNER JOIN Motivo moti ON moti.id = coti.motivo_denegacion
+			INNER JOIN Usuario ase ON ase.cedula = coti.id_asesor
 GO
-
 
 CREATE PROCEDURE procObtenerContactosPorCliente
 	@cedula_cliente VARCHAR(30),
