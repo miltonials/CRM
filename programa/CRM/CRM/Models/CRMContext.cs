@@ -56,6 +56,7 @@ namespace CRM.Models
         public virtual DbSet<VCotizacionInfoGeneral> VCotizacionInfoGenerals { get; set; } = null!;
         public virtual DbSet<VProductosInfoGeneral> VProductosInfoGenerals { get; set; } = null!;
         public virtual DbSet<ValorPresenteCotizacione> ValorPresenteCotizaciones { get; set; } = null!;
+        public virtual DbSet<VProductosXcotizacion> VProductosXcotizacions { get; set; } = null!;
         public virtual DbSet<Zona> Zonas { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1184,6 +1185,37 @@ namespace CRM.Models
                     .HasColumnName("nombre");
             });
 
+            modelBuilder.Entity<VProductosXcotizacion>(entity =>
+            {
+                entity.HasKey(e => e.NumeroCotizacion);
+
+                entity.ToView("vProductosXcotizacion");
+
+                entity.Property(e => e.Codigo).HasColumnName("codigo");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Familia)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.NumeroCotizacion).HasColumnName("numero_cotizacion");
+
+                entity.Property(e => e.PrecioEstandar).HasColumnName("precio_estandar");
+            });
+
             modelBuilder.Entity<Tarea>(entity =>
             {
                 entity.ToTable("Tarea");
@@ -1502,7 +1534,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<VProductosInfoGeneral>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Codigo);
 
                 entity.ToView("vProductosInfoGeneral");
 

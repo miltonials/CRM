@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRM.Models.Producto>
+﻿@model IEnumerable<CRM.Models.VProductosInfoGeneral>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,7 +8,7 @@
 
 <p>
     <a asp-controller="Producto" asp-action="Create" class="btn btn-success">Registrar un nuevo producto</a>
-    <a asp-controller="VProductosInfoGeneral" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <a asp-controller="Producto" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
 </p>
 <table class="table table-striped">
     <thead>
@@ -26,10 +26,10 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoFamiliaNavigation)
+                @Html.DisplayNameFor(model => model.Familia)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EstadoNavigation)
+                @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th></th>
         </tr>
@@ -44,20 +44,20 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PrecioEstandar)
+                    @Html.DisplayFor(modelItem => item.PrecioEstandar)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoFamiliaNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.Familia)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EstadoNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-outline-primary">Modificar</a>
-                <a asp-action="Details" asp-route-id="@item.Codigo" class="btn btn-outline-secondary">Detalles</a>
+                <a asp-controller="Producto" asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-outline-primary">Modificar</a>
+                <a asp-controller="Producto" asp-action="Details" asp-route-id="@item.Codigo" class="btn btn-outline-secondary">Detalles</a>
             </td>
         </tr>
 }

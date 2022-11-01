@@ -119,8 +119,8 @@
             @Html.DisplayFor(model => model.ProbabilidadNavigation.Porcentaje)
         </dd>
     </dl>
+    <a asp-controller="VProductosXcotizacion" asp-action="Filtrar" asp-route-id="@Model.NumeroCotizacion">Ver productos de la cotizacion</a>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

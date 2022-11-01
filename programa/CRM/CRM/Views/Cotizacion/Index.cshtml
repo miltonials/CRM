@@ -135,7 +135,9 @@
             </td>
             <td>
                     @Html.ActionLink("Edit", "Edit", new { @item.NumeroCotizacion }) |
-                    @Html.ActionLink("Details", "Details", new {@item.NumeroCotizacion })
+                    @*@Html.ActionLink("Details", "Details", new {@item.NumeroCotizacion })*@
+                    <a asp-action="Details" asp-route-id="@item.NumeroCotizacion">Detalles</a>
+
             </td>
         </tr>
 }

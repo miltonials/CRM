@@ -8,7 +8,7 @@ namespace CRM.Models
         public int Codigo { get; set; }
         public string? Familia { get; set; }
         public string? Nombre { get; set; }
-        public int? PrecioEstandar { get; set; }
+        public double? PrecioEstandar { get; set; }
         public string? Estado { get; set; }
         public string? Descripcion { get; set; }
     }

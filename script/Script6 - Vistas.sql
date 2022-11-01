@@ -3,6 +3,7 @@ GO
 
 DROP VIEW IF EXISTS vProductosInfoGeneral
 DROP VIEW IF EXISTS vClienteInfoGeneral
+DROP VIEW IF EXISTS vProductosXcotizacion
 DROP VIEW IF EXISTS vContactosInfoGeneral
 DROP VIEW IF EXISTS vCotizacionInfoGeneral
 DROP PROCEDURE IF EXISTS procObtenerContactosPorCliente
@@ -81,6 +82,14 @@ END
 GO
 
 /* Procedimiento que obtenga producto por cotizacion */
+CREATE VIEW vProductosXcotizacion AS 
+	SELECT pc.numero_cotizacion, p.codigo as codigo,f.nombre as Familia, p.nombre,p.precio_estandar,
+		e.nombre AS Estado, p.descripcion, COUNT(*) AS Cantidad
+			FROM ProductoCotizacion pc, Producto p, Estado e, Familia F
+				WHERE p.estado = e.id and p.codigo_Familia = f.codigo AND
+						pc.codigo_producto = P.codigo
+				GROUP BY pc.numero_cotizacion, p.codigo ,f.nombre , p.nombre,p.precio_estandar, e.nombre, p.descripcion
+GO
 
 CREATE PROCEDURE procObtenerProductoPorCotizacion
 	@numero_cotizacion INT,
@@ -88,12 +97,8 @@ CREATE PROCEDURE procObtenerProductoPorCotizacion
 AS
 BEGIN
 	BEGIN TRY
-		SELECT p.codigo as codigo,f.nombre as Familia, p.nombre,p.precio_estandar,
-		e.nombre, p.descripcion
-			FROM ProductoCotizacion pc, Producto p, Estado e, Familia F
-			WHERE pc.numero_cotizacion = @numero_cotizacion and p.estado = e.id and p.codigo_Familia = f.codigo AND
-			PC.codigo_producto = P.codigo
-
+		SELECT * FROM vProductosXcotizacion
+			WHERE numero_cotizacion = @numero_cotizacion
 		SET @ret = 1
 	END TRY
 	BEGIN CATCH

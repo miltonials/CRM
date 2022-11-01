@@ -1,20 +1,22 @@
-﻿@model IEnumerable<CRM.Models.Producto>
+﻿@model IEnumerable<CRM.Models.VProductosXcotizacion>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Productos</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-controller="Producto" asp-action="Create" class="btn btn-success">Registrar un nuevo producto</a>
-    <a asp-controller="VProductosInfoGeneral" asp-action="Index" class="btn btn-secondary">Cambiar vista</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Familia)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -23,13 +25,13 @@
                 @Html.DisplayNameFor(model => model.PrecioEstandar)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoFamiliaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoNavigation)
+                @Html.DisplayNameFor(model => model.Cantidad)
             </th>
             <th></th>
         </tr>
@@ -41,23 +43,27 @@
                 @Html.DisplayFor(modelItem => item.Codigo)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Familia)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PrecioEstandar)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoFamiliaNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.Cantidad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EstadoNavigation.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn btn-outline-primary">Modificar</a>
-                <a asp-action="Details" asp-route-id="@item.Codigo" class="btn btn-outline-secondary">Detalles</a>
+                <a asp-action="Edit" asp-route-id="@item.NumeroCotizacion">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.NumeroCotizacion">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.NumeroCotizacion">Delete</a>
             </td>
         </tr>
 }

@@ -50,7 +50,7 @@ namespace CRM.Controllers
             var ret = new SqlParameter("ret", 2);
             var res = _context
             .VContactosInfoGenerals
-            .FromSqlInterpolated($"procObtenerContactosPorCliente @cedula_cliente = {cedula}, @ret = {ret}").ToList();
+            .FromSqlInterpolated($"procObtenerContactosPorCliente @cedula_cliente = {cedulaCl}, @ret = {ret}").ToList();
             
             return View("Index", res);
         }
