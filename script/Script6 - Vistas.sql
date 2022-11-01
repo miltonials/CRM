@@ -18,8 +18,13 @@ GO
 
 /*Se debe reemplazar por cuenta cliente*/
 CREATE VIEW vClienteInfoGeneral AS
-	SELECT c.cedula, c.telefono, c.celular, c.nombre, c.apellido1, c.apellido2
-	FROM Cliente c;
+	SELECT c.id, c.cedula_cliente, c.nombre_cuenta, m.nombre AS moneda,
+			contacto_principal, sitio_web, informacion_adicional, correo_electronico,
+			zn.nombre AS zona, SC.nombre AS Sector
+		FROM CuentaCliente c
+		INNER JOIN zona zn ON zn.id = c.id_zona
+		INNER JOIN Moneda m ON m.id = c.moneda
+		INNER JOIN Sector sc ON sc.id = c.id_sector;
 GO
 
 
@@ -99,6 +104,48 @@ BEGIN
 	BEGIN TRY
 		SELECT * FROM vProductosXcotizacion
 			WHERE numero_cotizacion = @numero_cotizacion
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarProducto
+GO
+CREATE PROCEDURE procBuscarProducto
+	@codigo INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT * FROM Producto
+			WHERE codigo = @codigo
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarCliente
+GO
+CREATE PROCEDURE procBuscarCliente
+	@cedula INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT * FROM Cliente
+			WHERE cedula = @cedula
 		SET @ret = 1
 	END TRY
 	BEGIN CATCH

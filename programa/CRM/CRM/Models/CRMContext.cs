@@ -1043,7 +1043,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.HasKey(e => new { e.Codigo, e.CodigoFamilia })
+                entity.HasKey(e => new { e.Codigo})
                     .HasName("PK__Producto__15F6490F721B7434");
 
                 entity.ToTable("Producto");
@@ -1187,9 +1187,9 @@ namespace CRM.Models
 
             modelBuilder.Entity<VProductosXcotizacion>(entity =>
             {
-                entity.HasKey(e => e.NumeroCotizacion);
+                entity.HasNoKey();
 
-                entity.ToView("vProductosXcotizacion");
+                entity.ToView("VProductosXcotizacion");
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 

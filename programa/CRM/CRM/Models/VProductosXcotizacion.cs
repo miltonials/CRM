@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRM.Models
 {
     public partial class VProductosXcotizacion
     {
+        [Display(Name = "Número de cotización")]
         public int NumeroCotizacion { get; set; }
         public int Codigo { get; set; }
         public string Familia { get; set; } = null!;

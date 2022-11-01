@@ -160,7 +160,7 @@ namespace CRM.Controllers
 
 
         [HttpGet("VProductosXcotizacion/Filtrar/{cotizacion}")]
-        public IActionResult Filtrar(string cotizacion)
+        public IActionResult Filtrar(int cotizacion)
         {
             var pCotizacion = new SqlParameter("numero_cotizacion", cotizacion);
             var ret = new SqlParameter("ret", 2);

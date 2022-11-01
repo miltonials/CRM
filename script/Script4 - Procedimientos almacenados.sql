@@ -929,7 +929,6 @@ BEGIN
     BEGIN TRY
         UPDATE Producto
         SET
-            codigo = @codigo,
             codigo_familia = @codigo_familia,
             nombre = @nombre,
             precio_estandar = @precioEstandar,
