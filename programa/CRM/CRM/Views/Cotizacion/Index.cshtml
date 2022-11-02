@@ -134,10 +134,8 @@
                 @Html.DisplayFor(modelItem => item.ProbabilidadNavigation.Porcentaje)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Edit", new { @item.NumeroCotizacion }) |
-                    @*@Html.ActionLink("Details", "Details", new {@item.NumeroCotizacion })*@
-                    <a asp-action="Details" asp-route-id="@item.NumeroCotizacion">Detalles</a>
-
+                    <a asp-controller="Cotizacion" asp-action="Edit" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-primary">Modificar</a>
+                    <a asp-controller="Cotizacion" asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-outline-secondary">Detales</a>
             </td>
         </tr>
 }

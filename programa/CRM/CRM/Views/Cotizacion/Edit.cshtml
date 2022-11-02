@@ -38,7 +38,7 @@
                 <input asp-for="FechaCotizacion" class="form-control" />
                 <span asp-validation-for="FechaCotizacion" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="NombreCuenta" />
+            @*<input type="hidden" asp-for="NombreCuenta" />*@
             <div class="form-group">
                 <label asp-for="FechaProyeccionCierre" class="control-label"></label>
                 <input asp-for="FechaProyeccionCierre" class="form-control" />
@@ -59,7 +59,7 @@
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="IdZona" class="control-label"></label>
                 <select asp-for="IdZona" class="form-control" asp-items="ViewBag.IdZona"></select>
                 <span asp-validation-for="IdZona" class="text-danger"></span>
@@ -73,17 +73,17 @@
                 <label asp-for="IdMoneda" class="control-label"></label>
                 <select asp-for="IdMoneda" class="form-control" asp-items="ViewBag.IdMoneda"></select>
                 <span asp-validation-for="IdMoneda" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="IdEtapa" class="control-label"></label>
                 <select asp-for="IdEtapa" class="form-control" asp-items="ViewBag.IdEtapa"></select>
                 <span asp-validation-for="IdEtapa" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="IdAsesor" class="control-label"></label>
                 <select asp-for="IdAsesor" class="form-control" asp-items="ViewBag.IdAsesor"></select>
                 <span asp-validation-for="IdAsesor" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Probabilidad" class="control-label"></label>
                 <select asp-for="Probabilidad" class="form-control" asp-items="ViewBag.Probabilidad"></select>
