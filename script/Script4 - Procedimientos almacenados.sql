@@ -92,6 +92,7 @@ DROP PROCEDURE IF EXISTS procEliminarProductoCotizacion
 DROP PROCEDURE IF EXISTS procEliminarTarea
 DROP PROCEDURE IF EXISTS procEliminarTipoPrivilegio
 DROP PROCEDURE IF EXISTS procEliminarEstadoProducto
+DROP PROCEDURE IF EXISTS procBuscarCotizacion
 GO
 
 
@@ -1196,16 +1197,11 @@ CREATE PROCEDURE Cotizacion_Insert
     @tipo VARCHAR(30),
     @nombre_oportunidad VARCHAR(30),
     @fechaCotizacion DATE,
-    @nombrecuenta VARCHAR(30),
     @fecha_proyeccion_cierre DATE,
     @fecha_cierre DATE,
     @orden_compra VARCHAR(30),
     @descripcion VARCHAR(30),
-    @id_zona INT,
-    @id_sector INT,
-    @id_moneda INT,
     @id_etapa VARCHAR(30),
-    @id_asesor varchar(30),
     @id_probabilidad SMALLINT,
     @motivo_denegacion VARCHAR(10),
     @id_competidor VARCHAR(30),
@@ -1213,6 +1209,19 @@ CREATE PROCEDURE Cotizacion_Insert
 AS
 BEGIN
     BEGIN TRY
+        DECLARE @nombrecuenta VARCHAR(30), @id_zona INT, @id_sector INT, @id_moneda INT, @id_asesor VARCHAR(30), @cedula_cliente VARCHAR(30)
+        -- sacar la cedula del cliente del contacto y guardarlo en @nombre_cuenta 
+        SELECT @cedula_cliente = cedula_cliente FROM Contacto WHERE id = @idContacto
+        -- sacar el nombre de la cuenta con la cedula del cliente 
+        SELECT @nombrecuenta = nombre_cuenta FROM CuentaCliente WHERE cedula_cliente = @cedula_cliente
+        -- sacar el id de la zona de la cuenta y guardarlo en @id_zona
+        SELECT @id_zona = id_zona FROM Contacto WHERE id = @idContacto
+        -- sacar el id del sector de la cuenta y guardarlo en @id_sector
+        SELECT @id_sector = id_sector FROM Contacto WHERE id = @idContacto
+        -- sacar el id de la moneda de la cuenta y guardarlo en @id_moneda
+        SELECT @id_moneda = moneda FROM CuentaCliente WHERE cedula_cliente = @cedula_cliente
+        -- sacar el id del asesor de la cuenta y guardarlo en @id_asesor
+        SELECT @id_asesor = cedula_usuario FROM Contacto WHERE id = @idContacto
         INSERT INTO Cotizacion
         (
         numero_cotizacion, id_factura, id_contacto, tipo, nombre_oportunidad, fecha_cotizacion, nombre_cuenta, fecha_proyeccion_cierre, fecha_cierre, orden_compra, descripcion, id_zona, id_sector, id_moneda, id_etapa, id_asesor,probabilidad, motivo_denegacion, id_competidor
@@ -1228,6 +1237,26 @@ BEGIN
         print ERROR_MESSAGE()
         SET @ret = -1
         PRINT @ret
+        PRINT @numeroCotizacion
+        PRINT @idFactura
+        PRINT @idContacto
+        PRINT @tipo
+        PRINT @nombre_oportunidad
+        PRINT @fechaCotizacion
+        PRINT @nombrecuenta
+        PRINT @fecha_proyeccion_cierre
+        PRINT @fecha_cierre
+        PRINT @orden_compra
+        PRINT @descripcion
+        PRINT @id_zona
+        PRINT @id_sector
+        PRINT @id_moneda
+        PRINT @id_etapa
+        PRINT @id_asesor
+        PRINT @id_probabilidad
+        PRINT @motivo_denegacion
+        PRINT @id_competidor
+        
     END CATCH
 END
 GO
@@ -1241,25 +1270,34 @@ CREATE PROCEDURE Cotizacion_Update
         @tipo VARCHAR(30),
         @nombre_oportunidad VARCHAR(30),
         @fechaCotizacion DATE,
-        @nombrecuenta VARCHAR(30),
         @fecha_proyeccion_cierre DATE,
         @fecha_cierre DATE,
         @orden_compra VARCHAR(30),
         @descripcion VARCHAR(30),
-        @id_zona INT,
-        @id_sector INT,
-        @id_moneda INT,
         @id_etapa VARCHAR(30),
-        @id_asesor varchar(30),
         @id_probabilidad SMALLINT,
         @motivo_denegacion VARCHAR(10),
         @id_competidor VARCHAR(30),
         @ret int OUTPUT
     AS
 BEGIN
+	DECLARE @nombrecuenta VARCHAR(30), @id_zona INT, @id_sector INT, @id_moneda INT, @id_asesor VARCHAR(30), @cedula_cliente VARCHAR(30)
     BEGIN TRY
+            -- sacar la cedula del cliente del contacto y guardarlo en @nombre_cuenta 
+            SELECT @cedula_cliente = cedula_cliente FROM Contacto WHERE id = @idContacto
+            -- sacar el nombre de la cuenta con la cedula del cliente 
+            SELECT @nombrecuenta = nombre_cuenta FROM CuentaCliente WHERE cedula_cliente = @cedula_cliente
+            -- sacar el id de la zona de la cuenta y guardarlo en @id_zona
+            SELECT @id_zona = id_zona FROM Contacto WHERE id = @idContacto
+            -- sacar el id del sector de la cuenta y guardarlo en @id_sector
+            SELECT @id_sector = id_sector FROM Contacto WHERE id = @idContacto
+            -- sacar el id de la moneda de la cuenta y guardarlo en @id_moneda
+            SELECT @id_moneda = moneda FROM CuentaCliente WHERE cedula_cliente = @cedula_cliente
+            -- sacar el id del asesor de la cuenta y guardarlo en @id_asesor
+            SELECT @id_asesor = cedula_usuario FROM Contacto WHERE id = @idContacto
+			PRINT @nombrecuenta
         UPDATE Cotizacion
-        SET
+        SET 
             numero_Cotizacion = @numeroCotizacion,
             id_Factura = @idFactura,
             id_Contacto = @idContacto,
@@ -2242,3 +2280,22 @@ AS
   END
 GO
 
+/* procedimiento almacenado que busca una cotizacion por su id
+*/
+CREATE PROCEDURE procBuscarCotizacion
+  @id INT,
+  @ret INT OUTPUT
+AS
+    BEGIN
+        BEGIN TRY
+            SELECT * FROM Cotizacion WHERE numero_cotizacion = @id
+            SET @ret = 1
+        END TRY
+        BEGIN CATCH
+            --Se maneja un posible error generado en el try
+            print @@ERROR
+            PRINT ERROR_MESSAGE()
+            SET @ret = -1
+            PRINT @ret
+        END CATCH
+    END
