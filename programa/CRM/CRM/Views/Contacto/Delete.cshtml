@@ -13,11 +13,10 @@
     Estado estado = (Estado)ViewData["Estado"];
 }
 
-<h1>Delete</h1>
+<h1>Eliminar contacto</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h4>¿Estás seguro/a que deseas eliminar este contacto?</h4>
 <div>
-    <h4>Contacto</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -103,7 +102,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="CedulaCliente" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar contacto" class="btn btn-danger" /> |
+        <a asp-action="Index">Ver todos los contactos</a>
     </form>
 </div>

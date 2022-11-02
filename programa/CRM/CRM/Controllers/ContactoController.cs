@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace CRM.Controllers
@@ -27,25 +28,85 @@ namespace CRM.Controllers
         // GET: Contacto/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Contactos == null)
+            var pId = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "id",
+                Value = id,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
 
-            var contacto = await _context.Contactos
-                .Include(c => c.CedulaCliente1)
-                .Include(c => c.CedulaClienteNavigation)
-                .Include(c => c.CedulaUsuarioNavigation)
-                .Include(c => c.DireccionNavigation)
-                .Include(c => c.EstadoNavigation)
-                .Include(c => c.IdSectorNavigation)
-                .Include(c => c.IdZonaNavigation)
-                .Include(c => c.TipoContactoNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
-            {
-                return NotFound();
-            }
+            //Ejecucion de procedimiento almacenado
+            var contacto = _context
+                .Contactos
+                .FromSqlInterpolated($"procBuscarContacto {pId}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["usuario"] = _context
+                .Usuarios
+                .FromSqlInterpolated($"procBuscarUsuario {contacto.CedulaUsuario}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["cliente"] = _context
+                .Clientes
+                .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
+                .ToList()
+                .First();
+
+            Direccion dir = _context
+                .Direccions
+                .FromSqlInterpolated($"procBuscarDireccion {contacto.Direccion}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdProvinciaNavigation = _context
+                .Provincia
+                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdCantonNavigation = _context
+                .Cantons
+                .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdDistritoNavigation = _context
+                .Distritos
+                .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Zona"] = _context
+                .Zonas
+                .FromSqlInterpolated($"procBuscarZona {contacto.IdZona}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Sector"] = _context
+                .Sectors
+                .FromSqlInterpolated($"procBuscarSector {contacto.IdSector}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["TipoContacto"] = _context
+                .TipoContactos
+                .FromSqlInterpolated($"procBuscarTipoContacto {contacto.TipoContacto}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Estado"] = _context
+                .Estados
+                .FromSqlInterpolated($"procBuscarEstadoContacto {contacto.Estado}, {pRetorno}")
+                .ToList()
+                .First();
 
             return View(contacto);
         }
@@ -53,19 +114,54 @@ namespace CRM.Controllers
         // GET: Contacto/Create
         public IActionResult Create()
         {
-            ViewData["CedulaCliente"] = (IEnumerable<Cliente>) _context
-                .Clientes
-                .FromSqlInterpolated($"procSelectCliente")
+            IEnumerable<CuentaCliente> objClientes = (IEnumerable<CuentaCliente>)_context
+                .CuentaClientes
+                .FromSqlInterpolated($"procSelectCuentaCliente")
                 .ToList();
+
+            foreach (CuentaCliente cuenta in objClientes)
+            {
+                cuenta.CedulaClienteNavigation = _context
+                .Clientes
+                .FromSqlInterpolated($"procBuscarCliente {cuenta.CedulaCliente}, {5}")
+                .ToList()
+                .First();
+            }
+
+            ViewData["CedulaCliente"] = objClientes;
 
             ViewData["CedulaUsuario"] = (IEnumerable<Usuario>) _context
                 .Usuarios
                 .FromSqlInterpolated($"procSelectUsuario")
                 .ToList();
-            ViewData["Direccion"] = (IEnumerable<Direccion>) _context
+
+            IEnumerable<Direccion> objDir = (IEnumerable<Direccion>)_context
                 .Direccions
                 .FromSqlInterpolated($"procSelectDireccion")
                 .ToList();
+
+            foreach (Direccion dir in objDir)
+            {
+                dir.IdProvinciaNavigation = _context
+                .Provincia
+                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {5}")
+                .ToList()
+                .First();
+
+                dir.IdCantonNavigation = _context
+                    .Cantons
+                    .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {5}")
+                    .ToList()
+                    .First();
+
+                dir.IdDistritoNavigation = _context
+                    .Distritos
+                    .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {5}")
+                    .ToList()
+                    .First();
+            }
+
+            ViewData["Direccion"] = objDir;
             ViewData["Estado"] = (IEnumerable<Estado>) _context
                 .Estados
                 .FromSqlInterpolated($"procSelectEstadoContacto")

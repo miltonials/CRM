@@ -29,20 +29,20 @@
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CedulaCliente" class="control-label"></label>
+                <label class="control-label">Cliente</label>
                 <select asp-for="CedulaCliente" class="form-control">
-                    @foreach (Cliente item in ViewBag.CedulaCliente)
+                    @foreach (CuentaCliente item in ViewBag.CedulaCliente)
                     {
-                        <option value="@item.Cedula">@item.Nombre @item.Apellido1 @item.Apellido2</option>
+                        <option value="@item.CedulaCliente">@item.CedulaClienteNavigation.Nombre @item.CedulaClienteNavigation.Apellido1 @item.CedulaClienteNavigation.Apellido2 | @item.CedulaClienteNavigation.Cedula</option>
                     }
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="CedulaUsuario" class="control-label"></label>
+                <label class="control-label">Asesor / Usuario</label>
                 <select asp-for="CedulaUsuario" class="form-control">
                     @foreach (Usuario item in ViewBag.CedulaUsuario)
                     {
-                        <option value="@item.Cedula">@item.Nombre @item.Apellido1 @item.Apellido2</option>
+                        <option value="@item.Cedula">@item.Nombre @item.Apellido1 @item.Apellido2 | @item.Cedula</option>
                     }
                 </select>
             </div>
@@ -89,7 +89,7 @@
                 <select asp-for="Direccion" class="form-control">
                     @foreach (Direccion item in ViewBag.Direccion)
                     {
-                        <option value="@item.Id">@item.Id</option>
+                        <option value="@item.Id">@item.Id | @item.IdProvinciaNavigation.Nombre , @item.IdCantonNavigation.Nombre , @item.IdDistritoNavigation.Nombre</option>
                     }
                 </select>
             </div>
@@ -117,15 +117,16 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Registrar contacto" class="btn btn-primary" />
             </div>
         </form>
 
     </div>
 </div>
+<hr />
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Ver todos los contactos</a>
 </div>
 
 @section Scripts {

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Valor presente de las cotizaciones</h1>
 
 <p>
     <a asp-action="calcularInflacion" class="btn btn-success">Calcular inflacion</a>
@@ -34,7 +34,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.TotalAValorPresente)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -64,9 +63,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalAValorPresente)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.NumeroCotizacion" class="btn btn-primary">Detalles</a>
             </td>
         </tr>
 }

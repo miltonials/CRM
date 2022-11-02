@@ -394,7 +394,7 @@ GO
 CREATE PROCEDURE procSelectDireccionCompleta
 AS
 BEGIN
-		SELECT Direccion.id, Provincia.nombre provincia, Canton.nombre canton, Distrito.nombre distrito
+		SELECT Direccion.id, Provincia.nombre id_provincia, Canton.nombre id_canton, Distrito.nombre id_distrito
 		FROM Direccion, Provincia, Canton, Distrito
 			WHERE Direccion.id_canton = canton.id AND Direccion.id_distrito = Distrito.id 
 				AND Direccion.id_provincia = Provincia.id

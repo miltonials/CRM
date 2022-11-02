@@ -25,26 +25,11 @@ namespace CRM.Controllers
             var cRMContext = _context.ValorPresenteCotizaciones.Include(v => v.NumeroCotizacionNavigation);
             return View(await cRMContext.ToListAsync());
         }
-
-        // GET: ValorPresenteCotizaciones/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.ValorPresenteCotizaciones == null)
-            {
-                return NotFound();
-            }
-
-            var valorPresenteCotizacione = await _context.ValorPresenteCotizaciones
-                .Include(v => v.NumeroCotizacionNavigation)
-                .FirstOrDefaultAsync(m => m.NumeroCotizacion == id);
-            if (valorPresenteCotizacione == null)
-            {
-                return NotFound();
-            }
-
-            return View(valorPresenteCotizacione);
-        }
-
+        
+        /// <summary>
+        /// Metodo que permite calcular el valor presente de todas las cotizaciones de la base de datos.
+        /// </summary>
+        /// <returns>La vista index</returns>
         [HttpGet]
         public IActionResult calcularInflacion()
         {
@@ -52,6 +37,10 @@ namespace CRM.Controllers
             return View("Index", cRMContext);
         }
 
+        /// <summary>
+        /// Método que permite borrar todos los registros actuales de la tabla ValorPresenteCotizacion
+        /// </summary>
+        /// <returns>La vista index</returns>
         [HttpGet]
         public IActionResult borrarRegistros()
         {

@@ -2,94 +2,104 @@
 
 @{
     ViewData["Title"] = "Details";
+    Cliente cliente = (Cliente)ViewData["Cliente"];
+    Usuario usuario = (Usuario)ViewData["Usuario"];
+    Provincium provincia = (Provincium)ViewData["Provincia"];
+    Canton canton = (Canton)ViewData["Canton"];
+    Distrito distrito = (Distrito)ViewData["Distrito"];
+    Zona zona = (Zona)ViewData["Zona"];
+    Sector sector = (Sector)ViewData["Sector"];
+    TipoContacto tipoContacto = (TipoContacto)ViewData["TipoContacto"];
+    Estado estado = (Estado)ViewData["Estado"];
 }
 
-<h1>Details</h1>
+<h1>Detalles de contacto</h1>
 
 <div>
-    <h4>Contacto</h4>
     <hr />
+    
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Motivo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Motivo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Telefono)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telefono)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CorreoElectronico)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CorreoElectronico)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descripcion)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descripcion)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CedulaCliente1)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CedulaCliente1.CedulaCliente)
+            @cliente.Cedula (@cliente.Nombre @cliente.Apellido1 @cliente.Apellido2)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CedulaClienteNavigation.Cedula)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CedulaUsuarioNavigation.Cedula)
+            (@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DireccionNavigation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DireccionNavigation.Id)
+            (@Model.DireccionNavigation.IdProvinciaNavigation.Nombre, @Model.DireccionNavigation.IdCantonNavigation.Nombre, @Model.DireccionNavigation.IdDistritoNavigation.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EstadoNavigation)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoNavigation.Id)
+        <dd class="col-sm-10">
+            @estado.Nombre
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IdSectorNavigation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdSectorNavigation.Id)
+            (@sector.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IdZonaNavigation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdZonaNavigation.Id)
+            (@zona.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TipoContactoNavigation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TipoContactoNavigation.Id)
+            (@tipoContacto.Tipo)
         </dd>
     </dl>
+
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Ver todos los contactos</a>
 </div>
