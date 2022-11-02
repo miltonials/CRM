@@ -16,9 +16,9 @@
           </button>
         </a>
         <ul class="dropdown-menu">
-            @foreach (var item in Model) {
+            @foreach (Contacto item in Model) {
                 <li>
-                    <a class="dropdown-item" asp-controller="VContactosInfoGeneral" asp-action="Filtrar" asp-route-id="@item.CedulaClienteNavigation.Cedula">
+                    <a class="dropdown-item" asp-controller="VContactosInfoGeneral" asp-action="Filtrar" asp-route-id="@item.CedulaCliente">
                         @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula) | 
                         @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Nombre)
                         @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Apellido1)

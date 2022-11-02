@@ -14,6 +14,7 @@ namespace CRM.Models
             IdTareas = new HashSet<Tarea>();
         }
 
+        [Required]
         public int Id { get; set; }
 
         [Display(Name = "Cédula del cliente")]
@@ -24,16 +25,25 @@ namespace CRM.Models
 
         [Display(Name = "Tipo de contacto")]
         public int? TipoContacto { get; set; }
+        [Required]
         public string? Motivo { get; set; }
+        [Required]
         public string? Nombre { get; set; }
+        [Required]
         public string? Telefono { get; set; }
+        [Required]
         
         [Display(Name = "Correo electrónico")]
         public string? CorreoElectronico { get; set; }
+        [Required]
         public int? Estado { get; set; }
+        [Required]
         public int? Direccion { get; set; }
+        [Required]
         public string? Descripcion { get; set; }
+        [Required]
         public int? IdZona { get; set; }
+        [Required]
         public int? IdSector { get; set; }
 
         [Display(Name = "Cédula del cliente")]

@@ -1125,7 +1125,7 @@ insert into inflacion values
 DECLARE @i INT, @cedula INT, @telefono INT, @celular INT, @nombre VARCHAR(30), @apellido1 VARCHAR(30), @apellido2 VARCHAR(30), @randomNombre INT, @randomApellido1 INT, @randomApellido2 INT
 
 SET @i = 1;
-WHILE @i <= 1000
+WHILE @i <= 100
 BEGIN
   SET @cedula = 111111111 + RAND() * 999999999;
   SET @telefono = 66666666 + RAND() * 89999999;

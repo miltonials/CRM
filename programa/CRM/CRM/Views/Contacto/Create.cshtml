@@ -2,11 +2,22 @@
 
 @{
     ViewData["Title"] = "Create";
+    int exito = (int)ViewData["Exito"];
 }
 
-<h1>Create</h1>
 
-<h4>Contacto</h4>
+
+<h1>Registro de nuevo contacto</h1>
+
+@if (exito == -1)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>
+            El contacto seleccionado no tiene una cuenta registrada en el sistema.
+            Por favor, registre una cuenta para el contacto.
+        </p>
+    </div>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,15 +30,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="CedulaCliente" class="control-label"></label>
-                <select asp-for="CedulaCliente" class ="form-control" asp-items="ViewBag.CedulaCliente"></select>
+                <select asp-for="CedulaCliente" class="form-control">
+                    @foreach (Cliente item in ViewBag.CedulaCliente)
+                    {
+                        <option value="@item.Cedula">@item.Nombre @item.Apellido1 @item.Apellido2</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="CedulaUsuario" class="control-label"></label>
-                <select asp-for="CedulaUsuario" class ="form-control" asp-items="ViewBag.CedulaUsuario"></select>
+                <select asp-for="CedulaUsuario" class="form-control">
+                    @foreach (Usuario item in ViewBag.CedulaUsuario)
+                    {
+                        <option value="@item.Cedula">@item.Nombre @item.Apellido1 @item.Apellido2</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="TipoContacto" class="control-label"></label>
-                <select asp-for="TipoContacto" class ="form-control" asp-items="ViewBag.TipoContacto"></select>
+                <select asp-for="TipoContacto" class="form-control">
+                    @foreach (TipoContacto item in ViewBag.TipoContacto)
+                    {
+                        <option value="@item.Id">@item.Tipo</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Motivo" class="control-label"></label>
@@ -51,11 +77,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class ="form-control" asp-items="ViewBag.Estado"></select>
+                <select asp-for="Estado" class="form-control">
+                    @foreach (Estado item in ViewBag.Estado)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Direccion" class="control-label"></label>
-                <select asp-for="Direccion" class ="form-control" asp-items="ViewBag.Direccion"></select>
+                <select asp-for="Direccion" class="form-control">
+                    @foreach (Direccion item in ViewBag.Direccion)
+                    {
+                        <option value="@item.Id">@item.Id</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
@@ -64,16 +100,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdZona" class="control-label"></label>
-                <select asp-for="IdZona" class ="form-control" asp-items="ViewBag.IdZona"></select>
+                <select asp-for="IdZona" class="form-control">
+                    @foreach (Zona item in ViewBag.IdZona)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="IdSector" class="control-label"></label>
-                <select asp-for="IdSector" class ="form-control" asp-items="ViewBag.IdSector"></select>
+                <select asp-for="IdSector" class="form-control">
+                    @foreach (Sector item in ViewBag.IdSector)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 
@@ -82,5 +129,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

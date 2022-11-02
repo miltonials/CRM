@@ -162,7 +162,7 @@ CREATE TABLE TipoContacto(
 -- Creacion de la tabla Contacto
 CREATE TABLE Contacto(
 	id int UNIQUE,
-	cedula_cliente VARCHAR(30) UNIQUE,
+	cedula_cliente VARCHAR(30) ,
 	cedula_usuario VARCHAR(30) NOT NULL,
  	tipo_contacto INT NOT NULL,
 	motivo VARCHAR(30) NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE Contacto(
 	descripcion VARCHAR(50) NOT NULL,
   	id_zona INT NOT NULL,
   	id_sector INT NOT NULL,
-	PRIMARY KEY (id, cedula_cliente)
+	PRIMARY KEY (id)
 );
 
 -- Creacion de la tabla Origen

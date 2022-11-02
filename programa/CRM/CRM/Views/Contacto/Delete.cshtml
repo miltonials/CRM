@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Cliente cliente = (Cliente)ViewData["Cliente"];
+    Usuario usuario = (Usuario)ViewData["Usuario"];
+    Provincium provincia = (Provincium)ViewData["Provincia"];
+    Canton canton = (Canton)ViewData["Canton"];
+    Distrito distrito = (Distrito)ViewData["Distrito"];
+    Zona zona = (Zona)ViewData["Zona"];
+    Sector sector = (Sector)ViewData["Sector"];
+    TipoContacto tipoContacto = (TipoContacto)ViewData["TipoContacto"];
+    Estado estado = (Estado)ViewData["Estado"];
 }
 
 <h1>Delete</h1>
@@ -46,48 +55,48 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CedulaCliente1.CedulaCliente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CedulaClienteNavigation.Cedula)
+            @cliente.Cedula (@cliente.Nombre @cliente.Apellido1 @cliente.Apellido2)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CedulaUsuarioNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CedulaUsuarioNavigation.Cedula)
+            (@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DireccionNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DireccionNavigation.Id)
+            (@provincia.Nombre, @canton.Nombre, @distrito.Nombre)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.EstadoNavigation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoNavigation.Id)
+            @estado.Nombre
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdSectorNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdSectorNavigation.Id)
+            (@sector.Nombre)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdZonaNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdZonaNavigation.Id)
+            (@zona.Nombre)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.TipoContactoNavigation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TipoContactoNavigation.Id)
+            (@tipoContacto.Tipo)
         </dd>
     </dl>
     

@@ -1,8 +1,10 @@
 ﻿using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace CRM.Controllers
 {
@@ -51,89 +53,339 @@ namespace CRM.Controllers
         // GET: Contacto/Create
         public IActionResult Create()
         {
-            ViewData["CedulaCliente"] = new SelectList(_context.CuentaClientes, "CedulaCliente", "CedulaCliente");
-            ViewData["CedulaCliente"] = new SelectList(_context.Clientes, "Cedula", "Cedula");
-            ViewData["CedulaUsuario"] = new SelectList(_context.Usuarios, "Cedula", "Cedula");
-            ViewData["Direccion"] = new SelectList(_context.Direccions, "Id", "Id");
-            ViewData["Estado"] = new SelectList(_context.Estados, "Id", "Id");
-            ViewData["IdSector"] = new SelectList(_context.Sectors, "Id", "Id");
-            ViewData["IdZona"] = new SelectList(_context.Zonas, "Id", "Id");
-            ViewData["TipoContacto"] = new SelectList(_context.TipoContactos, "Id", "Id");
+            ViewData["CedulaCliente"] = (IEnumerable<Cliente>) _context
+                .Clientes
+                .FromSqlInterpolated($"procSelectCliente")
+                .ToList();
+
+            ViewData["CedulaUsuario"] = (IEnumerable<Usuario>) _context
+                .Usuarios
+                .FromSqlInterpolated($"procSelectUsuario")
+                .ToList();
+            ViewData["Direccion"] = (IEnumerable<Direccion>) _context
+                .Direccions
+                .FromSqlInterpolated($"procSelectDireccion")
+                .ToList();
+            ViewData["Estado"] = (IEnumerable<Estado>) _context
+                .Estados
+                .FromSqlInterpolated($"procSelectEstadoContacto")
+                .ToList();
+            ViewData["IdSector"] = (IEnumerable<Sector>) _context
+                .Sectors
+                .FromSqlInterpolated($"procSelectSector")
+                .ToList();
+            ViewData["IdZona"] = (IEnumerable<Zona>) _context
+                .Zonas
+                .FromSqlInterpolated($"procSelectZona")
+                .ToList();
+            ViewData["TipoContacto"] = (IEnumerable<TipoContacto>) _context
+                .TipoContactos
+                .FromSqlInterpolated($"procSelectTipoContacto")
+                .ToList();
+            ViewData["exito"] = 0;
+
             return View();
         }
 
-        // POST: Contacto/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Metodo que permite registrar un nuevo contacto.
+        /// </summary>
+        /// <param name="contacto"></param>
+        /// <returns>Vista Index si el contacto fue registrado con éxito</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CedulaCliente,CedulaUsuario,TipoContacto,Motivo,Nombre,Telefono,CorreoElectronico,Estado,Direccion,Descripcion,IdZona,IdSector")] Contacto contacto)
         {
-            if (ModelState.IsValid)
+            //ejecutar procedimiento almacenado de crear contacto
+            //@id INT,
+            SqlParameter pId = new SqlParameter
             {
-                _context.Add(contacto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ParameterName = "@id",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Id
+            };
+            //@cedula_cliente VARCHAR(30),
+            SqlParameter pCliente = new SqlParameter
+            {
+                ParameterName = "@cedula_cliente",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 30,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.CedulaCliente
+            };
+            //@cedula_usuario VARCHAR(30),
+            SqlParameter pUsuario = new SqlParameter
+            {
+                ParameterName = "@cedula_usuario",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 30,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.CedulaUsuario
+            };
+            //@tipo_contacto INT,
+            SqlParameter pTipoContacto = new SqlParameter
+            {
+                ParameterName = "@tipo_contacto",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.TipoContacto
+            };
+            //@motivo VARCHAR(30),
+            SqlParameter pMotivo = new SqlParameter
+            {
+                ParameterName = "@motivo",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 30,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Motivo
+            };
+            //@nombre VARCHAR(30),
+            SqlParameter pNombre = new SqlParameter
+            {
+                ParameterName = "@nombre",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 30,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Nombre
+            };
+            //@telefono VARCHAR(255),
+            SqlParameter pTelefono = new SqlParameter
+            {
+                ParameterName = "@telefono",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 255,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Telefono
+            };
+            //@correo_electronico VARCHAR(30),
+            SqlParameter pEmail = new SqlParameter
+            {
+                ParameterName = "@correo_electronico",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 30,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.CorreoElectronico
+            };
+            //@estado INT,
+            SqlParameter pEstado = new SqlParameter
+            {
+                ParameterName = "@estado",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Estado
+            };
+            //@direccion INT,
+            SqlParameter pDireccion = new SqlParameter
+            {
+                ParameterName = "@direccion",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Direccion
+            };
+            //@descripcion VARCHAR(50),
+            SqlParameter pDescripcion = new SqlParameter
+            {
+                ParameterName = "@descripcion",
+                SqlDbType = System.Data.SqlDbType.VarChar,
+                Size = 50,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.Descripcion
+            };
+            //@id_zona INT,
+            SqlParameter pZona = new SqlParameter
+            {
+                ParameterName = "@id_zona",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.IdZona
+            };
+            //@id_sector INT,
+            SqlParameter pSector = new SqlParameter
+            {
+                ParameterName = "@id_sector",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Input,
+                Value = contacto.IdSector
+            };
+            //@ret int OUTPUT
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE procInsertarContacto @id, @cedula_cliente, @cedula_usuario, @tipo_contacto, @motivo, @nombre, @telefono, @correo_electronico, @estado, @direccion, @descripcion, @id_zona, @id_sector, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pId, pCliente, pUsuario, pTipoContacto, pMotivo, pNombre, pTelefono, pEmail, pEstado, pDireccion, pDescripcion, pZona, pSector, pRetorno);
+            int retorno = (int)pRetorno.Value;
+
+            if (retorno == -1)
+            {
+
+                ViewData["CedulaCliente"] = (IEnumerable<Cliente>)_context
+                    .Clientes
+                    .FromSqlInterpolated($"procSelectCliente")
+                    .ToList();
+                ViewData["CedulaUsuario"] = (IEnumerable<Usuario>)_context
+                    .Usuarios
+                    .FromSqlInterpolated($"procSelectUsuario")
+                    .ToList();
+                ViewData["Direccion"] = (IEnumerable<Direccion>)_context
+                    .Direccions
+                    .FromSqlInterpolated($"procSelectDireccion")
+                    .ToList();
+                ViewData["Estado"] = (IEnumerable<Estado>)_context
+                    .Estados
+                    .FromSqlInterpolated($"procSelectEstadoContacto")
+                    .ToList();
+                ViewData["IdSector"] = (IEnumerable<Sector>)_context
+                    .Sectors
+                    .FromSqlInterpolated($"procSelectSector")
+                    .ToList();
+                ViewData["IdZona"] = (IEnumerable<Zona>)_context
+                    .Zonas
+                    .FromSqlInterpolated($"procSelectZona")
+                    .ToList();
+                ViewData["TipoContacto"] = (IEnumerable<TipoContacto>)_context
+                    .TipoContactos
+                    .FromSqlInterpolated($"procSelectTipoContacto")
+                    .ToList();
+                ViewData["exito"] = -1;
+                //Debug.WriteLine("Answer: " + answer);
+                return View("Create", contacto);
             }
-            ViewData["CedulaCliente"] = new SelectList(_context.CuentaClientes, "CedulaCliente", "CedulaCliente", contacto.CedulaCliente);
-            ViewData["CedulaCliente"] = new SelectList(_context.Clientes, "Cedula", "Cedula", contacto.CedulaCliente);
-            ViewData["CedulaUsuario"] = new SelectList(_context.Usuarios, "Cedula", "Cedula", contacto.CedulaUsuario);
-            ViewData["Direccion"] = new SelectList(_context.Direccions, "Id", "Id", contacto.Direccion);
-            ViewData["Estado"] = new SelectList(_context.Estados, "Id", "Id", contacto.Estado);
-            ViewData["IdSector"] = new SelectList(_context.Sectors, "Id", "Id", contacto.IdSector);
-            ViewData["IdZona"] = new SelectList(_context.Zonas, "Id", "Id", contacto.IdZona);
-            ViewData["TipoContacto"] = new SelectList(_context.TipoContactos, "Id", "Id", contacto.TipoContacto);
-            return View(contacto);
+            else
+                return RedirectToAction(nameof(Index));
         }
 
-        // GET: Contacto/Delete/5
+        /// <summary>
+        /// Método que permite acceder a la vista para elimnar un contacto.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>La vist Delete de contacto.</returns>
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Contactos == null)
+            var pId = new SqlParameter
             {
-                return NotFound();
-            }
+                ParameterName = "id",
+                Value = id,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
 
-            var contacto = await _context.Contactos
-                .Include(c => c.CedulaCliente1)
-                .Include(c => c.CedulaClienteNavigation)
-                .Include(c => c.CedulaUsuarioNavigation)
-                .Include(c => c.DireccionNavigation)
-                .Include(c => c.EstadoNavigation)
-                .Include(c => c.IdSectorNavigation)
-                .Include(c => c.IdZonaNavigation)
-                .Include(c => c.TipoContactoNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
-            {
-                return NotFound();
-            }
+            //Ejecucion de procedimiento almacenado
+            var contacto = _context
+                .Contactos
+                .FromSqlInterpolated($"procBuscarContacto {pId}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["usuario"] = _context
+                .Usuarios
+                .FromSqlInterpolated($"procBuscarUsuario {contacto.CedulaUsuario}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["cliente"] = _context
+                .Clientes
+                .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
+                .ToList()
+                .First();
+
+            Direccion dir = _context
+                .Direccions
+                .FromSqlInterpolated($"procBuscarDireccion {contacto.Direccion}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["provincia"] = _context
+                .Provincia
+                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["canton"] = _context
+                .Cantons
+                .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["distrito"] = _context
+                .Distritos
+                .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Zona"] = _context
+                .Zonas
+                .FromSqlInterpolated($"procBuscarZona {contacto.IdZona}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Sector"] = _context
+                .Sectors
+                .FromSqlInterpolated($"procBuscarSector {contacto.IdSector}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["TipoContacto"] = _context
+                .TipoContactos
+                .FromSqlInterpolated($"procBuscarTipoContacto {contacto.TipoContacto}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Estado"] = _context
+                .Estados
+                .FromSqlInterpolated($"procBuscarEstadoContacto {contacto.Estado}, {pRetorno}")
+                .ToList()
+                .First();
 
             return View(contacto);
         }
 
-        // POST: Contacto/Delete/5
+        /// <summary>
+        /// Metodo que permite eliminar un contacto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> procEliminarContacto(int id)
         {
-            if (_context.Contactos == null)
+            var pId = new SqlParameter
             {
-                return Problem("Entity set 'CRMContext.Contactos'  is null.");
-            }
-            var contacto = await _context.Contactos.FindAsync(id);
-            if (contacto != null)
+                ParameterName = "id",
+                Value = id,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
             {
-                _context.Contactos.Remove(contacto);
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE procEliminarContacto @id, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pId, pRetorno);
+            int retorno = (int)pRetorno.Value;
+
+            if (retorno == -1)
+            {
+                TempData["exito"] = -1;
+                return RedirectToAction(nameof(Delete));
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ContactoExists(int id)
-        {
-            return _context.Contactos.Any(e => e.Id == id);
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }

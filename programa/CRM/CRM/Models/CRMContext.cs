@@ -291,7 +291,7 @@ namespace CRM.Models
 
             modelBuilder.Entity<Contacto>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.CedulaCliente })
+                entity.HasKey(e => new { e.Id})
                     .HasName("PK__Contacto__7EBE369A756F6CAD");
 
                 entity.ToTable("Contacto");

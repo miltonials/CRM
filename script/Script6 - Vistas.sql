@@ -156,3 +156,329 @@ BEGIN
 	END CATCH
 END
 GO
+
+DROP PROCEDURE IF EXISTS procBuscarContacto
+GO
+CREATE PROCEDURE procBuscarContacto
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Contacto
+			WHERE id = @id 
+			SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+
+DROP PROCEDURE IF EXISTS procBuscarDireccion
+GO
+CREATE PROCEDURE procBuscarDireccion
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Direccion
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarProvincia
+GO
+CREATE PROCEDURE procBuscarProvincia
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Provincia
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarCanton
+GO
+CREATE PROCEDURE procBuscarCanton
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Canton
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarDistrito
+GO
+CREATE PROCEDURE procBuscarDistrito
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Distrito
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarUsuario
+GO
+CREATE PROCEDURE procBuscarUsuario
+	@cedula INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Usuario
+			WHERE cedula = @cedula
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarZona
+GO
+CREATE PROCEDURE procBuscarZona
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Zona
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procBuscarSector
+GO
+CREATE PROCEDURE procBuscarSector
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Sector
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+
+DROP PROCEDURE IF EXISTS procBuscarTipoContacto
+GO
+CREATE PROCEDURE procBuscarTipoContacto
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM TipoContacto
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+
+DROP PROCEDURE IF EXISTS procBuscarEstadoContacto
+GO
+CREATE PROCEDURE procBuscarEstadoContacto
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT *
+		FROM Estado
+			WHERE id = @id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectCliente
+GO
+CREATE PROCEDURE procSelectCliente
+AS
+BEGIN
+		SELECT * FROM Cliente
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectDireccionCompleta
+GO
+CREATE PROCEDURE procSelectDireccionCompleta
+AS
+BEGIN
+		SELECT Direccion.id, Provincia.nombre provincia, Canton.nombre canton, Distrito.nombre distrito
+		FROM Direccion, Provincia, Canton, Distrito
+			WHERE Direccion.id_canton = canton.id AND Direccion.id_distrito = Distrito.id 
+				AND Direccion.id_provincia = Provincia.id
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectUsuario
+GO
+CREATE PROCEDURE procSelectUsuario
+AS
+BEGIN
+		SELECT * FROM USuario
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectDireccion
+GO
+CREATE PROCEDURE procSelectDireccion
+AS
+BEGIN
+		SELECT * FROM Direccion
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectEstadoContacto
+GO
+CREATE PROCEDURE procSelectEstadoContacto
+AS
+BEGIN
+		SELECT * FROM Estado
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectSector
+GO
+CREATE PROCEDURE procSelectSector
+AS
+BEGIN
+		SELECT * FROM Sector
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectZona
+GO
+CREATE PROCEDURE procSelectZona
+AS
+BEGIN
+		SELECT * FROM Zona
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectTipoContacto
+GO
+CREATE PROCEDURE procSelectTipoContacto
+AS
+BEGIN
+		SELECT * FROM TipoContacto
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectCuentaCliente
+GO
+CREATE PROCEDURE procSelectCuentaCliente
+AS
+BEGIN
+		SELECT * FROM CuentaCliente
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectClienteConCuenta
+GO
+CREATE PROCEDURE procSelectClienteConCuenta
+AS
+BEGIN
+		SELECT * FROM CuentaCliente cc, Cliente cl
+			WHERE cc.cedula_cliente = cl.cedula
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectContactos
+GO
+CREATE PROCEDURE procSelectContactos
+AS
+BEGIN
+		SELECT * FROM Contacto
+END
+GO
