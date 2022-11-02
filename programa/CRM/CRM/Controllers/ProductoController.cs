@@ -43,7 +43,7 @@ namespace CRM.Controllers
                 return NotFound();
             }
 
-            VProductosInfoGeneral producto = _context.VProductosInfoGenerals
+            Producto producto = _context.Productos
                 .FromSqlInterpolated($"procBuscarProducto {id}, {0}")
                 .ToList()
                 .First();
