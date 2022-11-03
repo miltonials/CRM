@@ -380,6 +380,53 @@ BEGIN
 END
 GO
 
+
+DROP PROCEDURE IF EXISTS procBuscarActividadContacto
+GO
+CREATE PROCEDURE procBuscarActividadContacto
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT id, descripcion, fecha_finalizacion
+		FROM ContactoActividad, Actividad
+			WHERE id_contacto = @id AND id_actividad = Actividad.id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
+
+DROP PROCEDURE IF EXISTS procBuscarTareaContacto
+GO
+CREATE PROCEDURE procBuscarTareaContacto
+	@id INT,
+	@ret INT OUTPUT
+AS
+BEGIN
+	BEGIN TRY
+	select * from tarea
+		SELECT id, descripcion, fecha_finalizacion, fecha_creacion, estado
+		FROM ContactoTarea, Tarea
+			WHERE id_contacto = @id AND id_tarea = Tarea.id
+		SET @ret = 1
+	END TRY
+	BEGIN CATCH
+		PRINT @@ERROR
+		print ERROR_MESSAGE()
+		SET @ret = -1
+		PRINT @ret
+	END CATCH
+END
+GO
+
 DROP PROCEDURE IF EXISTS procSelectCliente
 GO
 CREATE PROCEDURE procSelectCliente

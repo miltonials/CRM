@@ -98,8 +98,95 @@
             (@tipoContacto.Tipo)
         </dd>
     </dl>
-
 </div>
+
+<hr />
+    <h4>Actividades del contacto</h4>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdActividads.First().Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdActividads.First().Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdActividads.First().FechaFinalizacion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.IdActividads)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                    </td>
+                    <td>
+                        <a asp-controller="Contacto" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<hr />
+    <h4>Tareas del contacto</h4>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdTareas.First().Id)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.IdTareas.First().Descripcion)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.IdTareas.First().FechaFinalizacion)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.IdTareas.First().FechaCreacion)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.IdTareas.First().Estado)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.IdTareas)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        <a asp-controller="Contacto" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<hr />
 <div>
     <a asp-action="Index" class="btn btn-secondary">Ver todos los contactos</a>
 </div>

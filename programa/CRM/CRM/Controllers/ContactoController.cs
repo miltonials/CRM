@@ -108,6 +108,16 @@ namespace CRM.Controllers
                 .ToList()
                 .First();
 
+            contacto.IdActividads = (ICollection<Actividad>) _context
+                .Actividads
+                .FromSqlInterpolated($"procBuscarActividadContacto {contacto.Id}, {pRetorno}")
+                .ToList();
+            
+            contacto.IdTareas = (ICollection<Tarea>)_context
+                .Tareas
+                .FromSqlInterpolated($"procBuscarTareaContacto {contacto.Id}, {pRetorno}")
+                .ToList();
+            
             return View(contacto);
         }
 
