@@ -1,0 +1,46 @@
+﻿@model CRM.Models.Inflacion
+
+@{
+    ViewData["Title"] = "Index";
+    //int exito = (int)ViewData["Exito"];
+}
+
+<h1>Registro de inflación</h1>
+
+@if (Model.Anno == -1)
+{
+    <p class="alert alert-danger" role="alert">
+        Sucedió un error al registrar la inflación. 
+        Verifica que no exista un registro y que el año esté en el rango [2000, año actual[ E N
+    </p>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Anno" class="control-label"></label>
+                <input asp-for="Anno" class="form-control" />
+                <span asp-validation-for="Anno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Porcentaje" class="control-label"></label>
+                <input asp-for="Porcentaje" class="form-control" />
+                <span asp-validation-for="Porcentaje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrar inflación" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div>
+    <a asp-action="Index" class="btn btn-secondary" >Ver registro de inflación</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

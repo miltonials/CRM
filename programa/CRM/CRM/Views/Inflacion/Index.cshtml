@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CRM.Models.Inflacion>
+
+@{
+    ViewData["Title"] = "Index";
+    int exito = (int)ViewData["Exito"];
+}
+
+<h1>Registro de inflación</h1>
+@if (exito == -1)
+{
+    <p class="alert alert-danger" role="alert">El registro no pudo ser eliminado</p>
+}
+else if (exito == 1)
+{
+    <p class="alert alert-success" role="alert">El registro de la inflación ha sido eliminado con éxito.</p>
+}
+else if (exito == 2)
+{
+    <p class="alert alert-success" role="alert">La inflación ha sido registrada con éxito.</p>
+}
+<p>
+    <a asp-action="Create" class="btn btn-success">Registrar nueva inflación</a>
+    <a asp-controller="ValorPresenteCotizaciones" asp-action="Index" class="btn btn-success">Valor presente de cotizaciones</a>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Porcentaje)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Porcentaje) %
+            </td>
+            <td>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Anno">Eliminar registro</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

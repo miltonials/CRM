@@ -741,7 +741,7 @@ GO
 -- Procedimiento para insertar datos en la tabla Inflacion
 
 CREATE PROCEDURE Inflacion_Insert
-    @año int,
+    @anno int,
     @porcentaje float,
     @ret int OUTPUT
 AS
@@ -753,13 +753,13 @@ BEGIN
         )
     VALUES
         (
-            @año, @porcentaje)
-        SET @ret = 1
+            @anno, @porcentaje)
+        SET @ret = 2
     END TRY
     BEGIN CATCH
         PRINT @@ERROR
         print ERROR_MESSAGE()
-        SET @ret = -1
+        SET @ret = -2
         PRINT @ret
     END CATCH
 END

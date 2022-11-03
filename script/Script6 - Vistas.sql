@@ -482,3 +482,12 @@ BEGIN
 		SELECT * FROM Contacto
 END
 GO
+
+DROP PROCEDURE IF EXISTS procSelectInflacion
+GO
+CREATE PROCEDURE procSelectInflacion
+AS
+BEGIN
+		SELECT * FROM Inflacion
+END
+GO

@@ -210,6 +210,7 @@ namespace CRM.Controllers
             }
             else
             {
+                TempData["exito"] = 2;
                 return RedirectToAction(nameof(Index));
             }
         }

@@ -8,7 +8,7 @@ namespace CRM.Models
     [MetadataType(typeof(ValorPresenteCotizacione))]
     public partial class ValorPresenteCotizacione
     {
-        [Display(Name = "Número de cottización")]
+        [Display(Name = "Número de cotización")]
         public int NumeroCotizacion { get; set; }
 
         [Display(Name = "Número de contacto")]
