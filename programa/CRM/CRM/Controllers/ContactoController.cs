@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace CRM.Controllers
 {
@@ -26,102 +27,17 @@ namespace CRM.Controllers
         }
 
         // GET: Contacto/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            var pId = new SqlParameter
-            {
-                ParameterName = "id",
-                Value = id,
-                SqlDbType = System.Data.SqlDbType.Int
-            };
-            var pRetorno = new SqlParameter
-            {
-                ParameterName = "ret",
-                SqlDbType = System.Data.SqlDbType.Int,
-                Direction = System.Data.ParameterDirection.Output,
-            };
-
-            //Ejecucion de procedimiento almacenado
-            var contacto = _context
-                .Contactos
-                .FromSqlInterpolated($"procBuscarContacto {pId}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["usuario"] = _context
-                .Usuarios
-                .FromSqlInterpolated($"procBuscarUsuario {contacto.CedulaUsuario}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["cliente"] = _context
-                .Clientes
-                .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
-                .ToList()
-                .First();
-
-            Direccion dir = _context
-                .Direccions
-                .FromSqlInterpolated($"procBuscarDireccion {contacto.Direccion}, {pRetorno}")
-                .ToList()
-                .First();
-
-            dir.IdProvinciaNavigation = _context
-                .Provincia
-                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {pRetorno}")
-                .ToList()
-                .First();
-
-            dir.IdCantonNavigation = _context
-                .Cantons
-                .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {pRetorno}")
-                .ToList()
-                .First();
-
-            dir.IdDistritoNavigation = _context
-                .Distritos
-                .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Zona"] = _context
-                .Zonas
-                .FromSqlInterpolated($"procBuscarZona {contacto.IdZona}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Sector"] = _context
-                .Sectors
-                .FromSqlInterpolated($"procBuscarSector {contacto.IdSector}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["TipoContacto"] = _context
-                .TipoContactos
-                .FromSqlInterpolated($"procBuscarTipoContacto {contacto.TipoContacto}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Estado"] = _context
-                .Estados
-                .FromSqlInterpolated($"procBuscarEstadoContacto {contacto.Estado}, {pRetorno}")
-                .ToList()
-                .First();
-
-            contacto.IdActividads = (ICollection<Actividad>) _context
-                .Actividads
-                .FromSqlInterpolated($"procBuscarActividadContacto {contacto.Id}, {pRetorno}")
-                .ToList();
-            
-            contacto.IdTareas = (ICollection<Tarea>)_context
-                .Tareas
-                .FromSqlInterpolated($"procBuscarTareaContacto {contacto.Id}, {pRetorno}")
-                .ToList();
-            
-            return View(contacto);
+                       
+            return View(obtenerContacto(id));
         }
 
         // GET: Contacto/Create
+        /// <summary>
+        /// Método que se encarga de cargar la vista de creación de un contacto
+        /// </summary>
+        /// <returns>  La vista create de contactos </returns>
         public IActionResult Create()
         {
             IEnumerable<CuentaCliente> objClientes = (IEnumerable<CuentaCliente>)_context
@@ -371,89 +287,9 @@ namespace CRM.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>La vist Delete de contacto.</returns>
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var pId = new SqlParameter
-            {
-                ParameterName = "id",
-                Value = id,
-                SqlDbType = System.Data.SqlDbType.Int
-            };
-            var pRetorno = new SqlParameter
-            {
-                ParameterName = "ret",
-                SqlDbType = System.Data.SqlDbType.Int,
-                Direction = System.Data.ParameterDirection.Output,
-            };
-
-            //Ejecucion de procedimiento almacenado
-            var contacto = _context
-                .Contactos
-                .FromSqlInterpolated($"procBuscarContacto {pId}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["usuario"] = _context
-                .Usuarios
-                .FromSqlInterpolated($"procBuscarUsuario {contacto.CedulaUsuario}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["cliente"] = _context
-                .Clientes
-                .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
-                .ToList()
-                .First();
-
-            Direccion dir = _context
-                .Direccions
-                .FromSqlInterpolated($"procBuscarDireccion {contacto.Direccion}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["provincia"] = _context
-                .Provincia
-                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["canton"] = _context
-                .Cantons
-                .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["distrito"] = _context
-                .Distritos
-                .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Zona"] = _context
-                .Zonas
-                .FromSqlInterpolated($"procBuscarZona {contacto.IdZona}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Sector"] = _context
-                .Sectors
-                .FromSqlInterpolated($"procBuscarSector {contacto.IdSector}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["TipoContacto"] = _context
-                .TipoContactos
-                .FromSqlInterpolated($"procBuscarTipoContacto {contacto.TipoContacto}, {pRetorno}")
-                .ToList()
-                .First();
-
-            ViewData["Estado"] = _context
-                .Estados
-                .FromSqlInterpolated($"procBuscarEstadoContacto {contacto.Estado}, {pRetorno}")
-                .ToList()
-                .First();
-
-            return View(contacto);
+            return View(obtenerContacto(id));
         }
 
         /// <summary>
@@ -492,6 +328,182 @@ namespace CRM.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        /// <summary>
+        /// Metodo que permite eliminar actividades de un contacto.
+        /// </summary>
+        /// <param name="actividad">id de la actividad</param>
+        /// <param name="contacto">id del contacto</param>
+        /// <returns>La vista details</returns>
+        /// 
+        
+        public async Task<IActionResult> EliminarActividad(int actividad, int contacto)
+        {
+            var pActividad = new SqlParameter
+            {
+                ParameterName = "idActividad",
+                Value = actividad,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pContacto = new SqlParameter
+            {
+                ParameterName = "idContacto",
+                Value = contacto,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE ContactoActividad_Delete @idContacto,@idActividad, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pContacto, pActividad, pRetorno);
+            int retorno = (int)pRetorno.Value;
+            
+            TempData["exito"] = retorno;
+
+            return View("Details", obtenerContacto(contacto));
+        }
+        /// <summary>
+        /// Metodo que permite eliminar tareas de un contacto.
+        /// </summary>
+        /// <param name="tarea">id de la tarea</param>
+        /// <param name="contacto">id del contacto</param>
+        /// <returns>La vista details</returns>
+        /// 
+        
+        public async Task<IActionResult> EliminarTarea(int tarea, int contacto)
+        {
+            var pTarea = new SqlParameter
+            {
+                ParameterName = "id_tarea",
+                Value = tarea,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pContacto = new SqlParameter
+            {
+                ParameterName = "id_contacto",
+                Value = contacto,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE procEliminarContactoTarea @id_contacto,@id_tarea, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pContacto, pTarea, pRetorno);
+            int retorno = (int)pRetorno.Value;
+            
+            TempData["exito"] = retorno;
+
+            return View("Details", obtenerContacto(contacto));
+        }
+
+        /// <summary>
+        /// Metodo que permite obtener el objeto de un  cliente con id especifico
+        /// </summary>
+        /// <param name="id">id del cliente buscar</param>
+        /// <returns>Objeto tipo Cliente</returns>
+        public Contacto obtenerContacto(int id)
+        {
+            var pId = new SqlParameter
+            {
+                ParameterName = "id",
+                Value = id,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            var contacto = _context
+            .Contactos
+                .FromSqlInterpolated($"procBuscarContacto {pId}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["usuario"] = _context
+                .Usuarios
+                .FromSqlInterpolated($"procBuscarUsuario {contacto.CedulaUsuario}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["cliente"] = _context
+                .Clientes
+                .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
+                .ToList()
+                .First();
+
+            Direccion dir = _context
+                .Direccions
+                .FromSqlInterpolated($"procBuscarDireccion {contacto.Direccion}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdProvinciaNavigation = _context
+                .Provincia
+                .FromSqlInterpolated($"procBuscarProvincia {dir.IdProvincia}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdCantonNavigation = _context
+                .Cantons
+                .FromSqlInterpolated($"procBuscarCanton {dir.IdCanton}, {pRetorno}")
+                .ToList()
+                .First();
+
+            dir.IdDistritoNavigation = _context
+                .Distritos
+                .FromSqlInterpolated($"procBuscarDistrito {dir.IdDistrito}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Zona"] = _context
+                .Zonas
+                .FromSqlInterpolated($"procBuscarZona {contacto.IdZona}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Sector"] = _context
+                .Sectors
+                .FromSqlInterpolated($"procBuscarSector {contacto.IdSector}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["TipoContacto"] = _context
+                .TipoContactos
+                .FromSqlInterpolated($"procBuscarTipoContacto {contacto.TipoContacto}, {pRetorno}")
+                .ToList()
+                .First();
+
+            ViewData["Estado"] = _context
+                .Estados
+                .FromSqlInterpolated($"procBuscarEstadoContacto {contacto.Estado}, {pRetorno}")
+                .ToList()
+                .First();
+
+            contacto.IdActividads = (ICollection<Actividad>)_context
+                .Actividads
+                .FromSqlInterpolated($"procBuscarActividadContacto {contacto.Id}, {pRetorno}")
+                .ToList();
+
+            contacto.IdTareas = (ICollection<Tarea>)_context
+                .Tareas
+                .FromSqlInterpolated($"procBuscarTareaContacto {contacto.Id}, {pRetorno}")
+                .ToList();
+
+            return contacto;
         }
     }
 }
