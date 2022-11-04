@@ -560,3 +560,21 @@ BEGIN
 		SELECT * FROM Inflacion
 END
 GO
+
+DROP PROCEDURE IF EXISTS procSelectActividades
+GO
+CREATE PROCEDURE procSelectActividades
+AS
+BEGIN
+		SELECT * FROM Actividad
+END
+GO
+
+DROP PROCEDURE IF EXISTS procSelectTareas
+GO
+CREATE PROCEDURE procSelectTareas
+AS
+BEGIN
+		SELECT * FROM Tarea
+END
+GO

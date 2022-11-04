@@ -370,7 +370,7 @@ BEGIN
 END
 GO
 */
--- DELETE ContactoActividad
+-- select * FROM ContactoActividad
 
 CREATE PROCEDURE ContactoActividad_Delete
         @idContacto int,
@@ -1838,11 +1838,11 @@ GO
 CREATE PROCEDURE procInsertarContactoTarea
   @id_contacto INT,
   @id_tarea INT,
-  @ret INT
+  @ret INT OUTPUT
 AS
   BEGIN
 	BEGIN TRY
-		INSERT INTO ContactoTarea VALUES (@id_contacto, @id_tarea)
+		INSERT INTO ContactoTarea (id_contacto, id_tarea)VALUES (@id_contacto, @id_tarea)
 		SET @ret = 1
 	END TRY
 	BEGIN CATCH

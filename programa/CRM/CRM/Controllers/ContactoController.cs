@@ -337,7 +337,6 @@ namespace CRM.Controllers
         /// <param name="contacto">id del contacto</param>
         /// <returns>La vista details</returns>
         /// 
-        
         public async Task<IActionResult> EliminarActividad(int actividad, int contacto)
         {
             var pActividad = new SqlParameter
@@ -368,6 +367,45 @@ namespace CRM.Controllers
 
             return View("Details", obtenerContacto(contacto));
         }
+        
+        /// <summary>
+        /// Metodo que permite asociar una actividad a un contacto.
+        /// </summary>
+        /// <param name="actividad">id de la actividad</param>
+        /// <param name="contacto">id del contacto</param>
+        /// <returns>La vista details</returns>
+        /// 
+        public async Task<IActionResult> AsociarActividad(int actividad, int contacto)
+        {
+            var pActividad = new SqlParameter
+            {
+                ParameterName = "idActividad",
+                Value = actividad,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pContacto = new SqlParameter
+            {
+                ParameterName = "idContacto",
+                Value = contacto,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE ContactoActividad_Insert @idContacto,@idActividad, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pContacto, pActividad, pRetorno);
+            int retorno = (int)pRetorno.Value;
+            
+            TempData["exito"] = retorno;
+
+            return View("Details", obtenerContacto(contacto));
+        }
+        
         /// <summary>
         /// Metodo que permite eliminar tareas de un contacto.
         /// </summary>
@@ -375,7 +413,6 @@ namespace CRM.Controllers
         /// <param name="contacto">id del contacto</param>
         /// <returns>La vista details</returns>
         /// 
-        
         public async Task<IActionResult> EliminarTarea(int tarea, int contacto)
         {
             var pTarea = new SqlParameter
@@ -399,6 +436,45 @@ namespace CRM.Controllers
 
             //Ejecucion de procedimiento almacenado
             var sql = "EXECUTE procEliminarContactoTarea @id_contacto,@id_tarea, @ret OUT";
+            _ = _context.Database.ExecuteSqlRaw(sql, pContacto, pTarea, pRetorno);
+            int retorno = (int)pRetorno.Value;
+            
+            TempData["exito"] = retorno;
+
+            return View("Details", obtenerContacto(contacto));
+        }
+
+        
+        /// <summary>
+        /// Metodo que permite asociar una tarea a un contacto.
+        /// </summary>
+        /// <param name="tarea">id de la tarea</param>
+        /// <param name="contacto">id del contacto</param>
+        /// <returns>La vista details</returns>
+        /// 
+        public async Task<IActionResult> AsociarTarea(int tarea, int contacto)
+        {
+            var pTarea = new SqlParameter
+            {
+                ParameterName = "id_tarea",
+                Value = tarea,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pContacto = new SqlParameter
+            {
+                ParameterName = "id_contacto",
+                Value = contacto,
+                SqlDbType = System.Data.SqlDbType.Int
+            };
+            var pRetorno = new SqlParameter
+            {
+                ParameterName = "ret",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            //Ejecucion de procedimiento almacenado
+            var sql = "EXECUTE procInsertarContactoTarea @id_contacto,@id_tarea, @ret OUT";
             _ = _context.Database.ExecuteSqlRaw(sql, pContacto, pTarea, pRetorno);
             int retorno = (int)pRetorno.Value;
             
@@ -444,6 +520,16 @@ namespace CRM.Controllers
                 .FromSqlInterpolated($"procBuscarCliente {contacto.CedulaCliente}, {pRetorno}")
                 .ToList()
                 .First();
+
+            ViewData["actividades"] = (IEnumerable<Actividad>)_context
+                .Actividads
+                .FromSqlInterpolated($"procSelectActividades")
+                .ToList();
+
+            ViewData["tareas"] = (IEnumerable<Tarea>)_context
+                .Tareas
+                .FromSqlInterpolated($"procSelectTareas")
+                .ToList();
 
             Direccion dir = _context
                 .Direccions

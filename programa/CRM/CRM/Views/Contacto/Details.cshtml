@@ -11,6 +11,8 @@
     Sector sector = (Sector)ViewData["Sector"];
     TipoContacto tipoContacto = (TipoContacto)ViewData["TipoContacto"];
     Estado estado = (Estado)ViewData["Estado"];
+    IEnumerable<Tarea> tareas = (IEnumerable<Tarea>)ViewData["tareas"];
+    IEnumerable<Actividad> actividades = (IEnumerable<Actividad>)ViewData["actividades"];
 }
 
 <h1>Detalles de contacto</h1>
@@ -102,6 +104,24 @@
 
 <hr />
     <h4>Actividades del contacto</h4>
+    <div>
+        <a class="dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Asociar nueva actividad
+          </button>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (Actividad item in actividades) {
+                <li>
+                    <a class="dropdown-item" asp-controller="Contacto" asp-action="AsociarActividad" asp-route-actividad="@item.Id" asp-route-contacto="@Model.Id">
+                        @Html.DisplayFor(modelItem => item.Id) | 
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                        @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
     <table class="table table-stripped">
         <thead>
             <tr>
@@ -140,6 +160,24 @@
     </table>
 <hr />
     <h4>Tareas del contacto</h4>
+    <div>
+        <a class="dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Asociar nueva tarea
+          </button>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (Tarea item in tareas) {
+                <li>
+                    <a class="dropdown-item" asp-controller="Contacto" asp-action="AsociarTarea" asp-route-tarea="@item.Id" asp-route-contacto="@Model.Id">
+                        @Html.DisplayFor(modelItem => item.Id) | 
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                        @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
     <table class="table table-stripped">
         <thead>
             <tr>
