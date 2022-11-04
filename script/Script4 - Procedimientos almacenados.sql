@@ -2299,3 +2299,5 @@ AS
             PRINT @ret
         END CATCH
     END
+
+EXECUTE procEliminarProductoCotizacion 6,1,1
