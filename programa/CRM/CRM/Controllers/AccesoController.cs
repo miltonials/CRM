@@ -16,9 +16,10 @@ using System.Security.Claims;
 
 namespace CRM.Controllers
 {
+    
     public class AccesoController : Controller
     {
-        
+
         // GET: Acceso
         public ActionResult Index()
         {

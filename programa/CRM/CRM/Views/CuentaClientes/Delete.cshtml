@@ -1,0 +1,74 @@
+﻿@model CRM.Models.CuentaCliente
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Esta seguro de eliminar la cuenta?</h3>
+<div>
+    <h4>CuentaCliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactoPrincipal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContactoPrincipal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SitioWeb)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SitioWeb)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InformacionAdicional)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InformacionAdicional)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorreoElectronico)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorreoElectronico)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CedulaClienteNavigation.Cedula)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdSectorNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdSectorNavigation.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdZonaNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdZonaNavigation.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MonedaNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MonedaNavigation.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        @*<input type="hidden" asp-for="CedulaCliente" />
+        <input type="hidden" asp-for="NombreCuenta" />
+        <input type="hidden" asp-for="Moneda" />*@
+        @*<input type="submit" value="Eliminar contacto" class="btn btn-danger" /> |
+        <a asp-action="Index">Ver todos los contactos</a>*@
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Ver todas las cuenta</a>
+    </form>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<CRM.Models.CuentaCliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>CuentaCliente</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Agregar un nuevo producto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactoPrincipal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SitioWeb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InformacionAdicional)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaClienteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdZonaNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonedaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.ContactoPrincipal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SitioWeb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InformacionAdicional)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaClienteNavigation.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdZonaNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonedaNavigation.Id)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
